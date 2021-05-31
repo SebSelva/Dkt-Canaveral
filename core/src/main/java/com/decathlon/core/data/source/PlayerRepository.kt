@@ -1,4 +1,8 @@
 package com.decathlon.core.data.source
 
-class PlayerRepository {
+import com.decathlon.core.data.source.local.LocalDataSource
+
+class PlayerRepository(private val localDataSource: LocalDataSource) {
+
+
 }

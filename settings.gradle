@@ -1,2 +1,3 @@
+include ':core'
 include ':app'
-rootProject.name = "decathlon-canaveral-android-app"
+rootProject.name = "Canaveral"

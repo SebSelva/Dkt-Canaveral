@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
 }
 
+apply from: '../shared_dependencies.gradle'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -23,6 +25,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
+
     compileOptions {
         sourceCompatibility "1.8"
         targetCompatibility "1.8"
@@ -33,6 +41,8 @@ android {
 }
 
 dependencies {
+
+    implementation project(":core")
 
     //    Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'

@@ -1,15 +1,14 @@
-package com.decathlon.core.domain
+package com.decathlon.core.domain.model
 
-import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Player (
+class Player (
+        override var id: Int,
+        var nickname: String,
+//    var firstname: String,
+//    var lastname: String,
+        var image: String,
+        var visibleIcon: Boolean
 
-    var id: Int,
-    var nickname: String,
-    var firstname: String,
-    var lastname: String,
-    var image: String
-
-) : Parcelable
+) : BaseItem()

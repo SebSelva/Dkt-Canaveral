@@ -1,4 +1,9 @@
 package com.decathlon.core.domain.model
 
-class BaseItem {
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+abstract class BaseItem : Parcelable {
+    abstract val id: Int
+
 }
