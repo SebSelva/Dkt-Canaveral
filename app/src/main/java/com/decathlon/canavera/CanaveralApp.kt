@@ -1,4 +1,4 @@
-package com.decathlon.canavera.presentation;
+package com.decathlon.canavera.ui;
 
 import android.app.Application
 import android.view.LayoutInflater

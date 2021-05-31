@@ -1,4 +1,4 @@
-package com.decathlon.canavera.presentation
+package com.decathlon.canavera.ui
 
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
