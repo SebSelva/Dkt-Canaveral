@@ -21,10 +21,6 @@ class PlayerAdapter(val maxPlayers :Int,
 
     private var listData = ArrayList<BaseItem>()
 
-    init {
-        setData()
-    }
-
     private fun addPlayer1() {
 
         val player1 = Player(
@@ -37,8 +33,14 @@ class PlayerAdapter(val maxPlayers :Int,
         listData.addAll(newListData)
     }
 
-    private fun setData() {
-        addPlayer1()
+    fun setData(players: List<Player>) {
+        if (players.isEmpty()) {
+            addPlayer1()
+        } else {
+            listData.clear()
+            listData.addAll(players)
+        }
+
         if (listData.size < maxPlayers) {
             listData.add(
                 listData.size, Button(
@@ -94,22 +96,15 @@ class PlayerAdapter(val maxPlayers :Int,
 
     inner class ButtonViewHolder(private var binding: ItemListButtonBinding)
         : BaseViewHolder<Button>(binding.root) {
+
         override fun bind(item: Button) {
-            //binding.btnAddPlayer.text = item.text
             binding.btnAddPlayer.setOnClickListener {
                 if (listData.size <= maxPlayers) {
                     val player = Player(
                         listData.size, "Player " + listData.size, "null", "Null",
                         "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/1200px-Flat_tick_icon.svg.png"
                     )
-                    listData.add(listData.size - 1, player)
                     addClickListener.invoke(player)
-                    notifyItemInserted(listData.size - 1)
-
-                    if (listData.size > maxPlayers) {
-                        listData.removeLast()
-                        notifyItemRemoved(listData.size)
-                    }
                 }
                 binding.executePendingBindings()
             }
@@ -123,7 +118,7 @@ class PlayerAdapter(val maxPlayers :Int,
            override fun bind(item: Player) {
                binding.player = item
                // remove button
-               if (listData.size < maxPlayers - 1) {
+               if (position == 0) {
                    binding.btnRemovePlayer.visibility = View.GONE
                }
 
@@ -136,11 +131,8 @@ class PlayerAdapter(val maxPlayers :Int,
                            notifyItemInserted(itemCount)
                    }
                }
-
                binding.executePendingBindings()
            }
-
-
    }
 
 }

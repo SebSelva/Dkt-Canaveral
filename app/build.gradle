@@ -64,8 +64,6 @@ dependencies {
 
     //    Okhttp
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
-    //    Koin
-    implementation 'org.koin:koin-android:2.1.6'
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"

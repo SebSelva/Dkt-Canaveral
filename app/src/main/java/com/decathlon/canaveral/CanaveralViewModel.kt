@@ -1,11 +1,19 @@
 package com.decathlon.canaveral
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlin.coroutines.CoroutineContext
 
-open class CanaveralViewModel (application: Application, protected val interactors: Interactors) :
-    AndroidViewModel(application) {
+open class CanaveralViewModel : ViewModel(), CoroutineScope {
 
-    protected val application: CanaveralApp = getApplication()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + SupervisorJob()
 
+    override fun onCleared() {
+        super.onCleared()
+        coroutineContext.cancel()
+    }
 }
