@@ -22,5 +22,4 @@ class DashboardViewModel (private val interactors: Interactors) : CanaveralViewM
     fun addPlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
         interactors.addPlayer(player)
     }
-
 }
