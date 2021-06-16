@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/DashboardFragment"
-        android:name="com.decathlon.canavera.dashboard.DashboardFragment"
+        android:name="com.decathlon.canaveral.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard">
 
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/GameFragment"
-        android:name="com.decathlon.canavera.game.GameFragment"
+        android:name="com.decathlon.canaveral.game.GameFragment"
         android:label="@string/title_game"
-        tools:layout="@layout/">
+        tools:layout="@layout/fragment_game">
 
     </fragment>
 </navigation>
