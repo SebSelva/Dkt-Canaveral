@@ -5,7 +5,9 @@ import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import com.decathlon.core.player.interactors.AddPlayer
+import com.decathlon.core.player.interactors.DeletePlayer
 import com.decathlon.core.player.interactors.GetPlayers
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.viewmodel.dsl.viewModel
@@ -41,7 +43,8 @@ class CanaveralApp : Application() {
         factory {
             Interactors(
                 GetPlayers(get()),
-                AddPlayer(get())
+                AddPlayer(get()),
+                DeletePlayer(get())
             )
         }
     }

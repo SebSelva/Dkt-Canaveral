@@ -22,4 +22,10 @@ class DashboardViewModel (private val interactors: Interactors) : CanaveralViewM
     fun addPlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
         interactors.addPlayer(player)
     }
+
+    /** First, we want to keep players number order
+     *  So we delete the last one each time instead of the @param player sent */
+    fun removePlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
+        interactors.deletePlayer(playerLiveData.value!!.last())
+    }
 }

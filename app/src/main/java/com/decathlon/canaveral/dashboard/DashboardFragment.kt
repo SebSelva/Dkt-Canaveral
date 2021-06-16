@@ -56,7 +56,7 @@ class DashboardFragment : Fragment() {
             (variantField.editText as? AutoCompleteTextView)?.setText(gameVariant[0],false)
 
             val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
-                {dashboardViewModel.addPlayer(it)})
+                {dashboardViewModel.addPlayer(it)}, {dashboardViewModel.removePlayer(it)})
 
             val playerRecycler = view.findViewById<RecyclerView>(R.id.rv_player)
 
