@@ -31,7 +31,7 @@
                 android:scaleType="centerInside"
                 android:contentDescription="@string/image_description"
                 android:src="@drawable/round_add_circle_outline_black_48dp"
-                android:tint="@color/blue_decat"
+                app:tint="@color/blue_decat"
                 tools:src="@drawable/round_add_circle_outline_black_48dp" />
 
         </androidx.cardview.widget.CardView>

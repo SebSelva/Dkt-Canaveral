@@ -61,7 +61,6 @@ class DashboardFragment : Fragment() {
             val playerRecycler = view.findViewById<RecyclerView>(R.id.rv_player)
 
             playerRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            playerRecycler.setHasFixedSize(true)
             playerRecycler.adapter = playerAdapter
 
             view.findViewById<Button>(R.id.start_btn).setOnClickListener {
