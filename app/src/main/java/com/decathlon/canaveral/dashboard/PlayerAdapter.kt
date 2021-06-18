@@ -12,7 +12,8 @@ import com.decathlon.core.player.model.Button
 import com.decathlon.core.player.model.Player
 
 class PlayerAdapter(val maxPlayers :Int,
-                    val addClickListener : (Player) -> Unit) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+                    val addClickListener : (Player) -> Unit,
+                    val delClickListener: (Player) -> Unit) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     companion object {
         private const val TYPE_PLAYER = 0
@@ -125,6 +126,7 @@ class PlayerAdapter(val maxPlayers :Int,
                binding.btnRemovePlayer.setOnClickListener {
                    notifyItemRemoved(adapterPosition)
                    listData.remove(item)
+                   delClickListener.invoke(item)
 
                    if (itemCount == maxPlayers - 1 && listData.last() !is Button) {
                        listData.add(Button(maxPlayers, ""))
