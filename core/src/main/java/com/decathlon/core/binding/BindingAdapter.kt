@@ -1,6 +1,5 @@
 package com.decathlon.core.binding
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 

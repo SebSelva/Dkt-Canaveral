@@ -1,5 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Canaveral</string>
+
+    <string name="dashboard_nickname_text">nickname</string>
 
     <string name="title_dashboard">Dashboard</string>
     <string name="title_stats">Stats</string>
@@ -12,27 +14,4 @@
     <string name="add">add</string>
     <string name="select_variant">Select variant</string>
 
-    <string-array name="game_type_array">
-        <item>01 Game</item>
-<!--        <item>Cricket</item>-->
-<!--        <item>Count up</item>-->
-<!--        <item>Bull hunter</item>-->
-<!--        <item>Shanghai</item>-->
-<!--        <item>Around a Clock</item>-->
-<!--        <item>Killer</item>-->
-    </string-array>
-
-    <string-array name="versus_type">
-        <item>Alone</item>
-        <item>1 vs 1</item>
-        <item>1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1</item>
-    </string-array>
-
-    <string-array name="zero_game_type_array">
-        <item>301</item>
-        <item>501</item>
-        <item>701</item>
-        <item>901</item>
-    </string-array>
 </resources>
