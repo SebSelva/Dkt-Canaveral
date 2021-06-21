@@ -1,4 +1,5 @@
 package com.decathlon.core.binding
+
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -7,3 +8,8 @@ import com.bumptech.glide.Glide
 fun showImage(imgView: ImageView, url: String?) {
     Glide.with(imgView.context).load(url).into(imgView)
 }
+/*
+@BindingAdapter("app:roundedImageSrc")
+fun roundedImageSrc(imgView: ImageView, url: String?) {
+    Glide.with(imgView.context).load(url).optionalCircleCrop().into(imgView)
+}*/

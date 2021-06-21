@@ -3,6 +3,8 @@ package com.decathlon.canaveral.dashboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.databinding.ItemListButtonBinding
@@ -13,7 +15,7 @@ import com.decathlon.core.player.model.Player
 
 class PlayerAdapter(val maxPlayers :Int,
                     val addClickListener : (Player) -> Unit,
-                    val delClickListener: (Player) -> Unit) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+                    val delClickListener: (Player) -> Unit) : ListAdapter<Player, BaseViewHolder<*>>(DiffCallback()) {
 
     companion object {
         private const val TYPE_PLAYER = 0
@@ -30,15 +32,14 @@ class PlayerAdapter(val maxPlayers :Int,
         )
         addClickListener.invoke(player1)
         val newListData : List<Player> = listOf(player1)
-        listData.clear()
         listData.addAll(newListData)
     }
 
     fun setData(players: List<Player>) {
+        listData.clear()
         if (players.isEmpty()) {
             addPlayer1()
         } else {
-            listData.clear()
             listData.addAll(players)
         }
 
@@ -136,5 +137,15 @@ class PlayerAdapter(val maxPlayers :Int,
                binding.executePendingBindings()
            }
    }
+
+    class DiffCallback : DiffUtil.ItemCallback<Player>() {
+        override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
+            return oldItem == newItem
+        }
+    }
 
 }

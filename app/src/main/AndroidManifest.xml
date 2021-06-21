@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Decathloncanaveralandroidapp">
         <activity
-            android:name="com.decathlon.canaveral.MainActivity">
+            android:name="com.decathlon.canaveral.MainActivity"
+            android:theme="@style/Theme.DecathlonCanaveral">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
