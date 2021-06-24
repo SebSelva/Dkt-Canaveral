@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GAME"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:background="@color/white"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/keyboard_dkt">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dart_points_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="100sp"
+            tools:text="GAME" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <GridView
+        android:id="@+id/keyboard_dkt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:gravity="center"
+        android:numColumns="5"
+        android:horizontalSpacing="@dimen/keyboard_item_horizontal_spacing"
+        android:verticalSpacing="@dimen/keyboard_item_vertical_spacing"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="168dp"
-        tools:layout_editor_absoluteY="300dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:itemCount="25"
+        tools:listitem="@layout/item_keyboard" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
