@@ -13,13 +13,13 @@
 
         <action
             android:id="@+id/action_dashboard_to_game"
-            app:destination="@id/GameFragment" />
+            app:destination="@id/GameActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/GameFragment"
-        android:name="com.decathlon.canaveral.game.GameFragment"
+    <activity
+        android:id="@+id/GameActivity"
+        android:name="com.decathlon.canaveral.game.GameActivity"
         android:label="@string/title_game"
-        tools:layout="@layout/fragment_game">
+        tools:layout="@layout/activity_game">
 
-    </fragment>
+    </activity>
 </navigation>
