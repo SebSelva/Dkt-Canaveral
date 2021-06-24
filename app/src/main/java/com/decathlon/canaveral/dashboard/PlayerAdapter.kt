@@ -28,7 +28,7 @@ class PlayerAdapter(val maxPlayers :Int,
 
         val player1 = Player(
             1, "Player 1", "null", "Null",
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/1200px-Flat_tick_icon.svg.png"
+            null
         )
         addClickListener.invoke(player1)
         val newListData : List<Player> = listOf(player1)
@@ -103,8 +103,8 @@ class PlayerAdapter(val maxPlayers :Int,
             binding.btnAddPlayer.setOnClickListener {
                 if (listData.size <= maxPlayers) {
                     val player = Player(
-                        listData.size, "Player " + listData.size, "null", "Null",
-                        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/1200px-Flat_tick_icon.svg.png"
+                        listData.size, "Player " + listData.size,
+                        "null", "Null", null
                     )
                     addClickListener.invoke(player)
                 }
