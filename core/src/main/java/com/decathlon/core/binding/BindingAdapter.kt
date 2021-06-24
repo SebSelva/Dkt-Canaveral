@@ -6,7 +6,9 @@ import com.bumptech.glide.Glide
 
 @BindingAdapter("app:showImage")
 fun showImage(imgView: ImageView, url: String?) {
-    Glide.with(imgView.context).load(url).into(imgView)
+    if (!url.isNullOrEmpty()) {
+        Glide.with(imgView.context).load(url).into(imgView)
+    }
 }
 /*
 @BindingAdapter("app:roundedImageSrc")

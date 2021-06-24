@@ -1,13 +1,19 @@
 package com.decathlon.core.player.data.source.room
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.decathlon.core.player.data.entity.PlayerEntity
 
 
-@Database(entities = [PlayerEntity::class], version = 1, exportSchema = false)
+@Database(
+    version = 1,
+    entities = [PlayerEntity::class],
+    exportSchema = false)
 abstract class PlayerDatabase : RoomDatabase() {
 
     abstract fun playerDao(): PlayerDao
@@ -23,10 +29,18 @@ abstract class PlayerDatabase : RoomDatabase() {
                     context.applicationContext,
                     PlayerDatabase::class.java,
                     PlayerDatabase::class.java.simpleName
-                ).build()
+                    /*).addMigrations(
+                        MIGRATION_1_2*/
+                    ).build()
                 INSTANCE = instance
                 instance
             }
         }
+
+        /*private val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("")
+            }
+        }*/
     }
 }

@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull
 @Entity(tableName = "player")
 data class PlayerEntity(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NotNull
     @ColumnInfo(name = "uid")
     var uid: Int,
@@ -27,7 +27,7 @@ data class PlayerEntity(
     var lastname: String,
 
     @ColumnInfo(name = "image")
-    var image: String
+    var image: String?
 
 ) : Parcelable {
     constructor(player: Player) :this(player.id, player.nickname, player.firstname, player.lastname, player.image)

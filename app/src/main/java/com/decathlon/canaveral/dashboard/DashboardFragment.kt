@@ -12,9 +12,11 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
+import com.decathlon.core.player.model.Player
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.get
 import timber.log.Timber
@@ -89,9 +91,10 @@ class DashboardFragment : Fragment() {
                 val variantSelected = variantField?.text.toString()
                 Toast.makeText(context, "$gameSelected : $variantSelected", Toast.LENGTH_SHORT)
                     .show()
+                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game)
             }
 
-            dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, Observer {
+            dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
                 Timber.d("Dashboard see %d players", it.size)
                 playerAdapter.setData(it)
                 versusField?.setText(versusMode[if (it.isEmpty()) 0 else (it.size-1)],false)

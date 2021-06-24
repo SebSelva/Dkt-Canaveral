@@ -6,9 +6,6 @@ import androidx.room.*
 interface BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg item: T)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: T): Long
 
     @Insert(onConflict = OnConflictStrategy.ABORT)

@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.DecathlonCanaveral" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_decat</item>
-        <item name="colorPrimaryVariant">@color/blue_decat</item>
+        <item name="colorPrimary">@color/blue_dkt</item>
+        <item name="colorPrimaryVariant">@color/blue_dkt</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -28,7 +28,7 @@
     </style>
 
     <style name="Dkt.TextStyle.BlueDecat" parent="Dkt.TextStyle">
-        <item name="android:textColor">@color/blue_decat</item>
+        <item name="android:textColor">@color/blue_dkt</item>
     </style>
 
     <style name="Dkt.TextStyle.Grey" parent="Dkt.TextStyle">

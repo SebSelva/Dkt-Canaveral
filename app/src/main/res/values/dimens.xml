@@ -2,4 +2,10 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="cardview_margin">8dp</dimen>
+
+    // Keyboard
+    <dimen name="keyboard_item_height">51dp</dimen>
+    <dimen name="keyboard_item_width">51dp</dimen>
+    <dimen name="keyboard_item_vertical_spacing">8dp</dimen>
+    <dimen name="keyboard_item_horizontal_spacing">18dp</dimen>
 </resources>

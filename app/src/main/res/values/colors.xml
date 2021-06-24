@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_decat">#0082C3</color>
+    <color name="blue_dkt">#0082C3</color>
+    <color name="blue_dkt_secondary">#0078b6</color>
     <color name="grey_light">#EAECEF</color>
+    <color name="grey_kb_background">#C7C7C7</color>
+    <color name="grey_kb_text">#ACACAC</color>
     <color name="grey_dark">#707070</color>
-    <color name="blue_profile_circle">#0078b6</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
