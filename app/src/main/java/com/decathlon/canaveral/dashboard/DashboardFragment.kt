@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -64,6 +65,12 @@ class DashboardFragment : Fragment() {
             gameField?.setOnTouchListener { _, _ ->
                 gameField.showDropDown()
                 true
+            }
+            if (gameType.size == 1) {
+                gameField?.apply {
+                    gameField.setTextColor(AppCompatResources.getColorStateList(context, R.color.grey_dark))
+                    gameField.isEnabled = false
+                }
             }
 
             // Game Variant selection
