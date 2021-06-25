@@ -68,10 +68,11 @@
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/input_versus"
-                        style="@style/Dkt.TextStyle.SpinnerText"
+                        style="@style/Dkt.TextStyle.SpinnerText.Disabled"
                         android:layout_width="match_parent"
                         android:layout_height="38dp"
                         android:background="@drawable/background_spinner"
+                        android:enabled="false"
                         tools:text="1 VS 1" />
 
                     <androidx.appcompat.widget.AppCompatTextView
