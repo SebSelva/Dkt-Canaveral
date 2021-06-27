@@ -31,9 +31,14 @@ class GameFragment : Fragment() {
 
         pointsRemainingView.setTextColor(AppCompatResources.getColorStateList(pointsRemainingView.context, R.color.blue_dkt_secondary))
 
-        val keyboardAdapter = KeyboardAdapter(view.context, isBullDoubled = true,
+        val keyboardAdapter = KeyboardAdapter(view.context,
             { value, multiple ->
-                val result = if (multiple != null) "$multiple$value" else "$value"
+                val result = if (value != 25) {
+                    if (multiple != null) "$multiple$value" else "$value"
+                } else {
+                    if (multiple != null) "$multiple-Bull" else "Bull"
+                }
+
                 Timber.d("Point to add : $result")
                 pointsRemainingView.text = result },
             {

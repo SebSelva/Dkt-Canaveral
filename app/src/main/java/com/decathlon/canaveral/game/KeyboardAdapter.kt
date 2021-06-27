@@ -15,7 +15,6 @@ import com.decathlon.canaveral.R as RApp
 import com.decathlon.core.R as RCore
 
 class KeyboardAdapter(private val context: Context,
-                      private val isBullDoubled: Boolean,
                       val onDartTouched: (Int?, String?) -> Unit,
                       val onDartTouchAborted: () -> Unit
                       ) : BaseAdapter()
@@ -102,7 +101,7 @@ class KeyboardAdapter(private val context: Context,
                 onDartTouched(TextUtils.getNumber(value), memoryKeyboardItem?.tag as String?)
             }
             value == mBullValue -> {
-                if ((memoryKeyboardItem?.tag != "T") && (isBullDoubled || memoryKeyboardItem?.tag != "D")) {
+                if (memoryKeyboardItem?.tag != "T") {
                     onDartTouched(25, memoryKeyboardItem?.tag as String?)
                     handleTouchFeedback(eventView)
                 }
