@@ -40,6 +40,11 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Dkt.TextStyle.SpinnerText.Disabled" parent="Dkt.TextStyle.Grey">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="Dkt.TextStyle.Label" parent="Dkt.TextStyle.Grey">
         <item name="android:textSize">13sp</item>
     </style>
