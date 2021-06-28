@@ -23,7 +23,7 @@ class Player (
         }
 
         override fun hashCode(): Int {
-                var result = id ?: 0
+                var result = id
                 result = 31 * result + nickname.hashCode()
                 result = 31 * result + firstname.hashCode()
                 result = 31 * result + lastname.hashCode()
