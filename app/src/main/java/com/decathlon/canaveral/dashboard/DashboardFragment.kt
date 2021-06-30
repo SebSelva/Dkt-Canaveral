@@ -83,42 +83,8 @@ class DashboardFragment : Fragment() {
             val detailBullField = view.findViewById<AutoCompleteTextView>(R.id.input_game_detail_bull)
             initSpinner(detailBullValues, detailBullField)
 
-            // Game details layout
-            val detailTitle = view.findViewById<LinearLayoutCompat>(R.id.game_details_title)
-            val detailLeftIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_left)
-            val detailRightIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_right)
-            val detailLayout = view.findViewById<LinearLayoutCompat>(R.id.game_details_layout)
-            var isDetailsVisible = false
-            detailLayout.animate().apply {
-                translationY(-detailLayout.height.toFloat())
-                alpha(0F)
-                detailLayout.isVisible = false
-            }
-
-            detailTitle.setOnClickListener {
-                val isOpened = detailLayout.isVisible
-                detailLeftIcon.rotation = if (isOpened) 0F else 90F
-                detailRightIcon.rotation = if (isOpened) 180F else 90F
-                if (isOpened) {
-                    detailLayout.animate().apply {
-                        translationY(-detailLayout.height.toFloat())
-                        alpha(0F)
-                    }
-                } else {
-                    detailLayout.isVisible = true
-                    detailLayout.animate().apply {
-                        translationY(0F)
-                        alpha(1F)
-                        setListener(object :AnimatorListenerAdapter() {
-                            override fun onAnimationEnd(animation: Animator?) {
-                                super.onAnimationEnd(animation)
-                                if (isDetailsVisible) detailLayout.isVisible = false
-                                isDetailsVisible = !isDetailsVisible
-                            }
-                        })
-                    }
-                }
-            }
+            // Game details layout animation
+            addGameDetailsAnimation(view)
 
             // Start button
             view.findViewById<Button>(R.id.start_btn).setOnClickListener {
@@ -149,6 +115,50 @@ class DashboardFragment : Fragment() {
         field?.setOnTouchListener { _, _ ->
             field.showDropDown()
             true
+        }
+    }
+
+    private fun addGameDetailsAnimation(view : View) {
+        val detailTitle = view.findViewById<LinearLayoutCompat>(R.id.game_details_title)
+        val detailLeftIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_left)
+        val detailRightIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_right)
+        val detailLayout = view.findViewById<LinearLayoutCompat>(R.id.game_details_layout)
+        var isDetailsVisible = false
+
+        // Init layout state
+        detailLayout.animate().apply {
+            duration = 700
+            translationY(-detailLayout.height.toFloat())
+            alpha(0F)
+            detailLayout.isVisible = false
+        }
+
+        // Layout animation
+        detailTitle.setOnClickListener {
+            val isOpened = detailLayout.isVisible
+            detailLeftIcon.rotation = if (isOpened) 0F else 90F
+            detailRightIcon.rotation = if (isOpened) 180F else 90F
+            if (isOpened) {
+                detailLayout.animate().apply {
+                    duration = 700
+                    translationY(-detailLayout.height.toFloat())
+                    alpha(0F)
+                }
+            } else {
+                detailLayout.isVisible = true
+                detailLayout.animate().apply {
+                    duration = 700
+                    translationY(0F)
+                    alpha(1F)
+                    setListener(object :AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            if (isDetailsVisible) detailLayout.isVisible = false
+                            isDetailsVisible = !isDetailsVisible
+                        }
+                    })
+                }
+            }
         }
     }
 }
