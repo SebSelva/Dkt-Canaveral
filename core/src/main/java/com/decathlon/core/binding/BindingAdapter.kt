@@ -10,8 +10,3 @@ fun showImage(imgView: ImageView, url: String?) {
         Glide.with(imgView.context).load(url).into(imgView)
     }
 }
-/*
-@BindingAdapter("app:roundedImageSrc")
-fun roundedImageSrc(imgView: ImageView, url: String?) {
-    Glide.with(imgView.context).load(url).optionalCircleCrop().into(imgView)
-}*/

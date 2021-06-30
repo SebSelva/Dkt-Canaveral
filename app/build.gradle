@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id "org.sonarqube" version "3.3"
 }
 
@@ -11,7 +12,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.decathlon.canavera"
+        applicationId "com.decathlon.canaveral"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
@@ -25,12 +26,22 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        applicationVariants.all { variant ->
+            if (variant.buildType.name == "debug") {
+                variant.outputs.all { output ->
+                    outputFileName = "${variant.applicationId}-${variant.versionName}($variant.versionCode).apk"
+                }
+            } else if(variant.buildType.name == "release") {
+                variant.outputs.all { output ->
+                    outputFileName = "${variant.applicationId}-${variant.versionName}.apk"
+                }
+            }
+        }
     }
 
     dataBinding {
         enabled = true
     }
-
 
     compileOptions {
         sourceCompatibility "1.8"
