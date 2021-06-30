@@ -15,6 +15,9 @@
     <string name="dashboard_select_game">Select Game</string>
     <string name="dashboard_select_variant">Select Variant</string>
     <string name="dashboard_game_details">Game Details</string>
+    <string name="dashboard_game_detail_in">In</string>
+    <string name="dashboard_game_detail_out">Out</string>
+    <string name="dashboard_game_detail_bull_value">Bull Value</string>
     <string name="dashboard_start">START</string>
 
 </resources>

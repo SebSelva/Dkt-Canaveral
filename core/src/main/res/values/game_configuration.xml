@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <integer name="player_max">4</integer>
+    
     <string-array name="game_type_array">
         <item>01 Game</item>
         <!--        <item>Cricket</item>-->
@@ -23,7 +26,16 @@
         <item>701</item>
         <item>901</item>
     </string-array>
+    
+    <string-array name="game_detail_inout_values">
+        <item>simple</item>
+        <item>double</item>
+        <item>master</item>
+    </string-array>
 
-    <integer name="player_max">4</integer>
+    <string-array name="game_detail_bull_values">
+        <item>25/50</item>
+        <item>50/50</item>
+    </string-array>
 
 </resources>
