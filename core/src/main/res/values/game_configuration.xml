@@ -28,9 +28,9 @@
     </string-array>
     
     <string-array name="game_detail_inout_values">
-        <item>simple</item>
-        <item>double</item>
-        <item>master</item>
+        <item>Simple</item>
+        <item>Double</item>
+        <item>Master</item>
     </string-array>
 
     <string-array name="game_detail_bull_values">

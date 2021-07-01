@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
-            android:layout_marginStart="@dimen/cardview_margin"
-            android:layout_marginEnd="@dimen/cardview_margin"
+            android:layout_marginStart="@dimen/cardview_margin_side"
+            android:layout_marginEnd="@dimen/cardview_margin_side"
             android:background="@color/white"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
@@ -29,17 +29,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="24dp"
-                android:paddingBottom="24dp"
+                android:paddingTop="@dimen/cardview_padding"
+                android:paddingBottom="@dimen/cardview_padding"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Dkt.TextStyle.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginEnd="52dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="@dimen/cardview_padding_side"
+                    android:layout_marginEnd="@dimen/cardview_padding_side"
+                    android:layout_marginBottom="@dimen/margin_medium"
                     android:text="@string/dashboard_select_players" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -55,10 +55,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginEnd="52dp"
-                    android:orientation="vertical"
-                    android:elevation="1dp">
+                    android:layout_marginStart="@dimen/cardview_padding_side"
+                    android:layout_marginEnd="@dimen/cardview_padding_side"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/game_details_layout"
@@ -79,23 +78,24 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="@dimen/margin_xxlarge"
                                 android:orientation="vertical">
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/Dkt.TextStyle.Label"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="13dp"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                    android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                     android:text="@string/dashboard_game_detail_in" />
 
                                 <AutoCompleteTextView
                                     android:id="@+id/input_game_detail_in"
                                     style="@style/Dkt.TextStyle.SpinnerText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="38dp"
+                                    android:layout_height="@dimen/spinner_height"
                                     android:background="@drawable/background_spinner"
+                                    android:enabled="false"
                                     tools:text="Simple"/>
 
                             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -110,15 +110,16 @@
                                     style="@style/Dkt.TextStyle.Label"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="13dp"
-                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                    android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                     android:text="@string/dashboard_game_detail_out" />
 
                                 <AutoCompleteTextView
                                     android:id="@+id/input_game_detail_out"
                                     style="@style/Dkt.TextStyle.SpinnerText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="38dp"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:enabled="false"
                                     android:background="@drawable/background_spinner"
                                     tools:text="Master"/>
 
@@ -130,15 +131,16 @@
                             style="@style/Dkt.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                             android:text="@string/dashboard_game_detail_bull_value" />
 
                         <AutoCompleteTextView
                             android:id="@+id/input_game_detail_bull"
                             style="@style/Dkt.TextStyle.SpinnerText"
                             android:layout_width="match_parent"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/spinner_height"
+                            android:enabled="false"
                             android:background="@drawable/background_spinner"
                             tools:text="25/50"/>
 
@@ -159,15 +161,15 @@
                             style="@style/Dkt.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                             android:text="@string/dashboard_select_versus"/>
 
                         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                             android:id="@+id/input_versus"
-                            style="@style/Dkt.TextStyle.SpinnerText.Disabled"
+                            style="@style/Dkt.TextStyle.SpinnerText"
                             android:layout_width="match_parent"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/spinner_height"
                             android:background="@drawable/background_spinner"
                             android:enabled="false"
                             tools:text="1 VS 1"
@@ -179,8 +181,8 @@
                             style="@style/Dkt.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                             android:text="@string/dashboard_select_game"
                             app:layout_constraintTop_toBottomOf="@id/input_versus"
                             app:layout_constraintLeft_toLeftOf="parent" />
@@ -189,7 +191,7 @@
                             android:id="@+id/input_game"
                             style="@style/Dkt.TextStyle.SpinnerText"
                             android:layout_width="match_parent"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/spinner_height"
                             android:background="@drawable/background_spinner"
                             tools:text="01 Game"
                             app:layout_constraintTop_toBottomOf="@id/input_game_label"
@@ -200,8 +202,8 @@
                             style="@style/Dkt.TextStyle.Label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="13dp"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                             android:text="@string/dashboard_select_variant"
                             app:layout_constraintTop_toBottomOf="@id/input_game"
                             app:layout_constraintLeft_toLeftOf="parent" />
@@ -210,7 +212,7 @@
                             android:id="@+id/input_variant"
                             style="@style/Dkt.TextStyle.SpinnerText"
                             android:layout_width="match_parent"
-                            android:layout_height="38dp"
+                            android:layout_height="@dimen/spinner_height"
                             android:background="@drawable/background_spinner"
                             app:layout_constraintTop_toBottomOf="@id/input_variant_label"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -221,8 +223,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="24dp"
-                            android:layout_marginBottom="12dp"
+                            android:layout_marginTop="@dimen/margin_xxlarge"
+                            android:layout_marginBottom="@dimen/margin_large"
                             android:orientation="horizontal"
                             app:layout_constraintTop_toBottomOf="@id/input_variant"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -234,7 +236,7 @@
                                 android:layout_height="match_parent"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
-                                android:layout_marginEnd="12dp"
+                                android:layout_marginEnd="@dimen/margin_large"
                                 android:src="@drawable/ic_game_details_left" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -249,15 +251,13 @@
                                 android:layout_height="match_parent"
                                 android:paddingStart="6dp"
                                 android:paddingEnd="6dp"
-                                android:layout_marginStart="12dp"
+                                android:layout_marginStart="@dimen/margin_large"
                                 android:rotation="180"
                                 android:src="@drawable/ic_game_details_left" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,11 +1,29 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    // Integer values
+    <integer name="dropdown_menu_vertical_offset">4</integer>
+    <integer name="animation_duration">400</integer>
 
-    <dimen name="cardview_margin">8dp</dimen>
+    // Dimension values
+    /// Default
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">12dp</dimen>
+    <dimen name="margin_xlarge">18dp</dimen>
+    <dimen name="margin_xxlarge">24dp</dimen>
 
-    // Keyboard
+    /// Cardview
+    <dimen name="cardview_margin_side">@dimen/margin_medium</dimen>
+    <dimen name="cardview_padding">@dimen/margin_xxlarge</dimen>
+    <dimen name="cardview_padding_side">52dp</dimen>
+
+    /// Spinner or AutoCompleteTextView
+    <dimen name="spinner_label_marginTop">@dimen/margin_large</dimen>
+    <dimen name="spinner_label_marginBottom">@dimen/margin_small</dimen>
+    <dimen name="spinner_height">38dp</dimen>
+
+    /// Keyboard
     <dimen name="keyboard_item_height">51dp</dimen>
     <dimen name="keyboard_item_width">51dp</dimen>
-    <dimen name="keyboard_item_vertical_spacing">8dp</dimen>
-    <dimen name="keyboard_item_horizontal_spacing">18dp</dimen>
+    <dimen name="keyboard_item_vertical_spacing">@dimen/margin_medium</dimen>
+    <dimen name="keyboard_item_horizontal_spacing">@dimen/margin_xlarge</dimen>
 </resources>
