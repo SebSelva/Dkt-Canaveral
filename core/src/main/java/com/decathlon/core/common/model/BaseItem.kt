@@ -1,4 +1,4 @@
-package com.decathlon.core.player.model
+package com.decathlon.core.common.model
 
 import android.os.Parcelable
 

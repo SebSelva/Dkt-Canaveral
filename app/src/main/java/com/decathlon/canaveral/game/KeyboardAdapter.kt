@@ -10,24 +10,25 @@ import android.widget.BaseAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
 import com.decathlon.canaveral.common.TextUtils
+import com.decathlon.core.game.model.Point
 import kotlinx.coroutines.*
 import com.decathlon.canaveral.R as RApp
 import com.decathlon.core.R as RCore
 
 class KeyboardAdapter(private val context: Context,
-                      val onDartTouched: (Int?, String?) -> Unit,
+                      val onDartTouched: (Point) -> Unit,
                       val onDartTouchAborted: () -> Unit
                       ) : BaseAdapter()
 {
+    private val keyboardItems : List<String> = context.resources.getStringArray(RCore.array.keyboard_items).asList()
 
-    companion object {
-        const val mBullValue = "Bull"
-        const val mBackValue = "Back"
-        const val mMissValue = "Miss"
-    }
+    private val mBullValue = context.resources.getString(RApp.string.game_bull)
+    private val mBackValue = context.resources.getString(RApp.string.game_back)
+    private val mMissValue = context.resources.getString(RApp.string.game_miss)
+    private val mDoubleValue = context.resources.getString(RApp.string.game_double)
+    private val mTripleValue = context.resources.getString(RApp.string.game_triple)
 
-    var keyboardItems : List<String> = context.resources.getStringArray(RCore.array.keyboard_items).asList()
-    var memoryKeyboardItem :AppCompatTextView? = null
+    private var memoryKeyboardItem :AppCompatTextView? = null
 
     override fun getCount(): Int = keyboardItems.size
 
@@ -95,19 +96,21 @@ class KeyboardAdapter(private val context: Context,
 
     private fun onDartEvent(eventView: AppCompatTextView) {
         val value = eventView.tag as String
+        val isDoubled = memoryKeyboardItem?.tag == mDoubleValue
+        val isTripled = memoryKeyboardItem?.tag == mTripleValue
         when {
             TextUtils.isNumber(value) -> {
                 handleTouchFeedback(eventView)
-                onDartTouched(TextUtils.getNumber(value), memoryKeyboardItem?.tag as String?)
+                onDartTouched(Point(value, isDoubled, isTripled))
             }
             value == mBullValue -> {
-                if (memoryKeyboardItem?.tag != "T") {
-                    onDartTouched(25, memoryKeyboardItem?.tag as String?)
+                if (memoryKeyboardItem?.tag != mTripleValue) {
+                    onDartTouched(Point(mBullValue, isDoubled, isTripled = false))
                     handleTouchFeedback(eventView)
                 }
             }
             value == mMissValue -> {
-                onDartTouched(0, null)
+                onDartTouched(Point(mMissValue, isDoubled = false, isTripled = false))
                 handleTouchFeedback(eventView)
             }
             value == mBackValue -> {

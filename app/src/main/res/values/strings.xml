@@ -9,7 +9,7 @@
     <string name="image_description">image</string>
     <string name="add">add</string>
 
-    // Dashboard strings
+    // Dashboard
     <string name="dashboard_select_players">Select Players</string>
     <string name="dashboard_select_versus">Select Versus</string>
     <string name="dashboard_select_game">Select Game</string>
@@ -19,5 +19,13 @@
     <string name="dashboard_game_detail_out">Out</string>
     <string name="dashboard_game_detail_bull_value">Bull Value</string>
     <string name="dashboard_start">START</string>
+
+    // Game
+    <string name="game_bull">Bull</string>
+    <string name="game_miss">Miss</string>
+    <string name="game_back">Back</string>
+    <string name="game_double">D</string>
+    <string name="game_triple">T</string>
+    <string name="player_remain_point">-</string>
 
 </resources>
