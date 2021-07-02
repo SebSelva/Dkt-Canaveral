@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.databinding.ItemListButtonBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerBinding
-import com.decathlon.core.player.model.BaseItem
+import com.decathlon.core.common.model.BaseItem
 import com.decathlon.core.player.model.Button
 import com.decathlon.core.player.model.Player
 
@@ -114,29 +113,29 @@ class PlayerAdapter(val maxPlayers :Int,
     }
 
 
-   inner class PlayerViewHolder(private var binding: ItemListPlayerBinding) :
-       BaseViewHolder<Player>(binding.root) {
+    inner class PlayerViewHolder(private var binding: ItemListPlayerBinding) :
+        BaseViewHolder<Player>(binding.root) {
 
-           override fun bind(item: Player) {
-               binding.player = item
-               // remove button
-               if (position == 0) {
-                   binding.btnRemovePlayer.visibility = View.GONE
-               }
+        override fun bind(item: Player) {
+            binding.player = item
+            // remove button
+            if (position == 0) {
+                binding.btnRemovePlayer.visibility = View.GONE
+            }
 
-               binding.btnRemovePlayer.setOnClickListener {
-                   notifyItemRemoved(adapterPosition)
-                   listData.remove(item)
-                   delClickListener.invoke(item)
+            binding.btnRemovePlayer.setOnClickListener {
+                notifyItemRemoved(adapterPosition)
+                listData.remove(item)
+                delClickListener.invoke(item)
 
-                   if (itemCount == maxPlayers - 1 && listData.last() !is Button) {
-                       listData.add(Button(maxPlayers, ""))
-                           notifyItemInserted(itemCount)
-                   }
-               }
-               binding.executePendingBindings()
-           }
-   }
+                if (itemCount == maxPlayers - 1 && listData.last() !is Button) {
+                    listData.add(Button(maxPlayers, ""))
+                    notifyItemInserted(itemCount)
+                }
+            }
+            binding.executePendingBindings()
+        }
+    }
 
     class DiffCallback : DiffUtil.ItemCallback<Player>() {
         override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {

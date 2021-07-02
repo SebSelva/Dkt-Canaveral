@@ -1,4 +1,4 @@
-package com.decathlon.core.player.data.source.room
+package com.decathlon.core.common.data.source.room
 
 import androidx.room.*
 

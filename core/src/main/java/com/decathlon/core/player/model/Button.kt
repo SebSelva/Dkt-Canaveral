@@ -1,5 +1,6 @@
 package com.decathlon.core.player.model
 
+import com.decathlon.core.common.model.BaseItem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

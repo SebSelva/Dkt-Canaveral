@@ -1,6 +1,7 @@
 package com.decathlon.core.player.data.source.room
 
 import androidx.room.*
+import com.decathlon.core.common.data.source.room.BaseDao
 import com.decathlon.core.player.data.entity.PlayerEntity
 import kotlinx.coroutines.flow.Flow
 

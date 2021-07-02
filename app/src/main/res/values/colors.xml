@@ -15,5 +15,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="dashboard_background_color">@color/teal_700</color>
+    <color name="dashboard_background_color">@color/white</color>
+    <color name="separator_line">#D5D5D5</color>
 </resources>

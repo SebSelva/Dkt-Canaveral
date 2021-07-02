@@ -1,5 +1,6 @@
 package com.decathlon.core.player.model
 
+import com.decathlon.core.common.model.BaseItem
 import com.decathlon.core.player.data.entity.PlayerEntity
 import kotlinx.android.parcel.Parcelize
 
@@ -18,7 +19,7 @@ class Player (
         override fun equals(other: Any?): Boolean {
                 if (other !is Player) return false
                 if (other.id != this.id) return false
-                if (!other.nickname.equals(this.nickname)) return false
+                if (other.nickname != this.nickname) return false
                 return true
         }
 
