@@ -50,12 +50,7 @@ class DashboardFragment : Fragment() {
             val gameType = resources.getStringArray(R.array.game_type_array)
             val gameField = view.findViewById<AutoCompleteTextView>(R.id.input_game)
             initSpinner(gameType, gameField)
-            if (gameType.size == 1) {
-                gameField?.apply {
-                    gameField.setTextColor(AppCompatResources.getColorStateList(context, R.color.grey_dark))
-                    gameField.isEnabled = false
-                }
-            }
+            gameField?.isEnabled = gameType.size > 1
 
             // Game Variant selection
             val gameVariant = resources.getStringArray(R.array.zero_game_type_array)
@@ -111,7 +106,7 @@ class DashboardFragment : Fragment() {
         field?.setAdapter(ArrayAdapter(requireContext(),
             R.layout.list_textview_item, array))
         field?.setText(array[0],false)
-        field?.dropDownVerticalOffset = 4
+        field?.dropDownVerticalOffset = resources.getInteger(R.integer.dropdown_menu_vertical_offset)
         field?.setOnTouchListener { _, _ ->
             field.showDropDown()
             true
@@ -123,11 +118,11 @@ class DashboardFragment : Fragment() {
         val detailLeftIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_left)
         val detailRightIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_right)
         val detailLayout = view.findViewById<LinearLayoutCompat>(R.id.game_details_layout)
-        var isDetailsVisible = false
+        val animationDuration = resources.getInteger(R.integer.animation_duration).toLong()
 
         // Init layout state
         detailLayout.animate().apply {
-            duration = 700
+            duration = animationDuration
             translationY(-detailLayout.height.toFloat())
             alpha(0F)
             detailLayout.isVisible = false
@@ -140,23 +135,23 @@ class DashboardFragment : Fragment() {
             detailRightIcon.rotation = if (isOpened) 180F else 90F
             if (isOpened) {
                 detailLayout.animate().apply {
-                    duration = 700
+                    duration = animationDuration
                     translationY(-detailLayout.height.toFloat())
                     alpha(0F)
+                    setListener(object :AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            detailLayout.isVisible = false
+                        }
+                    })
                 }
             } else {
                 detailLayout.isVisible = true
                 detailLayout.animate().apply {
-                    duration = 700
+                    duration = animationDuration
                     translationY(0F)
                     alpha(1F)
-                    setListener(object :AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            super.onAnimationEnd(animation)
-                            if (isDetailsVisible) detailLayout.isVisible = false
-                            isDetailsVisible = !isDetailsVisible
-                        }
-                    })
+                    setListener(null)
                 }
             }
         }
