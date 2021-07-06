@@ -13,7 +13,7 @@ class DashboardViewModel (private val interactors: Interactors) : CanaveralViewM
 
     val playerLiveData : MutableLiveData<List<Player>> = MutableLiveData()
 
-    fun getPlayers() = GlobalScope.launch(Dispatchers.IO) {
+    fun getPlayers() = viewModelScope.launch(Dispatchers.IO) {
         interactors.getPlayers().collect {
             playerLiveData.postValue(it)
         }

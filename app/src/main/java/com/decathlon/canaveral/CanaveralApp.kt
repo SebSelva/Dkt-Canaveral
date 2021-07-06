@@ -31,15 +31,15 @@ class CanaveralApp : Application() {
         }
     }
 
-    val repositoriesModule = module {
+    private val repositoriesModule = module {
         single { PlayerRepository(RoomPlayerDataSource(context = this@CanaveralApp)) }
     }
 
-    val viewModelsModule = module {
+    private val viewModelsModule = module {
         viewModel { DashboardViewModel(get()) }
     }
 
-    val interactorsModule = module {
+    private val interactorsModule = module {
         factory {
             Interactors(
                 GetPlayers(get()),

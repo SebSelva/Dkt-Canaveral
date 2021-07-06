@@ -1,7 +1,7 @@
 package com.decathlon.core.player.model
 
 import com.decathlon.core.common.model.BaseItem
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Button (

@@ -2,7 +2,7 @@ package com.decathlon.core.player.model
 
 import com.decathlon.core.common.model.BaseItem
 import com.decathlon.core.player.data.entity.PlayerEntity
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Player (
