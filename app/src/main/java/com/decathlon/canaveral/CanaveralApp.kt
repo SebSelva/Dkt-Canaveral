@@ -2,6 +2,7 @@ package com.decathlon.canaveral;
 
 import android.app.Application
 import com.decathlon.canaveral.dashboard.DashboardViewModel
+import com.decathlon.canaveral.game.Game01ViewModel
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import com.decathlon.core.player.interactors.AddPlayer
@@ -37,6 +38,7 @@ class CanaveralApp : Application() {
 
     private val viewModelsModule = module {
         viewModel { DashboardViewModel(get()) }
+        viewModel { Game01ViewModel() }
     }
 
     private val interactorsModule = module {

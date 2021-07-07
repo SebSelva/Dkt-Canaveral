@@ -8,14 +8,26 @@ import android.view.ViewGroup
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.DartsUtils
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IN
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_OUT
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_SELECTED
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
+import com.decathlon.core.player.model.Player
+import org.koin.android.ext.android.get
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class GameFragment : Fragment() {
+
+    val game01ViewModel: Game01ViewModel = get()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +39,31 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val bundleReceived = activity?.intent?.extras
+        val gameVariant: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_VARIANT)
+        val detailIn: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_DETAIL_IN)
+        val detailOut: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_DETAIL_OUT)
+        val isBull25: Boolean? = bundleReceived?.getBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, true)
+        val players: List<Player>? = bundleReceived?.getParcelableArrayList(BUNDLE_KEY_PLAYERS)
+
+        if (players != null && gameVariant != null) {
+            game01ViewModel.setPlayers(players)
+            game01ViewModel.variant = resources.getStringArray(R.array.zero_game_type_array)[gameVariant].toInt()
+        } else {
+            activity?.finish()
+        }
+
+        // Player name
+        val playerName = view.findViewById<AppCompatTextView>(R.id.player_name)
+        if (game01ViewModel.getCurrentPlayer() == null) {
+            game01ViewModel.selectNextPlayer()
+        }
+        playerName.text = game01ViewModel.getCurrentPlayer()?.nickname
+
         // Player points remaining
         val pointsRemainingView = view.findViewById<AppCompatTextView>(R.id.player_points_remaining)
         pointsRemainingView.typeface = Typeface.createFromAsset(view.context.assets, "klavika-bold-italic.otf")
-        pointsRemainingView.text = "301"
+        pointsRemainingView.text = game01ViewModel.variant.toString()
 
         // Player darts points
         val playerDartsPointsRecycler = view.findViewById<RecyclerView>(R.id.player_darts_points)
@@ -46,8 +79,10 @@ class GameFragment : Fragment() {
         // Keyboard
         val keyboardView = view.findViewById<GridView>(R.id.keyboard_dkt)
         val keyboardAdapter = KeyboardAdapter(view.context,
-            { point -> playerPointsAdapter.addData(point) },
-            { playerPointsAdapter.removeLast() })
+            { point ->
+                playerPointsAdapter.addData(point)
+                game01ViewModel.addPlayerPoint(point)
+            }, { playerPointsAdapter.removeLast() })
         keyboardView.adapter = keyboardAdapter
     }
 }
