@@ -12,7 +12,7 @@ class Game01ViewModel : BaseViewModel() {
     var variant: Int? = null
 
     private var players: List<Player> = emptyList()
-    private var playersPoints: Stack<PlayerPoint>? = null
+    private var playersPoints: Stack<PlayerPoint>? = Stack()
 
     private var currentPlayer: Player? = null
 
