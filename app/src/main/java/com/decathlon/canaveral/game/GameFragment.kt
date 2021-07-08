@@ -51,10 +51,6 @@ class GameFragment : Fragment() {
 
         // Player name
         val playerName = view.findViewById<AppCompatTextView>(R.id.player_name)
-        if (game01ViewModel.getCurrentPlayer() == null) {
-            game01ViewModel.selectNextPlayer()
-        }
-        playerName.text = game01ViewModel.getCurrentPlayer()?.nickname
 
         // Player points remaining
         val pointsRemainingView = view.findViewById<AppCompatTextView>(R.id.player_points_remaining)
@@ -78,12 +74,29 @@ class GameFragment : Fragment() {
             { point ->
                 playerPointsAdapter.addData(point)
                 game01ViewModel.addPlayerPoint(point)
-            }, { playerPointsAdapter.removeLast() })
+            }, {
+                playerPointsAdapter.removeLast()
+                game01ViewModel.removeLastPlayerPoint()
+            })
         keyboardView.adapter = keyboardAdapter
 
         // ViewModel observers
-        game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            pointsRemainingView.text = (startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.getCurrentPlayer()!!, it)).toString())
+        game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
+            playerName.text = it?.nickname
+            pointsRemainingView.text =
+                startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, it, game01ViewModel.playersPointsLivedata.value))
+                    .toString()
         })
+        game01ViewModel.getCurrentPlayer()
+        game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
+            pointsRemainingView.text = (startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.currentPlayerLiveData.value!!, it)).toString())
+            if (DartsUtils.isPlayerRoundComplete(it)) {
+                playerPointsAdapter.setData(emptyList())
+                game01ViewModel.selectNextPlayer()
+            } else {
+                playerPointsAdapter.setData(DartsUtils.getPlayerLastPoints(it))
+            }
+        })
+        game01ViewModel.getPlayersPoints()
     }
 }

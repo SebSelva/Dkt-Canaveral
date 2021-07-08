@@ -55,5 +55,35 @@ class DartsUtils {
             }
             return score
         }
+
+        fun getPlayerLastPoints(stackPoints: Stack<PlayerPoint>?): List<Point> {
+            var lastPoints = ArrayList<Point>()
+            if (stackPoints?.isNotEmpty() == true) {
+                val lastPlayer = stackPoints.peek().player
+                for (playerPoint in stackPoints) {
+                    if (playerPoint.player == lastPlayer) {
+                        lastPoints.add(playerPoint.point)
+                    } else {
+                        lastPoints.clear()
+                    }
+                }
+            }
+            return lastPoints
+        }
+
+        fun isPlayerRoundComplete(stack: Stack<PlayerPoint>): Boolean {
+            if (stack.size > 2) {
+                val last3Darts = stack.subList(stack.size-3, stack.size)
+                if (!last3Darts.isNullOrEmpty()) {
+                    var player: Player? = null
+                    for (playerPoint in last3Darts) {
+                        if (player == null) player = playerPoint.player
+                        else if (player != playerPoint.player) return false
+                    }
+                    return true
+                }
+            }
+            return false
+        }
     }
 }

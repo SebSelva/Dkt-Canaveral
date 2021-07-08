@@ -16,7 +16,8 @@ class Game01ViewModel : BaseViewModel() {
 
     private var currentPlayer: Player? = null
 
-    val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>?> = MutableLiveData()
+    val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
+    val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
 
     fun setPlayers(playersList: List<Player>) {
         players = playersList
@@ -28,21 +29,31 @@ class Game01ViewModel : BaseViewModel() {
     }
 
     fun removeLastPlayerPoint() {
-        playersPoints?.pop()
+        if (playersPoints?.isNotEmpty() == true) {
+            playersPoints?.pop()
+            if (playersPoints?.isNotEmpty() == true && currentPlayer != playersPoints?.peek()?.player) {
+                currentPlayer = playersPoints?.peek()?.player
+                currentPlayerLiveData.postValue(currentPlayer)
+            }
+        }
         playersPointsLivedata.postValue(playersPoints)
     }
 
-    fun getCurrentPlayer(): Player? {
-        return currentPlayer
+    fun getCurrentPlayer() {
+        if (currentPlayer == null) {
+            selectNextPlayer()
+        } else {
+            currentPlayerLiveData.postValue(currentPlayer)
+        }
     }
 
-    fun selectNextPlayer(): Player {
+    fun selectNextPlayer() {
         currentPlayer = if (currentPlayer == null) {
             players.first()
         } else {
             players[(players.indexOf(currentPlayer)+1) % players.size]
         }
-        return currentPlayer!!
+        currentPlayerLiveData.postValue(currentPlayer)
     }
 
     fun getPlayersPoints() {
