@@ -27,7 +27,7 @@ import org.koin.android.ext.android.get
  */
 class GameFragment : Fragment() {
 
-    val game01ViewModel: Game01ViewModel = get()
+    private val game01ViewModel: Game01ViewModel = get()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +41,6 @@ class GameFragment : Fragment() {
 
         val bundleReceived = activity?.intent?.extras
         val gameVariant: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_VARIANT)
-        val detailIn: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_DETAIL_IN)
-        val detailOut: Int? = bundleReceived?.getInt(BUNDLE_KEY_GAME_DETAIL_OUT)
-        val isBull25: Boolean? = bundleReceived?.getBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, true)
         val players: List<Player>? = bundleReceived?.getParcelableArrayList(BUNDLE_KEY_PLAYERS)
 
         if (players != null && gameVariant != null) {
