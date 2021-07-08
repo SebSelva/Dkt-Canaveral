@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
@@ -16,6 +18,10 @@ import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAI
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import com.decathlon.core.player.model.Player
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 
 /**
@@ -65,8 +71,10 @@ class GameFragment : Fragment() {
         playerPointsAdapter.setData(emptyList())
 
         // Players waiting
-        // val playersWaiting = view.findViewById<RecyclerView>(R.id.players_waiting)
-
+        val playersWaitingRecycler = view.findViewById<RecyclerView>(R.id.players_waiting)
+        playersWaitingRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val playersWaitingAdapter = PlayersWaitingAdapter(startingPoints, isBull25 == true)
+        playersWaitingRecycler.adapter = playersWaitingAdapter
 
         // Keyboard
         val keyboardView = view.findViewById<GridView>(R.id.keyboard_dkt)
@@ -86,13 +94,22 @@ class GameFragment : Fragment() {
             pointsRemainingView.text =
                 startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, it, game01ViewModel.playersPointsLivedata.value))
                     .toString()
+
+            val playersWaiting = players?.toMutableList()
+            playersWaiting?.remove(it)
+            if (playersWaiting != null) {
+                playersWaitingAdapter.setData(playersWaiting, game01ViewModel.playersPointsLivedata.value)
+            }
         })
         game01ViewModel.getCurrentPlayer()
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
             pointsRemainingView.text = (startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.currentPlayerLiveData.value!!, it)).toString())
             if (DartsUtils.isPlayerRoundComplete(it)) {
-                playerPointsAdapter.setData(emptyList())
-                game01ViewModel.selectNextPlayer()
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    delay(1200)
+                    playerPointsAdapter.setData(emptyList())
+                    game01ViewModel.selectNextPlayer()
+                }
             } else {
                 playerPointsAdapter.setData(DartsUtils.getPlayerLastPoints(it))
             }
