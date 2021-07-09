@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // Game types
+    <string name="game_type_01_game">01 Game</string>
+    <string name="game_type_cricket">Cricket</string>
+    <string name="game_type_count_up">Count up</string>
+    <string name="game_type_bull_hunter">Bull hunter</string>
+    <string name="game_type_shangai">Shanghai</string>
+    <string name="game_type_around_a_clock">Around a Clock</string>
+    <string name="game_type_killer">Killer</string>
+
+</resources>

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
-import com.decathlon.canaveral.common.TextUtils
+import androidx.core.text.isDigitsOnly
 import com.decathlon.core.game.model.Point
 import kotlinx.coroutines.*
 import com.decathlon.canaveral.R as RApp
@@ -99,7 +99,7 @@ class KeyboardAdapter(private val context: Context,
         val isDoubled = memoryKeyboardItem?.tag == mDoubleValue
         val isTripled = memoryKeyboardItem?.tag == mTripleValue
         when {
-            TextUtils.isNumber(value) -> {
+            value.isDigitsOnly() -> {
                 handleTouchFeedback(eventView)
                 onDartTouched(Point(value, isDoubled, isTripled))
             }

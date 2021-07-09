@@ -17,6 +17,12 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IN
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_OUT
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_SELECTED
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
+import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import org.koin.android.ext.android.get
 import timber.log.Timber
 
@@ -83,18 +89,23 @@ class DashboardFragment : Fragment() {
 
             // Start button
             view.findViewById<Button>(R.id.start_btn).setOnClickListener {
-                val gameSelected = gameField?.text.toString()
-                val variantSelected = variantField?.text.toString()
-                Toast.makeText(context, "$gameSelected : $variantSelected", Toast.LENGTH_SHORT)
-                    .show()
-                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game)
+                val bundle = Bundle()
+
+                bundle.putInt(BUNDLE_KEY_GAME_SELECTED, gameType.indexOf(gameField.text.toString()))
+                bundle.putInt(BUNDLE_KEY_GAME_VARIANT, gameVariant.indexOf(variantField.text.toString()))
+                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_IN, gameDetailsInOut.indexOf(detailInField.text.toString()))
+                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_OUT, gameDetailsInOut.indexOf(detailOutField.text.toString()))
+                bundle.putBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, detailBullValues.indexOf(detailBullField.text.toString()) == 0)
+                bundle.putParcelableArrayList(BUNDLE_KEY_PLAYERS, ArrayList(dashboardViewModel.playerLiveData.value))
+
+                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game, bundle)
             }
 
             // Data launch
             dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
-                Timber.d("Dashboard see %d players", it.size)
                 playerAdapter.setData(it)
-                versusField?.setText(versusMode[if (it.isEmpty()) 0 else (it.size-1)],false)
+                val versusIndex = if (it.isEmpty()) 0 else (it.size-1)
+                versusField?.setText(versusMode[versusIndex],false)
             })
             dashboardViewModel.getPlayers()
         }
