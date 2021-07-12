@@ -1,13 +1,18 @@
 package com.decathlon.canaveral.game
 
+import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -101,10 +106,12 @@ class GameFragment : Fragment() {
         })
         game01ViewModel.getCurrentPlayer()
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            pointsRemainingView.text = (startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.currentPlayerLiveData.value!!, it)).toString())
+            startScoreAnimation(pointsRemainingView,
+                (pointsRemainingView.text as String).toInt(),
+                startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.currentPlayerLiveData.value!!, it)))
             if (DartsUtils.isPlayerRoundComplete(it) && game01ViewModel.isStackIncreasing) {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    delay(1200)
+                    delay(2200)
                     playerPointsAdapter.setData(emptyList())
                     game01ViewModel.selectNextPlayer()
                 }
@@ -113,5 +120,16 @@ class GameFragment : Fragment() {
             }
         })
         game01ViewModel.getPlayersPoints()
+    }
+
+    @SuppressLint("Recycle")
+    private fun startScoreAnimation(textView: AppCompatTextView, start: Int, end: Int) {
+        val valueAnimator = ValueAnimator.ofInt(start, end)
+        valueAnimator.duration = 1000
+        valueAnimator.interpolator = LinearOutSlowInInterpolator()
+        valueAnimator.addUpdateListener {
+            textView.text = it.animatedValue.toString()
+        }
+        valueAnimator.start()
     }
 }
