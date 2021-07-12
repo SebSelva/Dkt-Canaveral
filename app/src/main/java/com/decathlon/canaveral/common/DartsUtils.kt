@@ -56,12 +56,11 @@ class DartsUtils {
             return score
         }
 
-        fun getPlayerLastPoints(stackPoints: Stack<PlayerPoint>?): List<Point> {
+        fun getPlayerLastDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<Point> {
             var lastPoints = ArrayList<Point>()
             if (stackPoints?.isNotEmpty() == true) {
-                val lastPlayer = stackPoints.peek().player
                 for (playerPoint in stackPoints) {
-                    if (playerPoint.player == lastPlayer) {
+                    if (playerPoint.player == currentPlayer) {
                         lastPoints.add(playerPoint.point)
                     } else {
                         lastPoints.clear()

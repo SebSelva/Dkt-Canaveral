@@ -1,10 +1,13 @@
 package com.decathlon.canaveral.game
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.core.game.model.PlayerPoint
 import com.decathlon.core.game.model.Point
 import com.decathlon.core.player.model.Player
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class Game01ViewModel : BaseViewModel() {
@@ -16,6 +19,7 @@ class Game01ViewModel : BaseViewModel() {
 
     private var currentPlayer: Player? = null
 
+    var isStackIncreasing: Boolean = true
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
 
@@ -24,16 +28,24 @@ class Game01ViewModel : BaseViewModel() {
     }
 
     fun addPlayerPoint(point: Point) {
+        isStackIncreasing = true
         playersPoints?.push(currentPlayer?.let { PlayerPoint(it,point) })
         playersPointsLivedata.postValue(playersPoints)
     }
 
     fun removeLastPlayerPoint() {
+        isStackIncreasing = false
         if (playersPoints?.isNotEmpty() == true) {
-            playersPoints?.pop()
-            if (playersPoints?.isNotEmpty() == true && currentPlayer != playersPoints?.peek()?.player) {
+            if (currentPlayer != playersPoints?.peek()?.player) {
                 currentPlayer = playersPoints?.peek()?.player
                 currentPlayerLiveData.postValue(currentPlayer)
+                viewModelScope.launch {
+                    delay(1200)
+                    playersPoints?.pop()
+                    playersPointsLivedata.postValue(playersPoints)
+                }
+            } else {
+                playersPoints?.pop()
             }
         }
         playersPointsLivedata.postValue(playersPoints)
