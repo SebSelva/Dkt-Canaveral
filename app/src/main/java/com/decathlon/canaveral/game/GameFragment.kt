@@ -1,6 +1,5 @@
 package com.decathlon.canaveral.game
 
-import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.Typeface
@@ -8,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
@@ -22,10 +20,10 @@ import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAI
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import com.decathlon.core.player.model.Player
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.get
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -49,77 +47,129 @@ class GameFragment : Fragment() {
         val isBull25: Boolean? = bundleReceived?.getBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, true)
         val players: List<Player>? = bundleReceived?.getParcelableArrayList(BUNDLE_KEY_PLAYERS)
 
-        if (players != null && gameVariant != null) {
-            game01ViewModel.setPlayers(players)
-            game01ViewModel.variant = resources.getStringArray(R.array.zero_game_type_array)[gameVariant].toInt()
+        if (players != null) {
+            game01ViewModel.players = players
         } else {
             activity?.finish()
         }
 
         val startingPoints = resources.getStringArray(R.array.zero_game_type_array)[gameVariant!!].toInt()
 
+        initializeViews(view, startingPoints, isBull25)
+    }
+
+    private fun initializeViews(
+        view: View,
+        startingPoints: Int,
+        isBull25: Boolean?
+    ) {
         // Player name
         val playerName = view.findViewById<AppCompatTextView>(R.id.player_name)
 
         // Player points remaining
         val pointsRemainingView = view.findViewById<AppCompatTextView>(R.id.player_points_remaining)
-        pointsRemainingView.typeface = Typeface.createFromAsset(view.context.assets, "klavika-bold-italic.otf")
-        pointsRemainingView.text = game01ViewModel.variant.toString()
+        pointsRemainingView.typeface =
+            Typeface.createFromAsset(view.context.assets, "klavika-bold-italic.otf")
+        pointsRemainingView.text = startingPoints.toString()
 
         // Player darts points
         val playerDartsPointsRecycler = view.findViewById<RecyclerView>(R.id.player_darts_points)
-        playerDartsPointsRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        playerDartsPointsRecycler.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val playerPointsAdapter = PlayerPointsAdapter()
         playerDartsPointsRecycler.adapter = playerPointsAdapter
-        playerPointsAdapter.setData(emptyList())
+        playerPointsAdapter.setData(emptyList(), false)
 
         // Players waiting
         val playersWaitingRecycler = view.findViewById<RecyclerView>(R.id.players_waiting)
-        playersWaitingRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        playersWaitingRecycler.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val playersWaitingAdapter = PlayersWaitingAdapter(startingPoints, isBull25 == true)
         playersWaitingRecycler.adapter = playersWaitingAdapter
 
         // Keyboard
         val keyboardView = view.findViewById<GridView>(R.id.keyboard_dkt)
-        val keyboardAdapter = KeyboardAdapter(view.context,
-            { point ->
-                playerPointsAdapter.addData(point)
-                game01ViewModel.addPlayerPoint(point)
-            }, {
-                playerPointsAdapter.removeLast()
-                game01ViewModel.removeLastPlayerPoint()
-            })
+        val keyboardAdapter = KeyboardAdapter(
+            view.context,
+            { point -> game01ViewModel.addPlayerPoint(point) },
+            { game01ViewModel.removeLastPlayerPoint() })
         keyboardView.adapter = keyboardAdapter
 
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
             playerName.text = it?.nickname
             pointsRemainingView.text =
-                startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, it, game01ViewModel.playersPointsLivedata.value))
+                startingPoints.minus(
+                    DartsUtils.getPlayerScore(
+                        isBull25 == true,
+                        it,
+                        game01ViewModel.playersPointsLivedata.value
+                    )
+                )
                     .toString()
 
-            val playersWaiting = players?.toMutableList()
-            playersWaiting?.remove(it)
-            if (playersWaiting != null) {
-                playersWaitingAdapter.setData(playersWaiting, game01ViewModel.playersPointsLivedata.value)
+            // Other players ordered
+            val otherPlayers = getWaitingPlayersOrdered(it, game01ViewModel.players)
+            if (otherPlayers.isNotEmpty()) {
+                playersWaitingAdapter.setData(
+                    otherPlayers,
+                    game01ViewModel.playersPointsLivedata.value
+                )
             }
         })
         game01ViewModel.getCurrentPlayer()
+
+        var job: Job? = null
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            startScoreAnimation(pointsRemainingView,
+            playerPointsAdapter.setData(
+                DartsUtils.getPlayerLastDarts(
+                    game01ViewModel.currentPlayerLiveData.value!!,
+                    it
+                ), !game01ViewModel.isStackIncreasing
+            )
+            startScoreAnimation(
+                pointsRemainingView,
                 (pointsRemainingView.text as String).toInt(),
-                startingPoints.minus(DartsUtils.getPlayerScore(isBull25 == true, game01ViewModel.currentPlayerLiveData.value!!, it)))
-            if (DartsUtils.isPlayerRoundComplete(it) && game01ViewModel.isStackIncreasing) {
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    delay(2200)
-                    playerPointsAdapter.setData(emptyList())
+                startingPoints.minus(
+                    DartsUtils.getPlayerScore(
+                        isBull25 == true,
+                        game01ViewModel.currentPlayerLiveData.value!!,
+                        it
+                    )
+                )
+            )
+
+            // Go to next player
+            if (DartsUtils.isPlayerRoundComplete(it)) {
+                job = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    delay(if (game01ViewModel.isStackIncreasing) 2200 else 3200)
+                    playerPointsAdapter.setData(emptyList(), false)
                     game01ViewModel.selectNextPlayer()
                 }
-            } else {
-                playerPointsAdapter.setData(DartsUtils.getPlayerLastDarts(game01ViewModel.currentPlayerLiveData.value!!, it))
+            } else if (!game01ViewModel.isStackIncreasing) {
+                job?.cancel()
             }
         })
         game01ViewModel.getPlayersPoints()
+    }
+
+    private fun getWaitingPlayersOrdered(
+        it: Player,
+        allPlayers: List<Player>
+    ): ArrayList<Player> {
+        val playersWaiting = ArrayList<Player>()
+        for (player in allPlayers) {
+            if (player != it) {
+                if (allPlayers.indexOf(player) < allPlayers.indexOf(it))
+                    playersWaiting.add(playersWaiting.size, player)
+                else
+                    playersWaiting.add(
+                        allPlayers.indexOf(player)
+                                - allPlayers.indexOf(it) - 1, player
+                    )
+            }
+        }
+        return playersWaiting
     }
 
     @SuppressLint("Recycle")
