@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
@@ -105,8 +107,7 @@ class GameFragment : Fragment() {
                         it,
                         game01ViewModel.playersPointsLivedata.value
                     )
-                )
-                    .toString()
+                ).toString()
 
             // Other players ordered
             val otherPlayers = getWaitingPlayersOrdered(it, game01ViewModel.players)
@@ -140,7 +141,7 @@ class GameFragment : Fragment() {
             )
 
             // Go to next player
-            if (DartsUtils.isPlayerRoundComplete(it)) {
+            if (DartsUtils.isPlayerRoundComplete(game01ViewModel.currentPlayerLiveData.value!!, it)) {
                 job = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     delay(if (game01ViewModel.isStackIncreasing) 2200 else 3200)
                     playerPointsAdapter.setData(emptyList(), false)

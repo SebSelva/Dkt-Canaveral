@@ -26,7 +26,7 @@ class DartsUtils {
             return text
         }
 
-        fun getIntFromPoint(isSimpleBull25: Boolean, point: Point): Int {
+        private fun getIntFromPoint(isSimpleBull25: Boolean, point: Point): Int {
             var score :Int
             if (point.value.isDigitsOnly()) {
                 score = point.value.toInt()
@@ -57,7 +57,7 @@ class DartsUtils {
         }
 
         fun getPlayerLastDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<Point> {
-            var lastPoints = ArrayList<Point>()
+            val lastPoints = ArrayList<Point>()
             if (stackPoints?.isNotEmpty() == true) {
                 for (playerPoint in stackPoints) {
                     if (playerPoint.player == currentPlayer) {
@@ -70,7 +70,7 @@ class DartsUtils {
             return lastPoints
         }
 
-        fun isPlayerRoundComplete(stack: Stack<PlayerPoint>): Boolean {
+        fun isPlayerRoundComplete(currentPlayer: Player, stack: Stack<PlayerPoint>): Boolean {
             if (stack.size > 2) {
                 val last3Darts = stack.subList(stack.size-3, stack.size)
                 if (!last3Darts.isNullOrEmpty()) {
@@ -79,7 +79,7 @@ class DartsUtils {
                         if (player == null) player = playerPoint.player
                         else if (player != playerPoint.player) return false
                     }
-                    return true
+                    return currentPlayer == player
                 }
             }
             return false
