@@ -24,7 +24,7 @@
             android:text="@{player.nickname}"
             tools:text="Player X"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.decathlon.canaveral.common.ScoreTextView
             android:id="@+id/player_score"
             style="@style/Dkt.TextStyle.PlayerScore.Waiting"
             android:layout_width="wrap_content"

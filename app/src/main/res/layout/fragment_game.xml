@@ -75,7 +75,7 @@
                     app:layout_constraintTop_toBottomOf="@id/player_image_round"
                     tools:text="Player X" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.decathlon.canaveral.common.ScoreTextView
                     style="@style/Dkt.TextStyle.PlayerScore.Playing"
                     android:id="@+id/player_points_remaining"
                     android:layout_width="wrap_content"
