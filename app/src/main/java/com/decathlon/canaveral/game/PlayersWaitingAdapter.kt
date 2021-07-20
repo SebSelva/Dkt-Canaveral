@@ -46,10 +46,9 @@ class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull2
 
         override fun bind(item: Player) {
             binding.player = item
-            binding.playerScore.apply {
-                typeface = Typeface.createFromAsset(context.assets, "klavika-bold-italic.otf")
-                text = startingPoints.minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints)).toString()
-            }
+            binding.playerScore.text = startingPoints
+                .minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints))
+                .toString()
         }
     }
 }

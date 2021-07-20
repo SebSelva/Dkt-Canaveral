@@ -2,18 +2,16 @@ package com.decathlon.canaveral.game
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.LinearInterpolator
 import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
@@ -22,10 +20,11 @@ import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAI
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import com.decathlon.core.player.model.Player
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
-import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -70,8 +69,6 @@ class GameFragment : Fragment() {
 
         // Player points remaining
         val pointsRemainingView = view.findViewById<AppCompatTextView>(R.id.player_points_remaining)
-        pointsRemainingView.typeface =
-            Typeface.createFromAsset(view.context.assets, "klavika-bold-italic.otf")
         pointsRemainingView.text = startingPoints.toString()
 
         // Player darts points
@@ -124,9 +121,8 @@ class GameFragment : Fragment() {
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
             playerPointsAdapter.setData(
                 DartsUtils.getPlayerLastDarts(
-                    game01ViewModel.currentPlayerLiveData.value!!,
-                    it
-                ), !game01ViewModel.isStackIncreasing
+                    game01ViewModel.currentPlayerLiveData.value!!, it),
+                !game01ViewModel.isStackIncreasing
             )
             startScoreAnimation(
                 pointsRemainingView,
@@ -144,6 +140,8 @@ class GameFragment : Fragment() {
             if (DartsUtils.isPlayerRoundComplete(game01ViewModel.currentPlayerLiveData.value!!, it)) {
                 job = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     delay(if (game01ViewModel.isStackIncreasing) 2200 else 3200)
+                    showPlayerRoundScore(DartsUtils.getScoreFromPointList(DartsUtils.getPlayerLastDarts(
+                        game01ViewModel.currentPlayerLiveData.value!!,it), isBull25!!))
                     playerPointsAdapter.setData(emptyList(), false)
                     game01ViewModel.selectNextPlayer()
                 }
@@ -182,5 +180,11 @@ class GameFragment : Fragment() {
             textView.text = it.animatedValue.toString()
         }
         valueAnimator.start()
+    }
+
+    private fun showPlayerRoundScore(score: Int) {
+        this.findNavController().navigate(
+            R.id.action_game_to_score,
+            GameScoreFragmentArgs(score).toBundle())
     }
 }

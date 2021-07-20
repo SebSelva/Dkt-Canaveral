@@ -8,9 +8,26 @@
     <fragment
         android:id="@+id/GameFragment"
         android:name="com.decathlon.canaveral.game.GameFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_game"
         tools:layout="@layout/fragment_game">
 
+        <action
+            android:id="@+id/action_game_to_score"
+            app:destination="@id/ScoreFragment" />
     </fragment>
+
+    <dialog
+        android:id="@+id/ScoreFragment"
+        android:name="com.decathlon.canaveral.game.GameScoreFragment"
+        android:label="@string/title_round_score"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"
+        tools:layout="@layout/fragment_score">
+        <argument
+            android:name="roundScore"
+            android:defaultValue="-1"
+            app:argType="integer"
+            app:nullable="false"/>
+    </dialog>
 
 </navigation>

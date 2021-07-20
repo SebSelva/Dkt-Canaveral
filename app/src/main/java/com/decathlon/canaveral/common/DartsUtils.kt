@@ -44,13 +44,19 @@ class DartsUtils {
             return score
         }
 
+        fun getScoreFromPointList(pointList: List<Point>, isSimpleBull25: Boolean): Int {
+            var score = 0
+            for (point in pointList) {
+                score += getIntFromPoint(isSimpleBull25, point)
+            }
+            return score
+        }
+
         fun getPlayerScore(isSimpleBull25: Boolean, player: Player, stackPoints: Stack<PlayerPoint>?) :Int{
             var score = 0
-            if (stackPoints != null) {
-                for (playerPoint in stackPoints) {
-                    if (playerPoint.player == player) {
-                        score += getIntFromPoint(isSimpleBull25, playerPoint.point)
-                    }
+            stackPoints?.forEach {
+                if (it.player == player) {
+                    score += getIntFromPoint(isSimpleBull25, it.point)
                 }
             }
             return score
@@ -58,31 +64,19 @@ class DartsUtils {
 
         fun getPlayerLastDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<Point> {
             val lastPoints = ArrayList<Point>()
-            if (stackPoints?.isNotEmpty() == true) {
-                for (playerPoint in stackPoints) {
-                    if (playerPoint.player == currentPlayer) {
-                        lastPoints.add(playerPoint.point)
-                    } else {
-                        lastPoints.clear()
-                    }
+            stackPoints?.forEach {
+                if (it.player == currentPlayer) {
+                    if (lastPoints.size == 3) lastPoints.clear()
+                    lastPoints.add(it.point)
+                } else {
+                    lastPoints.clear()
                 }
             }
             return lastPoints
         }
 
         fun isPlayerRoundComplete(currentPlayer: Player, stack: Stack<PlayerPoint>): Boolean {
-            if (stack.size > 2) {
-                val last3Darts = stack.subList(stack.size-3, stack.size)
-                if (!last3Darts.isNullOrEmpty()) {
-                    var player: Player? = null
-                    for (playerPoint in last3Darts) {
-                        if (player == null) player = playerPoint.player
-                        else if (player != playerPoint.player) return false
-                    }
-                    return currentPlayer == player
-                }
-            }
-            return false
+            return getPlayerLastDarts(currentPlayer, stack).size == 3
         }
     }
 }
