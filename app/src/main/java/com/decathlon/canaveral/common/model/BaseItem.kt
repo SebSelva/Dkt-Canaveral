@@ -1,4 +1,4 @@
-package com.decathlon.core.common.model
+package com.decathlon.canaveral.common.model
 
 import android.os.Parcelable
 

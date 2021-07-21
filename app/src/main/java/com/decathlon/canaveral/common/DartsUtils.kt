@@ -3,9 +3,9 @@ package com.decathlon.canaveral.common
 import android.content.Context
 import androidx.core.text.isDigitsOnly
 import com.decathlon.canaveral.R
-import com.decathlon.core.game.model.PlayerPoint
-import com.decathlon.core.game.model.Point
-import com.decathlon.core.player.model.Player
+import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.common.model.PlayerPoint
+import com.decathlon.canaveral.common.model.Point
 import java.util.*
 
 class DartsUtils {
@@ -62,11 +62,13 @@ class DartsUtils {
             return score
         }
 
-        fun getPlayerLastDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<Point> {
+        /**
+         * @return last darts thrown in the same round from @param stackPoints matching with @param player
+         */
+        fun getPlayerLastDarts(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?): List<Point> {
             val lastPoints = ArrayList<Point>()
             stackPoints?.forEach {
-                if (it.player == currentPlayer) {
-                    if (lastPoints.size == 3) lastPoints.clear()
+                if (it.player == currentPlayer && it.round == currentRound) {
                     lastPoints.add(it.point)
                 } else {
                     lastPoints.clear()
@@ -75,8 +77,15 @@ class DartsUtils {
             return lastPoints
         }
 
-        fun isPlayerRoundComplete(currentPlayer: Player, stack: Stack<PlayerPoint>): Boolean {
-            return getPlayerLastDarts(currentPlayer, stack).size == 3
+        /**
+         * Get the round number for the next point to add
+         */
+        fun getRoundNumber(players: List<Player>, stackPoints: Stack<PlayerPoint>): Int {
+            return (stackPoints.size / (players.size * 3)) + 1
+        }
+
+        fun isPlayerRoundComplete(currentPlayer: Player, round: Int, stack: Stack<PlayerPoint>): Boolean {
+            return getPlayerLastDarts(currentPlayer, round, stack).size == 3
         }
     }
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="player"
-            type="com.decathlon.core.player.model.Player" />
+            type="com.decathlon.canaveral.common.model.Player" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

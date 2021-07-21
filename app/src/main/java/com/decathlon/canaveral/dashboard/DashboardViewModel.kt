@@ -3,7 +3,7 @@ package com.decathlon.canaveral.dashboard
 import androidx.lifecycle.*
 import com.decathlon.canaveral.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
-import com.decathlon.core.player.model.Player
+import com.decathlon.canaveral.common.model.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -14,7 +14,7 @@ class DashboardViewModel (private val interactors: Interactors) : BaseViewModel(
 
     fun getPlayers() = viewModelScope.launch(Dispatchers.IO) {
         interactors.getPlayers().collect {
-            playerLiveData.postValue(it)
+            playerLiveData.postValue(it.map { player -> Player(player) })
         }
     }
 

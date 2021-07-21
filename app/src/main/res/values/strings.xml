@@ -28,5 +28,6 @@
     <string name="game_double">D</string>
     <string name="game_triple">T</string>
     <string name="player_remain_point">-</string>
+    <string name="player_round">R %d/%d</string>
 
 </resources>

@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.decathlon.canaveral.common.BaseViewHolder
+import com.decathlon.canaveral.common.model.Button
+import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.databinding.ItemListButtonBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerBinding
-import com.decathlon.core.common.model.BaseItem
-import com.decathlon.core.player.model.Button
-import com.decathlon.core.player.model.Player
+import com.decathlon.canaveral.common.model.BaseItem
 
 class PlayerAdapter(val maxPlayers :Int,
                     val addClickListener : (Player) -> Unit,

@@ -10,7 +10,7 @@ import android.widget.BaseAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.isDigitsOnly
-import com.decathlon.core.game.model.Point
+import com.decathlon.canaveral.common.model.Point
 import kotlinx.coroutines.*
 import com.decathlon.canaveral.R as RApp
 import com.decathlon.core.R as RCore

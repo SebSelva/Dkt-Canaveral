@@ -1,12 +1,11 @@
 package com.decathlon.core.player.model
 
-import com.decathlon.core.common.model.BaseItem
+import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Button (
-
-        override val id: Int,
+        val id: Int,
         var text: String
 
-) : BaseItem()
+) : Parcelable
