@@ -1,16 +1,13 @@
 package com.decathlon.canaveral.game
 
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.DartsUtils
+import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.databinding.ItemListGamePlayerBinding
-import com.decathlon.canaveral.databinding.ItemListPlayerPointBinding
-import com.decathlon.core.game.model.PlayerPoint
-import com.decathlon.core.game.model.Point
-import com.decathlon.core.player.model.Player
 import java.util.*
 import kotlin.collections.ArrayList
 

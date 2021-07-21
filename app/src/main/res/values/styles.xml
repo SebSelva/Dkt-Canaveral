@@ -67,8 +67,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Dkt.TextStyle.PlayerName.Waiting" parent="Dkt.TextStyle.BlueDecatSecondary">
+    <style name="Dkt.TextStyle.Game.Info" parent="Dkt.TextStyle.BlueDecatSecondary">
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.PlayerName.Waiting" parent="Dkt.TextStyle.BlueDecatSecondary">
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="Dkt.TextStyle.PlayerName.Playing" parent="Dkt.TextStyle.BlueDecatSecondary">

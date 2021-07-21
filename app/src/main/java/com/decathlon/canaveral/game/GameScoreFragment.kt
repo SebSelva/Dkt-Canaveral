@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.decathlon.canaveral.R
-import com.decathlon.canaveral.common.ScoreTextView
+import com.decathlon.canaveral.view.ScoreTextView
 import kotlinx.coroutines.delay
 
 class GameScoreFragment: DialogFragment() {

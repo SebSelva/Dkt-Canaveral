@@ -1,8 +1,8 @@
 package com.decathlon.canaveral
 
-import com.decathlon.core.player.interactors.AddPlayer
-import com.decathlon.core.player.interactors.DeletePlayer
-import com.decathlon.core.player.interactors.GetPlayers
+import com.decathlon.canaveral.common.interactors.AddPlayer
+import com.decathlon.canaveral.common.interactors.DeletePlayer
+import com.decathlon.canaveral.common.interactors.GetPlayers
 
 data class Interactors(
     val getPlayers: GetPlayers,

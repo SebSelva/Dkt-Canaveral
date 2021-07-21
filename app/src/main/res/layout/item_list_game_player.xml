@@ -5,7 +5,7 @@
     <data>
         <variable
             name="player"
-            type="com.decathlon.core.player.model.Player" />
+            type="com.decathlon.canaveral.common.model.Player" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -24,7 +24,7 @@
             android:text="@{player.nickname}"
             tools:text="Player X"/>
 
-        <com.decathlon.canaveral.common.ScoreTextView
+        <com.decathlon.canaveral.view.ScoreTextView
             android:id="@+id/player_score"
             style="@style/Dkt.TextStyle.PlayerScore.Waiting"
             android:layout_width="wrap_content"

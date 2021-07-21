@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
@@ -19,7 +20,7 @@ import com.decathlon.canaveral.common.DartsUtils
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
-import com.decathlon.core.player.model.Player
+import com.decathlon.canaveral.common.model.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -64,6 +65,9 @@ class GameFragment : Fragment() {
         startingPoints: Int,
         isBull25: Boolean?
     ) {
+        // Player round
+        val playerRound = view.findViewById<AppCompatTextView>(R.id.player_round)
+
         // Player name
         val playerName = view.findViewById<AppCompatTextView>(R.id.player_name)
 
@@ -97,6 +101,8 @@ class GameFragment : Fragment() {
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
             playerName.text = it?.nickname
+            playerRound.text =
+                resources.getString(R.string.player_round, game01ViewModel.currentRound, Game01ViewModel.MAX_ROUNDS)
             pointsRemainingView.text =
                 startingPoints.minus(
                     DartsUtils.getPlayerScore(
@@ -121,7 +127,7 @@ class GameFragment : Fragment() {
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
             playerPointsAdapter.setData(
                 DartsUtils.getPlayerLastDarts(
-                    game01ViewModel.currentPlayerLiveData.value!!, it),
+                    game01ViewModel.currentPlayerLiveData.value!!, game01ViewModel.currentRound, it),
                 !game01ViewModel.isStackIncreasing
             )
             startScoreAnimation(
@@ -137,11 +143,13 @@ class GameFragment : Fragment() {
             )
 
             // Go to next player
-            if (DartsUtils.isPlayerRoundComplete(game01ViewModel.currentPlayerLiveData.value!!, it)) {
+            if (DartsUtils.isPlayerRoundComplete(game01ViewModel.currentPlayerLiveData.value!!, game01ViewModel.currentRound, it)) {
                 job = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     delay(if (game01ViewModel.isStackIncreasing) 2200 else 3200)
-                    showPlayerRoundScore(DartsUtils.getScoreFromPointList(DartsUtils.getPlayerLastDarts(
-                        game01ViewModel.currentPlayerLiveData.value!!,it), isBull25!!))
+                    if (game01ViewModel.isStackIncreasing) {
+                        showPlayerRoundScore(DartsUtils.getScoreFromPointList(DartsUtils.getPlayerLastDarts(
+                            game01ViewModel.currentPlayerLiveData.value!!, game01ViewModel.currentRound, it), isBull25!!))
+                    }
                     playerPointsAdapter.setData(emptyList(), false)
                     game01ViewModel.selectNextPlayer()
                 }

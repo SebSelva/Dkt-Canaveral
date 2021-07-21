@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.DartsUtils
+import com.decathlon.canaveral.common.model.Dot
+import com.decathlon.canaveral.common.model.Point
 import com.decathlon.canaveral.databinding.ItemListPlayerPointBinding
-import com.decathlon.core.game.model.Dot
-import com.decathlon.core.game.model.Point
 
 class PlayerPointsAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 

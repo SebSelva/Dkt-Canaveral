@@ -1,6 +1,4 @@
-package com.decathlon.core.game.model
-
-import com.decathlon.core.player.model.Player
+package com.decathlon.canaveral.common.model
 
 class PlayerPoint(
     val player: Player,
