@@ -39,6 +39,10 @@
         <item name="android:textColor">@color/grey_dark</item>
     </style>
 
+    <style name="Dkt.TextStyle.White" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="Dkt.TextStyle.SpinnerText" parent="Dkt.TextStyle">
         <item name="android:textColor">@color/spinner_selector</item>
         <item name="android:textSize">18sp</item>
@@ -89,6 +93,18 @@
 
     <style name="Dkt.TextStyle.PlayerShot" parent="Dkt.TextStyle.BlueDecatSecondary">
         <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Options.Title" parent="Dkt.TextStyle.White">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Options.Item" parent="Dkt.TextStyle.Grey">
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     // TEXT STYLES - END

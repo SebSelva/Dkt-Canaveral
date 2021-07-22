@@ -10,6 +10,10 @@
     <string name="image_description">image</string>
     <string name="add">add</string>
 
+    // Common
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+
     // Dashboard
     <string name="dashboard_select_players">Select Players</string>
     <string name="dashboard_select_versus">Select Versus</string>
@@ -29,5 +33,11 @@
     <string name="game_triple">T</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
+
+    // Game Options
+    <string name="game_options_title">Options</string>
+    <string name="game_options_resume">Resume</string>
+    <string name="game_options_quit">Quit the game</string>
+    <string name="game_options_game_rules">Game Rules</string>
 
 </resources>

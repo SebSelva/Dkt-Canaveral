@@ -4,27 +4,25 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.content.res.AppCompatResources
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IN
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_OUT
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_SELECTED
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import org.koin.android.ext.android.get
-import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -32,13 +30,15 @@ import timber.log.Timber
 class DashboardFragment : Fragment() {
 
     private val dashboardViewModel: DashboardViewModel = get()
+    private lateinit var _binding: FragmentDashboardBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        _binding = FragmentDashboardBinding.bind(view)
+        return view
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,63 +49,55 @@ class DashboardFragment : Fragment() {
 
             // Versus Mode selection
             val versusMode = resources.getStringArray(R.array.versus_type)
-            val versusField = view.findViewById<AutoCompleteTextView>(R.id.input_versus)
-            initSpinner(versusMode, versusField)
+            initSpinner(versusMode, _binding.inputVersus)
 
             // Game Type selection
             val gameType = resources.getStringArray(R.array.game_type_array)
-            val gameField = view.findViewById<AutoCompleteTextView>(R.id.input_game)
-            initSpinner(gameType, gameField)
-            gameField?.isEnabled = gameType.size > 1
+            initSpinner(gameType, _binding.inputGame)
+            _binding.inputGame.isEnabled = gameType.size > 1
 
             // Game Variant selection
             val gameVariant = resources.getStringArray(R.array.zero_game_type_array)
-            val variantField = view.findViewById<AutoCompleteTextView>(R.id.input_variant)
-            initSpinner(gameVariant, variantField)
+            initSpinner(gameVariant, _binding.inputVariant)
 
             // Players
             val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
                 {dashboardViewModel.addPlayer(it)}, {dashboardViewModel.removePlayer(it)})
-            val playerRecycler = view.findViewById<RecyclerView>(R.id.rv_player)
-            playerRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            playerRecycler.adapter = playerAdapter
+            _binding.playersRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            _binding.playersRecyclerView.adapter = playerAdapter
 
             // Game details - In
             val gameDetailsInOut = resources.getStringArray(R.array.game_detail_inout_values)
-            val detailInField = view.findViewById<AutoCompleteTextView>(R.id.input_game_detail_in)
-            initSpinner(gameDetailsInOut, detailInField)
+            initSpinner(gameDetailsInOut, _binding.inputGameDetailIn)
 
             // Game details - Out
-            val detailOutField = view.findViewById<AutoCompleteTextView>(R.id.input_game_detail_out)
-            initSpinner(gameDetailsInOut, detailOutField)
+            initSpinner(gameDetailsInOut, _binding.inputGameDetailOut)
 
             // Game details - Bull
             val detailBullValues = resources.getStringArray(R.array.game_detail_bull_values)
-            val detailBullField = view.findViewById<AutoCompleteTextView>(R.id.input_game_detail_bull)
-            initSpinner(detailBullValues, detailBullField)
+            initSpinner(detailBullValues, _binding.inputGameDetailBull)
 
             // Game details layout animation
             addGameDetailsAnimation(view)
 
             // Start button
-            view.findViewById<Button>(R.id.start_btn).setOnClickListener {
+            _binding.startBtn.setOnClickListener {
                 val bundle = Bundle()
 
-                bundle.putInt(BUNDLE_KEY_GAME_SELECTED, gameType.indexOf(gameField.text.toString()))
-                bundle.putInt(BUNDLE_KEY_GAME_VARIANT, gameVariant.indexOf(variantField.text.toString()))
-                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_IN, gameDetailsInOut.indexOf(detailInField.text.toString()))
-                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_OUT, gameDetailsInOut.indexOf(detailOutField.text.toString()))
-                bundle.putBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, detailBullValues.indexOf(detailBullField.text.toString()) == 0)
+                bundle.putInt(BUNDLE_KEY_GAME_VARIANT, gameVariant.indexOf(_binding.inputVariant.text.toString()))
+                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_IN, gameDetailsInOut.indexOf(_binding.inputGameDetailIn.text.toString()))
+                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_OUT, gameDetailsInOut.indexOf(_binding.inputGameDetailOut.text.toString()))
+                bundle.putBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, detailBullValues.indexOf(_binding.inputGameDetailBull.text.toString()) == 0)
                 bundle.putParcelableArrayList(BUNDLE_KEY_PLAYERS, ArrayList(dashboardViewModel.playerLiveData.value))
 
-                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game, bundle)
+                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game,bundle)
             }
 
             // Data launch
             dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
                 playerAdapter.setData(it)
                 val versusIndex = if (it.isEmpty()) 0 else (it.size-1)
-                versusField?.setText(versusMode[versusIndex],false)
+                _binding.inputVersus.setText(versusMode[versusIndex],false)
             })
             dashboardViewModel.getPlayers()
         }

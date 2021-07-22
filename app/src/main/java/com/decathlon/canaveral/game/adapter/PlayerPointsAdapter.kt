@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.game
+package com.decathlon.canaveral.game.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

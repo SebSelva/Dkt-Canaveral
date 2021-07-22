@@ -6,21 +6,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.DartsUtils
+import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
-import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.game.adapter.KeyboardAdapter
+import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
+import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,12 +36,15 @@ import org.koin.android.ext.android.get
 class GameFragment : Fragment() {
 
     private val game01ViewModel: Game01ViewModel = get()
+    private lateinit var _binding: FragmentGameBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_game, container, false)
+        val view = inflater.inflate(R.layout.fragment_game, container, false)
+        _binding = FragmentGameBinding.bind(view)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,45 +71,43 @@ class GameFragment : Fragment() {
         startingPoints: Int,
         isBull25: Boolean?
     ) {
-        // Player round
-        val playerRound = view.findViewById<AppCompatTextView>(R.id.player_round)
-
-        // Player name
-        val playerName = view.findViewById<AppCompatTextView>(R.id.player_name)
+        // Options
+        _binding.gameOptions.setOnClickListener {
+            findNavController().navigate(R.id.action_game_to_options)
+        }
 
         // Player points remaining
-        val pointsRemainingView = view.findViewById<AppCompatTextView>(R.id.player_points_remaining)
-        pointsRemainingView.text = startingPoints.toString()
+        _binding.playerPointsRemaining.text = startingPoints.toString()
 
         // Player darts points
-        val playerDartsPointsRecycler = view.findViewById<RecyclerView>(R.id.player_darts_points)
-        playerDartsPointsRecycler.layoutManager =
+        _binding.playerDartsPoints.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val playerPointsAdapter = PlayerPointsAdapter()
-        playerDartsPointsRecycler.adapter = playerPointsAdapter
+        _binding.playerDartsPoints.adapter = playerPointsAdapter
         playerPointsAdapter.setData(emptyList(), false)
 
         // Players waiting
-        val playersWaitingRecycler = view.findViewById<RecyclerView>(R.id.players_waiting)
-        playersWaitingRecycler.layoutManager =
+        _binding.playersWaiting.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val playersWaitingAdapter = PlayersWaitingAdapter(startingPoints, isBull25 == true)
-        playersWaitingRecycler.adapter = playersWaitingAdapter
+        _binding.playersWaiting.adapter = playersWaitingAdapter
+
+        _binding.playersWaiting.isVisible = game01ViewModel.players.size > 1
+        _binding.playersWaitingSeparator.isVisible = game01ViewModel.players.size > 1
 
         // Keyboard
-        val keyboardView = view.findViewById<GridView>(R.id.keyboard_dkt)
         val keyboardAdapter = KeyboardAdapter(
             view.context,
             { point -> game01ViewModel.addPlayerPoint(point) },
             { game01ViewModel.removeLastPlayerPoint() })
-        keyboardView.adapter = keyboardAdapter
+        _binding.keyboardDkt.adapter = keyboardAdapter
 
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
-            playerName.text = it?.nickname
-            playerRound.text =
+            _binding.playerName.text = it?.nickname
+            _binding.playerRound.text =
                 resources.getString(R.string.player_round, game01ViewModel.currentRound, Game01ViewModel.MAX_ROUNDS)
-            pointsRemainingView.text =
+            _binding.playerPointsRemaining.text =
                 startingPoints.minus(
                     DartsUtils.getPlayerScore(
                         isBull25 == true,
@@ -131,8 +135,8 @@ class GameFragment : Fragment() {
                 !game01ViewModel.isStackIncreasing
             )
             startScoreAnimation(
-                pointsRemainingView,
-                (pointsRemainingView.text as String).toInt(),
+                _binding.playerPointsRemaining,
+                (_binding.playerPointsRemaining.text as String).toInt(),
                 startingPoints.minus(
                     DartsUtils.getPlayerScore(
                         isBull25 == true,

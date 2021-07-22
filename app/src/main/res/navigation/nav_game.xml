@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_game_to_score"
             app:destination="@id/ScoreFragment" />
+        <action android:id="@+id/action_game_to_options"
+            app:destination="@id/OptionsFragment" />
+
     </fragment>
 
     <dialog
@@ -29,5 +32,26 @@
             app:argType="integer"
             app:nullable="false"/>
     </dialog>
+
+    <dialog
+        android:id="@+id/OptionsFragment"
+        android:name="com.decathlon.canaveral.game.GameOptionsFragment"
+        android:label="@string/game_options_title"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"
+        tools:layout="@layout/fragment_game_options" >
+
+        <action android:id="@+id/action_options_to_quit"
+            app:destination="@id/OptionsQuitFragment"/>
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/OptionsQuitFragment"
+        android:name="com.decathlon.canaveral.game.GameQuitFragment"
+        android:label="@string/game_options_quit"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"
+        tools:layout="@layout/dialogfragment_game_quit" />
 
 </navigation>
