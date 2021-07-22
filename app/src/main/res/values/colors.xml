@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue_dkt">#0082C3</color>
-    <color name="blue_dkt_secondary">#0078b6</color>
+    <color name="blue_dkt_secondary">#0078B6</color>
     <color name="grey_light">#EAECEF</color>
     <color name="grey_kb_background">#C7C7C7</color>
     <color name="grey_kb_text">#ACACAC</color>

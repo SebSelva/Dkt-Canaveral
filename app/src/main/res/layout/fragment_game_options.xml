@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Options.Title"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:text="@string/game_options_title"
+            android:background="@drawable/background_options_top"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_medium"
+            android:paddingBottom="@dimen/margin_small"
+            android:layout_marginBottom="96dp"
+            android:gravity="center"
+            android:background="@drawable/background_options_bottom">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Dkt.TextStyle.Options.Item"
+                android:id="@+id/options_resume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/game_options_resume"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Dkt.TextStyle.Options.Item"
+                android:id="@+id/options_quit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/game_options_quit"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Dkt.TextStyle.Options.Item"
+                android:id="@+id/options_rules"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/game_options_game_rules"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

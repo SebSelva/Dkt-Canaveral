@@ -10,18 +10,22 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.databinding.FragmentScoreBinding
 import com.decathlon.canaveral.view.ScoreTextView
 import kotlinx.coroutines.delay
 
 class GameScoreFragment: DialogFragment() {
 
     val args: GameScoreFragmentArgs by navArgs()
+    private lateinit var _binding: FragmentScoreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_score, container, false)
+        val view = inflater.inflate(R.layout.fragment_score, container, false)
+        _binding = FragmentScoreBinding.bind(view)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,8 +33,7 @@ class GameScoreFragment: DialogFragment() {
 
         dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
 
-        val roundScore = view.findViewById<ScoreTextView>(R.id.player_round_score)
-        roundScore.text = args.roundScore.toString()
+        _binding.playerRoundScore.text = args.roundScore.toString()
 
         backToGame()
     }
