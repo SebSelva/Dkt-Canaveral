@@ -23,6 +23,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
     var players: List<Player> = emptyList()
     var currentRound: Int = 1
     var isStackIncreasing: Boolean = true
+    var isRoundDecreasing: Boolean = false
 
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
@@ -34,6 +35,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     fun addPlayerPoint(point: Point) {
         isStackIncreasing = true
+        isRoundDecreasing = false
         currentPlayer?.let {
             if (players.size == 1 || DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
                 currentRound = DartsUtils.getRoundNumber(players, playersPoints)
@@ -45,10 +47,12 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     fun removeLastPlayerPoint() {
         isStackIncreasing = false
+        isRoundDecreasing = false
         if (playersPoints.isNotEmpty()) {
             if (currentPlayer != playersPoints.peek().player || currentRound != playersPoints.peek().round) {
                 currentPlayer = playersPoints.peek().player
                 currentRound = playersPoints.peek().round
+                isRoundDecreasing = true
                 currentPlayerLiveData.postValue(currentPlayer)
             } else {
                 playersPoints.pop()
