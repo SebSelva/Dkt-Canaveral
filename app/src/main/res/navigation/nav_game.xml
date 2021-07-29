@@ -16,12 +16,19 @@
             app:destination="@id/ScoreFragment" />
         <action android:id="@+id/action_game_to_options"
             app:destination="@id/OptionsFragment" />
+        <action
+            android:id="@+id/action_game_to_end"
+            app:destination="@id/EndGameFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
     </fragment>
 
     <dialog
         android:id="@+id/ScoreFragment"
-        android:name="com.decathlon.canaveral.game.GameScoreFragment"
+        android:name="com.decathlon.canaveral.game.dialog.GameScoreFragment"
         android:label="@string/title_round_score"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
@@ -35,7 +42,7 @@
 
     <dialog
         android:id="@+id/OptionsFragment"
-        android:name="com.decathlon.canaveral.game.GameOptionsFragment"
+        android:name="com.decathlon.canaveral.game.dialog.GameOptionsFragment"
         android:label="@string/game_options_title"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
@@ -48,10 +55,47 @@
 
     <dialog
         android:id="@+id/OptionsQuitFragment"
-        android:name="com.decathlon.canaveral.game.GameQuitFragment"
+        android:name="com.decathlon.canaveral.game.dialog.GameQuitFragment"
         android:label="@string/game_options_quit"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
         tools:layout="@layout/dialogfragment_game_quit" />
+
+    <fragment
+        android:id="@+id/EndGameFragment"
+        android:name="com.decathlon.canaveral.game.GameEndStatsFragment"
+        android:label="Game End"
+        app:popEnterAnim="@android:anim/slide_in_left"
+        app:popExitAnim="@android:anim/slide_out_right"
+        tools:layout="@layout/fragment_game_end">
+
+        <action android:id="@+id/action_end_to_new_game"
+            app:destination="@id/GameFragment"/>
+
+        <argument
+            android:name="x01PlayerList"
+            app:argType="com.decathlon.canaveral.common.model.X01Player[]"/>
+        <argument
+            android:name="variantIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="isBull25"
+            android:defaultValue="true"
+            app:argType="boolean"/>
+        <argument
+            android:name="nbRound"
+            android:defaultValue="20"
+            app:argType="integer"/>
+        <argument
+            android:name="inIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="outIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
+    </fragment>
 
 </navigation>

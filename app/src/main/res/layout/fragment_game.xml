@@ -29,7 +29,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginStart="@dimen/margin_xlarge"
                 android:layout_marginEnd="@dimen/margin_xlarge"
                 android:layout_marginBottom="@dimen/margin_large">

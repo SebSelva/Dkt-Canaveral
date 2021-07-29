@@ -21,5 +21,26 @@
         android:label="@string/title_game"
         tools:layout="@layout/activity_game">
 
+        <argument
+            android:name="variantIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="isBull25"
+            android:defaultValue="true"
+            app:argType="boolean"/>
+        <argument
+            android:name="nbRound"
+            android:defaultValue="20"
+            app:argType="integer"/>
+        <argument
+            android:name="inIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="outIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+
     </activity>
 </navigation>

@@ -15,7 +15,7 @@ class GameActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        // Do not back !!
+        // Do not back while playing
     }
 
     override fun getLayoutId(): Int {

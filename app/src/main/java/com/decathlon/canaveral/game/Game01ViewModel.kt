@@ -1,33 +1,41 @@
 package com.decathlon.canaveral.game
 
 import androidx.lifecycle.MutableLiveData
+import com.decathlon.canaveral.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
-import com.decathlon.canaveral.common.DartsUtils
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.Point
+import com.decathlon.canaveral.common.utils.DartsUtils
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
-class Game01ViewModel : BaseViewModel() {
+class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     companion object {
         private const val DARTS_SHOTS_NUMBER = 3
-        const val MAX_ROUNDS = 20
     }
 
-    private var playersPoints: Stack<PlayerPoint> = Stack()
-    private var currentPlayer: Player? = null
-
+    var playersPoints: Stack<PlayerPoint> = Stack()
+    var currentPlayer: Player? = null
     var players: List<Player> = emptyList()
     var currentRound: Int = 1
     var isStackIncreasing: Boolean = true
+
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
+
+    private suspend fun getPlayers() {
+        players = interactors.getPlayers().first().map { player -> Player(player) }
+        getCurrentPlayer()
+    }
 
     fun addPlayerPoint(point: Point) {
         isStackIncreasing = true
         currentPlayer?.let {
-            if (players.size == 1 || DartsUtils.getPlayerLastDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
+            if (players.size == 1 || DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
                 currentRound = DartsUtils.getRoundNumber(players, playersPoints)
                 playersPoints.push(PlayerPoint(it, point, currentRound))
                 playersPointsLivedata.postValue(playersPoints)
@@ -50,10 +58,18 @@ class Game01ViewModel : BaseViewModel() {
     }
 
     fun getCurrentPlayer() {
-        if (currentPlayer == null) {
-            selectNextPlayer()
-        } else {
-            currentPlayerLiveData.postValue(currentPlayer)
+        when {
+            players.isEmpty() -> {
+                runBlocking {
+                    launch { getPlayers() }
+                }
+            }
+            currentPlayer == null -> {
+                selectNextPlayer()
+            }
+            else -> {
+                currentPlayerLiveData.postValue(currentPlayer)
+            }
         }
     }
 

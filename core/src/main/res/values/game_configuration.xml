@@ -25,6 +25,7 @@
         <item>501</item>
         <item>701</item>
         <item>901</item>
+        <item>1001</item>
     </string-array>
     
     <string-array name="game_detail_inout_values">
