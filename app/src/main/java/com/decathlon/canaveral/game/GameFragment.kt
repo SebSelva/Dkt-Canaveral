@@ -55,6 +55,7 @@ class GameFragment : Fragment() {
         }
 
         val startingPoints = resources.getStringArray(R.array.zero_game_type_array)[args.variantIndex].toInt()
+        val nbRounds = resources.getStringArray(R.array.game_01_detail_round)[args.roundIndex].toIntOrNull()
 
         // Options
         _binding.gameOptions.setOnClickListener {
@@ -90,8 +91,12 @@ class GameFragment : Fragment() {
             _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
 
             _binding.playerName.text = it?.nickname
-            _binding.playerRound.text =
-                resources.getString(R.string.player_round, game01ViewModel.currentRound, args.nbRound)
+            _binding.playerRound.text = if (nbRounds == null) {
+                resources.getString(R.string.player_round_unlimited, game01ViewModel.currentRound)
+            } else {
+                resources.getString(R.string.player_round, game01ViewModel.currentRound, nbRounds)
+            }
+
             _binding.playerPointsRemaining.text = startingPoints
                     .minus(DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints))
                     .toString()
@@ -121,7 +126,7 @@ class GameFragment : Fragment() {
             }
 
             // Test if game is finished
-            if (DartsUtils.is01GameFinished(startingPoints, args.nbRound, game01ViewModel.players, it, args.isBull25)) {
+            if (DartsUtils.is01GameFinished(startingPoints, nbRounds, game01ViewModel.players, it, args.isBull25)) {
                 goToPlayersStatsScreen(startingPoints)
             }
 
@@ -169,7 +174,7 @@ class GameFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             delay(1200)
             findNavController().navigate(R.id.action_game_to_end,
-                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.nbRound, args.inIndex, args.outIndex).toBundle())
+                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.roundIndex, args.inIndex, args.outIndex).toBundle())
         }
     }
 

@@ -14,6 +14,20 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
 
+    // Game types
+    <string name="game_type_01_game">01 Game</string>
+    <string name="game_type_cricket">Cricket</string>
+    <string name="game_type_count_up">Count up</string>
+    <string name="game_type_bull_hunter">Bull hunter</string>
+    <string name="game_type_shangai">Shanghai</string>
+    <string name="game_type_around_a_clock">Around a Clock</string>
+    <string name="game_type_killer">Killer</string>
+
+    // In Out values
+    <string name="game_detail_inout_simple">Simple</string>
+    <string name="game_detail_inout_double">Double</string>
+    <string name="game_detail_inout_master">Master</string>
+
     // Dashboard
     <string name="dashboard_select_players">Select Players</string>
     <string name="dashboard_select_versus">Select Versus</string>
@@ -23,6 +37,8 @@
     <string name="dashboard_game_detail_in">In</string>
     <string name="dashboard_game_detail_out">Out</string>
     <string name="dashboard_game_detail_bull_value">Bull Value</string>
+    <string name="dashboard_game_detail_rounds">Rounds</string>
+    <string name="dashboard_game_detail_round_infinite">Infinite</string>
     <string name="dashboard_start">START</string>
 
     // Game
@@ -33,6 +49,7 @@
     <string name="game_triple">T</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
+    <string name="player_round_unlimited">R %d</string>
     <string name="player_ppd">PPD: %.2f</string>
 
     // Game Options

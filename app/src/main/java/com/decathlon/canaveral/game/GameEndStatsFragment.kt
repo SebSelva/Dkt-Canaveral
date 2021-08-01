@@ -90,7 +90,7 @@ class GameEndStatsFragment : Fragment() {
                 GameActivityArgs(
                     args.variantIndex,
                     args.isBull25,
-                    args.nbRound,
+                    args.roundIndex,
                     args.inIndex,
                     args.outIndex
                 ).toBundle())
