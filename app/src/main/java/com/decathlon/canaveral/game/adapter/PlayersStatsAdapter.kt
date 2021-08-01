@@ -21,17 +21,19 @@ class PlayersStatsAdapter(
     }
 
     private var players: List<X01Player> = emptyList()
+    private var isPortraitMode = true
 
-    fun setData(playerList: List<X01Player>) {
+    fun setData(playerList: List<X01Player>, isPortrait: Boolean) {
         players = playerList
+        isPortraitMode = isPortrait
     }
 
     override fun getItemViewType(position: Int): Int {
 
         return if (isWinViews) {
-            if (players.size < 3) LARGE else MEDIUM
+            if (players.size > 2 && isPortraitMode) MEDIUM else LARGE
         } else {
-            if (players.size < 3) MEDIUM else SMALL
+            if (players.size > 2 && isPortraitMode) SMALL else MEDIUM
         }
     }
 

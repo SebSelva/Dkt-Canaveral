@@ -1,5 +1,6 @@
 package com.decathlon.canaveral.game
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -71,14 +72,18 @@ class GameEndStatsFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val winningPlayersStatsAdapter = PlayersStatsAdapter(true)
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
-        winningPlayersStatsAdapter.setData(winPlayers)
+        winningPlayersStatsAdapter.setData(winPlayers,
+            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
 
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val otherPlayersStatsAdapter = PlayersStatsAdapter(false)
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
-        otherPlayersStatsAdapter.setData(sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size))
+        otherPlayersStatsAdapter.setData(
+            sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size),
+            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        )
 
 
         // Buttons
