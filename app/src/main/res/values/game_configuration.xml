@@ -5,12 +5,6 @@
     
     <string-array name="game_type_array">
         <item>@string/game_type_01_game</item>
-        <!--        <item>@string/game_type_cricket</item>-->
-        <item>@string/game_type_count_up</item>
-        <!--        <item>@string/game_type_bull_hunter</item>-->
-        <!--        <item>@string/game_type_shangai</item>-->
-        <!--        <item>@string/game_type_around_a_clock</item>-->
-        <!--        <item>@string/game_type_killer</item>-->
     </string-array>
 
     <string-array name="versus_type">
