@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.game
+package com.decathlon.canaveral.game.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.databinding.FragmentScoreBinding
-import com.decathlon.canaveral.view.ScoreTextView
 import kotlinx.coroutines.delay
 
 class GameScoreFragment: DialogFragment() {

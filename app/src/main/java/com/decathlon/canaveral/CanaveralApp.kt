@@ -37,7 +37,7 @@ class CanaveralApp : Application() {
 
     private val viewModelsModule = module {
         viewModel { DashboardViewModel(get()) }
-        viewModel { Game01ViewModel() }
+        viewModel { Game01ViewModel(get()) }
     }
 
     private val interactorsModule = module {

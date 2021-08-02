@@ -22,6 +22,7 @@ import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAI
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_OUT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
 import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
+import com.decathlon.canaveral.game.GameActivityArgs
 import org.koin.android.ext.android.get
 
 /**
@@ -82,15 +83,16 @@ class DashboardFragment : Fragment() {
 
             // Start button
             _binding.startBtn.setOnClickListener {
-                val bundle = Bundle()
 
-                bundle.putInt(BUNDLE_KEY_GAME_VARIANT, gameVariant.indexOf(_binding.inputVariant.text.toString()))
-                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_IN, gameDetailsInOut.indexOf(_binding.inputGameDetailIn.text.toString()))
-                bundle.putInt(BUNDLE_KEY_GAME_DETAIL_OUT, gameDetailsInOut.indexOf(_binding.inputGameDetailOut.text.toString()))
-                bundle.putBoolean(BUNDLE_KEY_GAME_DETAIL_IS_BULL_25, detailBullValues.indexOf(_binding.inputGameDetailBull.text.toString()) == 0)
-                bundle.putParcelableArrayList(BUNDLE_KEY_PLAYERS, ArrayList(dashboardViewModel.playerLiveData.value))
-
-                Navigation.findNavController(view).navigate(R.id.action_dashboard_to_game,bundle)
+                Navigation.findNavController(view).navigate(
+                    R.id.action_dashboard_to_game,
+                    GameActivityArgs(
+                        gameVariant.indexOf(_binding.inputVariant.text.toString()),
+                        detailBullValues.indexOf(_binding.inputGameDetailBull.text.toString()) == 0,
+                        20,
+                        gameDetailsInOut.indexOf(_binding.inputGameDetailIn.text.toString()),
+                        gameDetailsInOut.indexOf(_binding.inputGameDetailOut.text.toString())
+                    ).toBundle())
             }
 
             // Data launch

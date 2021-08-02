@@ -8,5 +8,6 @@
     android:textAlignment="center"
     android:ellipsize="end"
     android:maxLines="1"
+    android:background="@color/white"
     tools:text="This is an element"
     style="@style/Dkt.TextStyle.SpinnerText" />

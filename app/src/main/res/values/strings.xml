@@ -33,11 +33,21 @@
     <string name="game_triple">T</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
+    <string name="player_ppd">PPD: %.2f</string>
 
     // Game Options
     <string name="game_options_title">Options</string>
     <string name="game_options_resume">Resume</string>
     <string name="game_options_quit">Quit the game</string>
     <string name="game_options_game_rules">Game Rules</string>
+
+    // Game End
+    <string name="game_end_draw">DRAW !</string>
+    <string name="game_end_win_one">%s wins !</string>
+    <string name="game_end_win_two">%s &amp; %s win !</string>
+    <string name="game_end_win_three">%s, %s &amp; %s win !</string>
+    <string name="game_end_checkout">Checkout</string>
+    <string name="game_end_remaining">Remaining</string>
+    <string name="game_end_ppd">PPD</string>
 
 </resources>
