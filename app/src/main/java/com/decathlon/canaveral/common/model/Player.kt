@@ -3,12 +3,12 @@ package com.decathlon.canaveral.common.model
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-open class Player (
+class Player (
         override var id: Int,
-        open var nickname: String,
-        open var firstname: String,
-        open var lastname: String,
-        open var image: String?
+        var nickname: String,
+        var firstname: String,
+        var lastname: String,
+        var image: String?
 
 ) : BaseItem() {
         constructor(player: com.decathlon.core.player.model.Player) : this(player.id, player.nickname,
@@ -34,15 +34,3 @@ open class Player (
                 return result
         }
 }
-
-@Parcelize
-class X01Player(
-        override var id: Int,
-        override var nickname: String,
-        override var firstname: String,
-        override var lastname: String,
-        override var image: String?,
-        var remainingPoints: Int,
-        var checkout: Int,
-        var ppd: Float
-): Player(id, nickname, firstname, lastname, image)

@@ -17,7 +17,7 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.X01Player
+import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
@@ -200,15 +200,11 @@ class GameFragment : Fragment() {
     }
 
     private fun goToPlayersStatsScreen(startingPoints: Int) {
-        val x01PlayerList = emptyList<X01Player>().toMutableList()
+        val x01PlayerList = emptyList<X01PlayerStats>().toMutableList()
         game01ViewModel.players.forEach {
             x01PlayerList.add(
-                X01Player(
-                    it.id,
-                    it.nickname,
-                    it.firstname,
-                    it.lastname,
-                    it.image,
+                X01PlayerStats(
+                    it,
                     remainingPoints = startingPoints.minus(
                         DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints)),
                     checkout = DartsUtils.getScoreFromPointList(

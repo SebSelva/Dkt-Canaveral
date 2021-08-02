@@ -6,8 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_xlarge"
         android:paddingLeft="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
         android:background="@drawable/background_blue"
@@ -25,8 +25,11 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintVertical_weight="1"
+            android:paddingBottom="@dimen/margin_medium"
             android:orientation="horizontal"
+            android:gravity="bottom"
             app:layout_constraintTop_toBottomOf="@id/end_title"
             app:layout_constraintBottom_toTopOf="@id/game_end_bottom"
             app:layout_constraintRight_toRightOf="parent"
@@ -37,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:listitem="@layout/item_list_player_game_stats_small"
+                tools:listitem="@layout/item_list_player_game_stats_large"
                 tools:itemCount="1"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -45,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:listitem="@layout/item_list_player_game_stats_small"
+                tools:listitem="@layout/item_list_player_game_stats_medium"
                 tools:itemCount="1"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -65,7 +68,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/button_check"
@@ -89,7 +92,7 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="3"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

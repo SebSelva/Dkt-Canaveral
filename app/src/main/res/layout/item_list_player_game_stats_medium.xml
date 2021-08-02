@@ -10,8 +10,8 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="155dp"
         android:layout_margin="6dp"
         android:padding="@dimen/margin_medium"
         android:orientation="vertical"
@@ -59,7 +59,7 @@
             style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
             tools:text="37.20"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -74,9 +74,7 @@
             style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_large"
-            android:paddingStart="@dimen/margin_large"
-            android:paddingEnd="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
             tools:text="51"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

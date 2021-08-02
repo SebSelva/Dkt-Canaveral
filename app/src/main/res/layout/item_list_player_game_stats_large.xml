@@ -10,9 +10,9 @@
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_large"
+        android:layout_width="139dp"
+        android:layout_height="197dp"
+        android:layout_margin="6dp"
         android:padding="@dimen/margin_medium"
         android:orientation="vertical"
         android:background="@drawable/background_player_game_stats">
@@ -75,8 +75,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_large"
-            android:paddingStart="@dimen/margin_large"
-            android:paddingEnd="@dimen/margin_large"
             tools:text="51"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
