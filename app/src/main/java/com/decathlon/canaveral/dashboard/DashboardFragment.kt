@@ -17,11 +17,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IN
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_IS_BULL_25
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_DETAIL_OUT
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_GAME_VARIANT
-import com.decathlon.canaveral.game.GameActivity.Companion.BUNDLE_KEY_PLAYERS
 import com.decathlon.canaveral.game.GameActivityArgs
 import org.koin.android.ext.android.get
 
@@ -78,6 +73,10 @@ class DashboardFragment : Fragment() {
             val detailBullValues = resources.getStringArray(R.array.game_detail_bull_values)
             initSpinner(detailBullValues, _binding.inputGameDetailBull)
 
+            // Game details - Round
+            val detailRoundValues = resources.getStringArray(R.array.game_01_detail_round)
+            initSpinner(detailRoundValues, 1, _binding.inputGameDetailRound)
+
             // Game details layout animation
             addGameDetailsAnimation(view)
 
@@ -89,7 +88,7 @@ class DashboardFragment : Fragment() {
                     GameActivityArgs(
                         gameVariant.indexOf(_binding.inputVariant.text.toString()),
                         detailBullValues.indexOf(_binding.inputGameDetailBull.text.toString()) == 0,
-                        20,
+                        detailRoundValues.indexOf(_binding.inputGameDetailRound.text.toString()),
                         gameDetailsInOut.indexOf(_binding.inputGameDetailIn.text.toString()),
                         gameDetailsInOut.indexOf(_binding.inputGameDetailOut.text.toString())
                     ).toBundle())
@@ -106,11 +105,15 @@ class DashboardFragment : Fragment() {
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private fun initSpinner(array: Array<String>, field :AutoCompleteTextView?) {
+        initSpinner(array, 0, field)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initSpinner(array: Array<String>, initIndex: Int, field :AutoCompleteTextView?) {
         field?.setAdapter(ArrayAdapter(requireContext(),
             R.layout.list_textview_item, array))
-        field?.setText(array[0],false)
+        field?.setText(array[initIndex],false)
         field?.dropDownVerticalOffset = resources.getInteger(R.integer.dropdown_menu_vertical_offset)
         field?.setOnTouchListener { _, _ ->
             field.showDropDown()

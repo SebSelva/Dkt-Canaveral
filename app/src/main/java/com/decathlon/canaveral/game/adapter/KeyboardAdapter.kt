@@ -12,21 +12,20 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.isDigitsOnly
 import com.decathlon.canaveral.common.model.Point
 import kotlinx.coroutines.*
-import com.decathlon.canaveral.R as RApp
-import com.decathlon.core.R as RCore
+import com.decathlon.canaveral.R
 
 class KeyboardAdapter(private val context: Context,
                       val onDartTouched: (Point) -> Unit,
                       val onDartTouchAborted: () -> Unit
                       ) : BaseAdapter()
 {
-    private val keyboardItems : List<String> = context.resources.getStringArray(RCore.array.keyboard_items).asList()
+    private val keyboardItems : List<String> = context.resources.getStringArray(R.array.keyboard_items).asList()
 
-    private val mBullValue = context.resources.getString(RApp.string.game_bull)
-    private val mBackValue = context.resources.getString(RApp.string.game_back)
-    private val mMissValue = context.resources.getString(RApp.string.game_miss)
-    private val mDoubleValue = context.resources.getString(RApp.string.game_double)
-    private val mTripleValue = context.resources.getString(RApp.string.game_triple)
+    private val mBullValue = context.resources.getString(R.string.game_bull)
+    private val mBackValue = context.resources.getString(R.string.game_back)
+    private val mMissValue = context.resources.getString(R.string.game_miss)
+    private val mDoubleValue = context.resources.getString(R.string.game_double)
+    private val mTripleValue = context.resources.getString(R.string.game_triple)
 
     private var memoryKeyboardItem :AppCompatTextView? = null
 
@@ -46,13 +45,13 @@ class KeyboardAdapter(private val context: Context,
 
         if (view == null) {
             val layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(RApp.layout.item_keyboard, null);
+            view = layoutInflater.inflate(R.layout.item_keyboard, null);
         }
 
-        val itemText = view?.findViewById<AppCompatTextView>(RApp.id.keyboard_textview)
+        val itemText = view?.findViewById<AppCompatTextView>(R.id.keyboard_textview)
         itemText?.apply {
-            height = context.resources.getDimension(RApp.dimen.keyboard_item_height).toInt()
-            width = context.resources.getDimension(RApp.dimen.keyboard_item_width).toInt()
+            height = context.resources.getDimension(R.dimen.keyboard_item_height).toInt()
+            width = context.resources.getDimension(R.dimen.keyboard_item_width).toInt()
             typeface = Typeface.createFromAsset(context.assets, "klavika-bold.otf")
             gravity = Gravity.CENTER
             tag = itemValue
@@ -76,19 +75,19 @@ class KeyboardAdapter(private val context: Context,
         if (isReleased) {
             if (view?.tag == mMissValue || view?.tag == mBackValue) {
                 view.apply {
-                    setTextColor(AppCompatResources.getColorStateList(context, RApp.color.white))
-                    background = AppCompatResources.getDrawable(context, RApp.drawable.keyboard_background_grey)
+                    setTextColor(AppCompatResources.getColorStateList(context, R.color.white))
+                    background = AppCompatResources.getDrawable(context, R.drawable.keyboard_background_grey)
                 }
             } else {
                 view?.apply {
-                    setTextColor(AppCompatResources.getColorStateList(context, RApp.color.grey_kb_text))
+                    setTextColor(AppCompatResources.getColorStateList(context, R.color.grey_kb_text))
                     background = null
                 }
             }
         } else {
             view?.apply {
-                setTextColor(AppCompatResources.getColorStateList(context, RApp.color.white))
-                background = AppCompatResources.getDrawable(context, RApp.drawable.keyboard_background_blue)
+                setTextColor(AppCompatResources.getColorStateList(context, R.color.white))
+                background = AppCompatResources.getDrawable(context, R.drawable.keyboard_background_blue)
             }
         }
 

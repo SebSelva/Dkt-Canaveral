@@ -30,8 +30,8 @@
             android:defaultValue="true"
             app:argType="boolean"/>
         <argument
-            android:name="nbRound"
-            android:defaultValue="20"
+            android:name="roundIndex"
+            android:defaultValue="1"
             app:argType="integer"/>
         <argument
             android:name="inIndex"

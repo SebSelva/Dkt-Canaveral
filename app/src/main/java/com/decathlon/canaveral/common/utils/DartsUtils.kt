@@ -106,11 +106,12 @@ class DartsUtils {
         }
 
         fun getPlayerPPD(player: Player, stackPoints: Stack<PlayerPoint>): Float {
+
             return 0F
         }
 
-        fun is01GameFinished(startingPoints: Int, nbRounds: Int, players: List<Player>, stackPoints: Stack<PlayerPoint>, isSimpleBull25: Boolean): Boolean {
-            if (getRoundNumber(players, stackPoints) > nbRounds) {
+        fun is01GameFinished(startingPoints: Int, nbRounds: Int?, players: List<Player>, stackPoints: Stack<PlayerPoint>, isSimpleBull25: Boolean): Boolean {
+            if (nbRounds != null && getRoundNumber(players, stackPoints) > nbRounds) {
                 return true
             }
             getSorted01PlayersByScore(startingPoints, players, stackPoints, isSimpleBull25).forEach {
@@ -120,7 +121,7 @@ class DartsUtils {
             return false
         }
 
-        fun getSorted01PlayersByScore(startingPoints: Int, players: List<Player>, stackPoints: Stack<PlayerPoint>, isSimpleBull25: Boolean): Map<Player, Int> {
+        private fun getSorted01PlayersByScore(startingPoints: Int, players: List<Player>, stackPoints: Stack<PlayerPoint>, isSimpleBull25: Boolean): Map<Player, Int> {
             val playersScoresMap = HashMap<Player,Int>()
             players.forEach {
                 playersScoresMap[it] =

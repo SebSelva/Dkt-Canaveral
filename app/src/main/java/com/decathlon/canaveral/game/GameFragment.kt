@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.X01Player
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
@@ -27,6 +28,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -37,6 +40,8 @@ class GameFragment : Fragment() {
     private lateinit var _binding: FragmentGameBinding
 
     private val game01ViewModel: Game01ViewModel = get()
+
+    var jobNextPlayer: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +59,13 @@ class GameFragment : Fragment() {
             args = GameActivityArgs.fromBundle(activity?.intent?.extras!!)
         }
 
+        initViews(view)
+    }
+
+    private fun initViews(view: View) {
+
         val startingPoints = resources.getStringArray(R.array.zero_game_type_array)[args.variantIndex].toInt()
+        val nbRounds = resources.getStringArray(R.array.game_01_detail_round)[args.roundIndex].toIntOrNull()
 
         // Options
         _binding.gameOptions.setOnClickListener {
@@ -86,65 +97,106 @@ class GameFragment : Fragment() {
 
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
-            _binding.playersWaiting.isVisible = (game01ViewModel.players.size > 1)
-            _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
-
-            _binding.playerName.text = it?.nickname
-            _binding.playerRound.text =
-                resources.getString(R.string.player_round, game01ViewModel.currentRound, args.nbRound)
-            _binding.playerPointsRemaining.text = startingPoints
-                    .minus(DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints))
-                    .toString()
-
-            // Other players ordered
-            val otherPlayers = getWaitingPlayersOrdered(it, game01ViewModel.players)
-            if (otherPlayers.isNotEmpty()) {
-                playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
-            }
+            onUpdateCurrentPlayer(it, nbRounds, startingPoints, playersWaitingAdapter)
         })
         game01ViewModel.getCurrentPlayer()
 
-        var jobNextPlayer: Job? = null
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            playerPointsAdapter.setData(
-                DartsUtils.getPlayerRoundDarts(game01ViewModel.currentPlayer!!, game01ViewModel.currentRound, it),
-                game01ViewModel.isRoundDecreasing
-            )
-            val remainingPoints = startingPoints.minus(DartsUtils.getPlayerScore(args.isBull25, game01ViewModel.currentPlayer!!, it))
-
-            if ((_binding.playerPointsRemaining.text as String).toInt() != remainingPoints) {
-                startScoreAnimation(
-                    _binding.playerPointsRemaining,
-                    (_binding.playerPointsRemaining.text as String).toInt(),
-                    remainingPoints
-                )
-            }
-
-            // Test if game is finished
-            if (DartsUtils.is01GameFinished(startingPoints, args.nbRound, game01ViewModel.players, it, args.isBull25)) {
-                goToPlayersStatsScreen(startingPoints)
-            }
-
-            // Go to next player
-            if (DartsUtils.isPlayerRoundComplete(game01ViewModel.currentPlayerLiveData.value!!, game01ViewModel.currentRound, it)) {
-                jobNextPlayer = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-                    if (game01ViewModel.isStackIncreasing) {
-                        delay(2000)
-                        showPlayerRoundScore(
-                            DartsUtils.getScoreFromPointList(
-                                DartsUtils.getPlayerRoundDarts(
-                            game01ViewModel.currentPlayerLiveData.value!!, game01ViewModel.currentRound, it), args.isBull25))
-                    } else {
-                        delay(3000)
-                    }
-                    playerPointsAdapter.setData(emptyList(), false)
-                    game01ViewModel.selectNextPlayer()
-                }
-            } else if (!game01ViewModel.isStackIncreasing) {
-                jobNextPlayer?.cancel()
-            }
+            onUpdatePlayersPoints(playerPointsAdapter, it, startingPoints, nbRounds)
         })
         game01ViewModel.getPlayersPoints()
+    }
+
+    private fun onUpdatePlayersPoints(
+        playerPointsAdapter: PlayerPointsAdapter,
+        stack: Stack<PlayerPoint>,
+        startingPoints: Int,
+        nbRounds: Int?
+    ) {
+        playerPointsAdapter.setData(
+            DartsUtils.getPlayerRoundDarts(
+                game01ViewModel.currentPlayer!!,
+                game01ViewModel.currentRound,
+                stack
+            ),
+            game01ViewModel.isRoundDecreasing
+        )
+        val remainingPoints = startingPoints.minus(
+            DartsUtils.getPlayerScore(
+                args.isBull25,
+                game01ViewModel.currentPlayer!!,
+                stack
+            )
+        )
+
+        if ((_binding.playerPointsRemaining.text as String).toInt() != remainingPoints) {
+            startScoreAnimation(
+                _binding.playerPointsRemaining,
+                (_binding.playerPointsRemaining.text as String).toInt(),
+                remainingPoints
+            )
+        }
+
+        // Test if game is finished
+        if (DartsUtils.is01GameFinished(startingPoints, nbRounds, game01ViewModel.players, stack, args.isBull25)) {
+            goToPlayersStatsScreen(startingPoints)
+        }
+
+        // Go to next player
+        if (DartsUtils.isPlayerRoundComplete(
+                game01ViewModel.currentPlayerLiveData.value!!,
+                game01ViewModel.currentRound,
+                stack
+            )
+        ) {
+            jobNextPlayer = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                if (game01ViewModel.isStackIncreasing) {
+                    delay(2000)
+                    showPlayerRoundScore(
+                        DartsUtils.getScoreFromPointList(
+                            DartsUtils.getPlayerRoundDarts(
+                                game01ViewModel.currentPlayerLiveData.value!!,
+                                game01ViewModel.currentRound,
+                                stack
+                            ), args.isBull25
+                        )
+                    )
+                } else {
+                    delay(3000)
+                }
+                playerPointsAdapter.setData(emptyList(), false)
+                game01ViewModel.selectNextPlayer()
+            }
+        } else if (!game01ViewModel.isStackIncreasing) {
+            jobNextPlayer?.cancel()
+        }
+    }
+
+    private fun onUpdateCurrentPlayer(
+        player: Player,
+        nbRounds: Int?,
+        startingPoints: Int,
+        playersWaitingAdapter: PlayersWaitingAdapter
+    ) {
+        _binding.playersWaiting.isVisible = (game01ViewModel.players.size > 1)
+        _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
+
+        _binding.playerName.text = player.nickname
+        _binding.playerRound.text = if (nbRounds == null) {
+            resources.getString(R.string.player_round_unlimited, game01ViewModel.currentRound)
+        } else {
+            resources.getString(R.string.player_round, game01ViewModel.currentRound, nbRounds)
+        }
+
+        _binding.playerPointsRemaining.text = startingPoints
+            .minus(DartsUtils.getPlayerScore(args.isBull25, player, game01ViewModel.playersPoints))
+            .toString()
+
+        // Other players ordered
+        val otherPlayers = getWaitingPlayersOrdered(player, game01ViewModel.players)
+        if (otherPlayers.isNotEmpty()) {
+            playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
+        }
     }
 
     private fun goToPlayersStatsScreen(startingPoints: Int) {
@@ -169,7 +221,7 @@ class GameFragment : Fragment() {
         lifecycleScope.launchWhenResumed {
             delay(1200)
             findNavController().navigate(R.id.action_game_to_end,
-                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.nbRound, args.inIndex, args.outIndex).toBundle())
+                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.roundIndex, args.inIndex, args.outIndex).toBundle())
         }
     }
 
