@@ -74,7 +74,7 @@
 
         <argument
             android:name="x01PlayerList"
-            app:argType="com.decathlon.canaveral.common.model.X01Player[]"/>
+            app:argType="com.decathlon.canaveral.common.model.X01PlayerStats[]"/>
         <argument
             android:name="variantIndex"
             android:defaultValue="0"

@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
-import com.decathlon.canaveral.common.model.X01Player
+import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
 
@@ -33,7 +33,7 @@ class GameEndStatsFragment : Fragment() {
 
         val sortedPlayers = args.x01PlayerList
         sortedPlayers.sortBy { x01Player -> x01Player.remainingPoints }
-        val winPlayers = emptyList<X01Player>().toMutableList()
+        val winPlayers = emptyList<X01PlayerStats>().toMutableList()
         var bestScore: Int? = null
         sortedPlayers.forEach {
             if (bestScore == null) bestScore = it.remainingPoints
@@ -48,20 +48,20 @@ class GameEndStatsFragment : Fragment() {
             when (winPlayers.size) {
                 1 -> resources.getString(
                     R.string.game_end_win_one,
-                    winPlayersIterator.next().nickname
+                    winPlayersIterator.next().player.nickname
                 )
 
                 2 -> resources.getString(
                     R.string.game_end_win_two,
-                    winPlayersIterator.next().nickname,
-                    winPlayersIterator.next().nickname
+                    winPlayersIterator.next().player.nickname,
+                    winPlayersIterator.next().player.nickname
                 )
 
                 3 -> resources.getString(
                     R.string.game_end_win_three,
-                    winPlayersIterator.next().nickname,
-                    winPlayersIterator.next().nickname,
-                    winPlayersIterator.next().nickname
+                    winPlayersIterator.next().player.nickname,
+                    winPlayersIterator.next().player.nickname,
+                    winPlayersIterator.next().player.nickname
                 )
                 else -> resources.getString(R.string.game_end_draw)
             }

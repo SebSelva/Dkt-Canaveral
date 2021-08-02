@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
-import com.decathlon.canaveral.common.model.X01Player
+import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsLargeBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsMediumBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsSmallBinding
 
 class PlayersStatsAdapter(
     private val isWinViews: Boolean
-): RecyclerView.Adapter<BaseViewHolder<X01Player>>()  {
+): RecyclerView.Adapter<BaseViewHolder<X01PlayerStats>>()  {
 
     companion object {
         private const val SMALL = 0
@@ -20,10 +20,10 @@ class PlayersStatsAdapter(
         private const val LARGE = 2
     }
 
-    private var players: List<X01Player> = emptyList()
+    private var players: List<X01PlayerStats> = emptyList()
     private var isPortraitMode = true
 
-    fun setData(playerList: List<X01Player>, isPortrait: Boolean) {
+    fun setData(playerList: List<X01PlayerStats>, isPortrait: Boolean) {
         players = playerList
         isPortraitMode = isPortrait
     }
@@ -37,7 +37,7 @@ class PlayersStatsAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<X01Player> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<X01PlayerStats> {
 
         return when (viewType) {
             SMALL -> {
@@ -68,7 +68,7 @@ class PlayersStatsAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<X01Player>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<X01PlayerStats>, position: Int) {
         holder.bind(players[position])
     }
 
@@ -77,10 +77,10 @@ class PlayersStatsAdapter(
     }
 
     inner class PlayerStatsViewSmallHolder(private var binding: ItemListPlayerGameStatsSmallBinding) :
-        BaseViewHolder<X01Player>(binding.root) {
+        BaseViewHolder<X01PlayerStats>(binding.root) {
 
-        override fun bind(item: X01Player) {
-            binding.player = item
+        override fun bind(item: X01PlayerStats) {
+            binding.player = item.player
             binding.playerStatsPpd.text = item.ppd.toString()
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(R.string.game_end_remaining)
             binding.playerStatsSecondFieldValue.text = item.remainingPoints.toString()
@@ -89,10 +89,10 @@ class PlayersStatsAdapter(
     }
 
     inner class PlayerStatsViewMediumHolder(private var binding: ItemListPlayerGameStatsMediumBinding) :
-        BaseViewHolder<X01Player>(binding.root) {
+        BaseViewHolder<X01PlayerStats>(binding.root) {
 
-        override fun bind(item: X01Player) {
-            binding.player = item
+        override fun bind(item: X01PlayerStats) {
+            binding.player = item.player
             binding.playerStatsPpd.text = item.ppd.toString()
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(
                 if (isWinViews) R.string.game_end_checkout else R.string.game_end_remaining)
@@ -107,10 +107,10 @@ class PlayersStatsAdapter(
     }
 
     inner class PlayerStatsViewLargeHolder(private var binding: ItemListPlayerGameStatsLargeBinding) :
-        BaseViewHolder<X01Player>(binding.root) {
+        BaseViewHolder<X01PlayerStats>(binding.root) {
 
-        override fun bind(item: X01Player) {
-            binding.player = item
+        override fun bind(item: X01PlayerStats) {
+            binding.player = item.player
             binding.playerStatsPpd.text = item.ppd.toString()
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(R.string.game_end_checkout)
             binding.playerStatsSecondFieldValue.text = item.checkout.toString()
