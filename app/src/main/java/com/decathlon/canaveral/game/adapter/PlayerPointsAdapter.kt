@@ -112,7 +112,7 @@ class PlayerPointsAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
            override fun bind(item: Point) {
                val blinkTextAnim = AnimationUtils.loadAnimation(itemView.context, R.anim.text_blink)
-               if (isBlinkMode && !listData.contains(Dot()) && listData.indexOf(item) == 2) binding.point.startAnimation(blinkTextAnim)
+               if (isBlinkMode && item == listData.findLast { it !is Dot }) binding.point.startAnimation(blinkTextAnim)
                binding.point.text = DartsUtils.getStringFromPoint(binding.root.context, item)
                binding.executePendingBindings()
            }

@@ -108,7 +108,7 @@ class GameFragment : Fragment() {
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
             playerPointsAdapter.setData(
                 DartsUtils.getPlayerRoundDarts(game01ViewModel.currentPlayer!!, game01ViewModel.currentRound, it),
-                !game01ViewModel.isStackIncreasing
+                game01ViewModel.isRoundDecreasing
             )
             val remainingPoints = startingPoints.minus(DartsUtils.getPlayerScore(args.isBull25, game01ViewModel.currentPlayer!!, it))
 
