@@ -9,6 +9,7 @@ import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsLargeBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsMediumBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsSmallBinding
+import java.util.*
 
 class PlayersStatsAdapter(
     private val isWinViews: Boolean
@@ -81,7 +82,8 @@ class PlayersStatsAdapter(
 
         override fun bind(item: X01PlayerStats) {
             binding.player = item.player
-            binding.playerStatsPpd.text = item.ppd.toString()
+            binding.playerStatsPpd.text = String.format(Locale.ENGLISH,
+                binding.root.context.resources.getString(R.string.game_end_ppd_value), item.ppd)
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(R.string.game_end_remaining)
             binding.playerStatsSecondFieldValue.text = item.remainingPoints.toString()
             binding.executePendingBindings()
@@ -93,7 +95,8 @@ class PlayersStatsAdapter(
 
         override fun bind(item: X01PlayerStats) {
             binding.player = item.player
-            binding.playerStatsPpd.text = item.ppd.toString()
+            binding.playerStatsPpd.text = String.format(Locale.ENGLISH,
+                binding.root.context.resources.getString(R.string.game_end_ppd_value), item.ppd)
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(
                 if (isWinViews) R.string.game_end_checkout else R.string.game_end_remaining)
             binding.playerStatsSecondFieldValue.text =
@@ -111,7 +114,8 @@ class PlayersStatsAdapter(
 
         override fun bind(item: X01PlayerStats) {
             binding.player = item.player
-            binding.playerStatsPpd.text = item.ppd.toString()
+            binding.playerStatsPpd.text = String.format(Locale.ENGLISH,
+                binding.root.context.resources.getString(R.string.game_end_ppd_value), item.ppd)
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(R.string.game_end_checkout)
             binding.playerStatsSecondFieldValue.text = item.checkout.toString()
             binding.executePendingBindings()

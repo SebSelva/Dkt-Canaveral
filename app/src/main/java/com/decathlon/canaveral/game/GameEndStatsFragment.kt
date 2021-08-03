@@ -89,7 +89,6 @@ class GameEndStatsFragment : Fragment() {
         // Buttons
         _binding.buttonCheck.setOnClickListener { activity?.finish() }
         _binding.buttonReload.setOnClickListener {
-            /* Reload Game */
             Navigation.findNavController(view).navigate(
                 R.id.action_end_to_new_game,
                 GameActivityArgs(

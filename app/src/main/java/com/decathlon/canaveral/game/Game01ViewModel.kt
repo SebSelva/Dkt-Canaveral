@@ -3,6 +3,7 @@ package com.decathlon.canaveral.game
 import androidx.lifecycle.MutableLiveData
 import com.decathlon.canaveral.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
+import com.decathlon.canaveral.common.model.NullPoint
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.Point
@@ -18,12 +19,18 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
         private const val DARTS_SHOTS_NUMBER = 3
     }
 
+    var players: List<Player> = emptyList()
+    var startingPoints = 0
+    var isBull25 = true
+    var inValue = 0
+    var outValue = 0
+
     var playersPoints: Stack<PlayerPoint> = Stack()
     var currentPlayer: Player? = null
-    var players: List<Player> = emptyList()
     var currentRound: Int = 1
     var isStackIncreasing: Boolean = true
     var isRoundDecreasing: Boolean = false
+    var isRoundBusted = false
 
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
@@ -37,12 +44,32 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
         isStackIncreasing = true
         isRoundDecreasing = false
         currentPlayer?.let {
-            if (players.size == 1 || DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
+            if (DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
                 currentRound = DartsUtils.getRoundNumber(players, playersPoints)
-                playersPoints.push(PlayerPoint(it, point, currentRound))
+                isRoundBusted = DartsUtils.isBusted(it, playersPoints, point, startingPoints, isBull25, inValue, outValue)
+                playersPoints.push(PlayerPoint(it, point, currentRound, isRoundBusted))
+                if (isRoundBusted) addPlayerRoundBusted(currentRound, it)
                 playersPointsLivedata.postValue(playersPoints)
             }
         }
+    }
+
+    private fun addPlayerRoundBusted(currentRound: Int, currentPlayer: Player) {
+        playersPoints.filter { it.round == currentRound && it.player == currentPlayer }
+            .forEach {
+                it.isBusted = true
+            }
+        val nullDartsNumber = DARTS_SHOTS_NUMBER - playersPoints.filter { it.round == currentRound && it.player == currentPlayer }.size
+        repeat(nullDartsNumber) {
+            playersPoints.push(PlayerPoint(currentPlayer, NullPoint(), currentRound, true))
+        }
+    }
+
+    private fun removePlayerRoundBusted(currentRound: Int, currentPlayer: Player?) {
+        playersPoints.filter { it.round == currentRound && it.player == currentPlayer }
+            .forEach {
+                it.isBusted = false
+            }
     }
 
     fun removeLastPlayerPoint() {
@@ -52,10 +79,15 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
             if (currentPlayer != playersPoints.peek().player || currentRound != playersPoints.peek().round) {
                 currentPlayer = playersPoints.peek().player
                 currentRound = playersPoints.peek().round
+                isRoundBusted = playersPoints.peek().isBusted
                 isRoundDecreasing = true
                 currentPlayerLiveData.postValue(currentPlayer)
             } else {
-                playersPoints.pop()
+                var isNullDart = true
+                while (isNullDart) {
+                    isNullDart = playersPoints.pop().point is NullPoint
+                }
+                removePlayerRoundBusted(currentRound, currentPlayer)
             }
         }
         playersPointsLivedata.postValue(playersPoints)
