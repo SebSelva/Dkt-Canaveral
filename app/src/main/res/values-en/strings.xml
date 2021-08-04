@@ -24,6 +24,7 @@
     <string name="game_end_checkout">Checkout</string>
     <string name="game_end_draw">DRAW !</string>
     <string name="game_end_ppd">PPD</string>
+    <string name="game_end_ppd_value">%.2f</string>
     <string name="game_end_remaining">Remaining</string>
     <string name="game_end_win_one">%s wins !</string>
     <string name="game_end_win_three">%s, %s &amp; %s win !</string>
@@ -33,6 +34,7 @@
     <string name="game_options_quit">Quit the game</string>
     <string name="game_options_resume">Resume</string>
     <string name="game_options_title">Options</string>
+    <string name="game_round_bust">BUST</string>
     <string name="game_triple">T</string>
     <string name="game_type_01_game">01 Game</string>
     <string name="game_type_around_a_clock">Around a Clock</string>

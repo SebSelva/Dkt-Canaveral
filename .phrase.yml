@@ -9,6 +9,76 @@ phrase:
         file_format: xml
   pull:
     targets:
-    - file: ./app/src/main/res/values-<locale_code>/strings.xml
+    - file: ./app/src/main/res/values-en/strings.xml
       params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id: "en"
         file_format: xml
+    - file: ./app/src/main/res/values-de/strings.xml
+      params:
+        fallback_locale_id : "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "de"
+        file_format: xml
+    - file: ./app/src/main/res/values-es/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "es"
+        file_format: xml
+    - file: ./app/src/main/res/values-fr/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "fr"
+        file_format: xml
+    - file: ./app/src/main/res/values-it/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "it"
+        file_format: xml
+    - file: ./app/src/main/res/values-ja/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "ja"
+        file_format: xml
+    - file: ./app/src/main/res/values-ko/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "ko"
+        file_format: xml
+    - file: ./app/src/main/res/values-pt/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "pt"
+        file_format: xml
+    - file: ./app/src/main/res/values-ru/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "ru"
+        file_format: xml
+    - file: ./app/src/main/res/values-zh/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "zh"
+        file_format: xml
+    - file: ./app/src/main/res/values-zh-rCN/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "zh-rCN"
+        file_format: xml
+    - file: ./app/src/main/res/values-zh-rTW/strings.xml
+      params:
+        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
+        include_empty_translations: true
+        locale_id : "zh-rTW"
+        file_format: xml
+
