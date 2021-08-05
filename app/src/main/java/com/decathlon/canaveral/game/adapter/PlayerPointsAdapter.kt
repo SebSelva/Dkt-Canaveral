@@ -8,6 +8,7 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.common.model.Dot
+import com.decathlon.canaveral.common.model.NullPoint
 import com.decathlon.canaveral.common.model.Point
 import com.decathlon.canaveral.databinding.ItemListPlayerPointBinding
 
@@ -44,7 +45,7 @@ class PlayerPointsAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
     fun setData(points: List<Point>, isLastDartBlink: Boolean) {
         isBlinkMode = isLastDartBlink
         listData.clear()
-        listData.addAll(points)
+        listData.addAll(points.filter { it !is NullPoint })
 
         addDots()
         notifyDataSetChanged()

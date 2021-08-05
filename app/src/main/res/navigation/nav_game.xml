@@ -28,15 +28,14 @@
 
     <dialog
         android:id="@+id/ScoreFragment"
-        android:name="com.decathlon.canaveral.game.dialog.GameScoreFragment"
+        android:name="com.decathlon.canaveral.game.dialog.GameTransitionInfoFragment"
         android:label="@string/title_round_score"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
-        tools:layout="@layout/fragment_score">
+        tools:layout="@layout/fragment_transition_info">
         <argument
-            android:name="roundScore"
-            android:defaultValue="-1"
-            app:argType="integer"
+            android:name="info"
+            app:argType="string"
             app:nullable="false"/>
     </dialog>
 

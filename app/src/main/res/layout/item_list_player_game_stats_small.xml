@@ -51,7 +51,7 @@
             style="@style/Dkt.TextStyle.Player.Stats.Item.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/game_end_ppd"/>
 
         <androidx.appcompat.widget.AppCompatTextView

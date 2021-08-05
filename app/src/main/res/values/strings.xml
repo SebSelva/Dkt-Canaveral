@@ -51,6 +51,7 @@
     <string name="player_round">R %d/%d</string>
     <string name="player_round_unlimited">R %d</string>
     <string name="player_ppd">PPD: %.2f</string>
+    <string name="game_round_bust">BUST</string>
 
     // Game Options
     <string name="game_options_title">Options</string>
@@ -66,5 +67,6 @@
     <string name="game_end_checkout">Checkout</string>
     <string name="game_end_remaining">Remaining</string>
     <string name="game_end_ppd">PPD</string>
+    <string name="game_end_ppd_value">%.2f</string>
 
 </resources>

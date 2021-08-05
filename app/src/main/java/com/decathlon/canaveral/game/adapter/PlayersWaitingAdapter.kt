@@ -11,7 +11,8 @@ import com.decathlon.canaveral.databinding.ItemListGamePlayerBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull25: Boolean)
+class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull25: Boolean,
+                            private val inIndex: Int)
     : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private var waitingPlayers = ArrayList<Player>()
@@ -44,7 +45,7 @@ class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull2
         override fun bind(item: Player) {
             binding.player = item
             binding.playerScore.text = startingPoints
-                .minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints))
+                .minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints, inIndex))
                 .toString()
         }
     }

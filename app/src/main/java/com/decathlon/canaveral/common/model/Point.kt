@@ -7,3 +7,5 @@ open class Point(
 )
 
 class Dot: Point("-", false, false)
+
+class NullPoint: Point("null", false, false)
