@@ -72,18 +72,32 @@ class GameEndStatsFragment : Fragment() {
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val winningPlayersStatsAdapter = PlayersStatsAdapter(true)
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
-        winningPlayersStatsAdapter.setData(winPlayers,
-            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+
 
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val otherPlayersStatsAdapter = PlayersStatsAdapter(false)
+        val otherPlayersStatsAdapter = PlayersStatsAdapter(winPlayers.size == sortedPlayers.size)
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
-        otherPlayersStatsAdapter.setData(
-            sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size),
-            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-        )
+
+        if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
+            winningPlayersStatsAdapter.setData(
+                winPlayers.subList(0,2),
+                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            otherPlayersStatsAdapter.setData(
+                sortedPlayers.toList().subList(2, sortedPlayers.size),
+                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            )
+        } else {
+            winningPlayersStatsAdapter.setData(
+                winPlayers,
+                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+            otherPlayersStatsAdapter.setData(
+                sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size),
+                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            )
+        }
+
 
 
         // Buttons
