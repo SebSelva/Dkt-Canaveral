@@ -26,4 +26,10 @@
     <dimen name="keyboard_item_width">51dp</dimen>
     <dimen name="keyboard_item_vertical_spacing">@dimen/margin_medium</dimen>
     <dimen name="keyboard_item_horizontal_spacing">@dimen/margin_xlarge</dimen>
+    /// Keyboard Land
+    <dimen name="keyboard_item_land_height">45dp</dimen>
+    <dimen name="keyboard_item_land_width">45dp</dimen>
+    <dimen name="keyboard_item_land_vertical_spacing">@dimen/margin_small</dimen>
+    <dimen name="keyboard_item_land_horizontal_spacing">@dimen/margin_xxlarge</dimen>
+
 </resources>

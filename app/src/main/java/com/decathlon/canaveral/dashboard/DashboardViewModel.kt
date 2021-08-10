@@ -7,8 +7,15 @@ import com.decathlon.canaveral.common.model.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
+
+private val TAG = DashboardViewModel::class.simpleName
 
 class DashboardViewModel (private val interactors: Interactors) : BaseViewModel() {
+
+    init {
+        Timber.d("%s Init", TAG)
+    }
 
     val playerLiveData : MutableLiveData<List<Player>> = MutableLiveData()
 

@@ -18,14 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
-import org.koin.android.ext.android.get
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class DashboardFragment : Fragment() {
 
-    private val dashboardViewModel: DashboardViewModel = get()
+    private val dashboardViewModel by viewModel<DashboardViewModel>()
     private lateinit var _binding: FragmentDashboardBinding
 
     override fun onCreateView(
