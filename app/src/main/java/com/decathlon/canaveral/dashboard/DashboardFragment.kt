@@ -3,12 +3,12 @@ package com.decathlon.canaveral.dashboard
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Filter
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,18 +24,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     private val dashboardViewModel by viewModel<DashboardViewModel>()
-    private lateinit var _binding: FragmentDashboardBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        _binding = FragmentDashboardBinding.bind(view)
-        return view
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_dashboard
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -111,7 +106,7 @@ class DashboardFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initSpinner(array: Array<String>, initIndex: Int, field :AutoCompleteTextView?) {
-        field?.setAdapter(ArrayAdapter(requireContext(),
+        field?.setAdapter(MyAdapter(requireContext(),
             R.layout.list_textview_item, array))
         field?.setText(array[initIndex],false)
         field?.dropDownVerticalOffset = resources.getInteger(R.integer.dropdown_menu_vertical_offset)
@@ -119,6 +114,7 @@ class DashboardFragment : Fragment() {
             field.showDropDown()
             true
         }
+        field?.invalidate()
     }
 
     private fun addGameDetailsAnimation(view : View) {
@@ -163,5 +159,22 @@ class DashboardFragment : Fragment() {
                 }
             }
         }
+    }
+
+    /**
+     * Workaround to always have dropdown menu choice list filled
+     */
+    class MyAdapter(context: Context, layoutId: Int, items: Array<String>)
+        : ArrayAdapter<String>(context, layoutId, items) {
+
+        private val noOpFilter = object : Filter() {
+            private val noOpResult = FilterResults()
+            override fun performFiltering(constraint: CharSequence?) = noOpResult
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                // Workaround to not show filtered results
+            }
+        }
+
+        override fun getFilter() = noOpFilter
     }
 }
