@@ -23,6 +23,11 @@
     <string name="game_type_around_a_clock">Around a Clock</string>
     <string name="game_type_killer">Killer</string>
 
+    // Countup variants
+    <string name="game_variant_countup_standard">Standard</string>
+    <string name="game_variant_countup_cricket">Cricket</string>
+    <string name="game_variant_countup_bull">Bull</string>
+
     // In Out values
     <string name="game_detail_inout_simple">Simple</string>
     <string name="game_detail_inout_double">Double</string>
@@ -40,6 +45,10 @@
     <string name="dashboard_game_detail_rounds">Rounds</string>
     <string name="dashboard_game_detail_round_infinite">Infinite</string>
     <string name="dashboard_start">START</string>
+
+    // Loading Game
+    <string name="loading_game_tip_bot">Did you know ?\n You can assign a bot if you\’re alone !</string>
+    <string name="loading_game_loading">Loading now…</string>
 
     // Game
     <string name="game_bull">Bull</string>

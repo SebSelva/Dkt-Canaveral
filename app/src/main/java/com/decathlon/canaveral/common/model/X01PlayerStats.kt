@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class X01PlayerStats (
     val player: Player,
-    var remainingPoints: Int,
+    var currentScore: Int,
     var checkout: Int,
     var ppd: Float
     ) : Parcelable

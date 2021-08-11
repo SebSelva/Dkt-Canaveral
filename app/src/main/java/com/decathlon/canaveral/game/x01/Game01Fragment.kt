@@ -1,16 +1,13 @@
-package com.decathlon.canaveral.game
+package com.decathlon.canaveral.game.x01
 
-import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
@@ -19,10 +16,10 @@ import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
+import com.decathlon.canaveral.game.GameEndStatsFragmentArgs
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
-import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,32 +29,24 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class GameFragment : BaseFragment<FragmentGameBinding>() {
+class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
-    private lateinit var args: GameActivityArgs
-
+    private val args: Game01FragmentArgs by navArgs()
     private val game01ViewModel by viewModel<Game01ViewModel>()
+    override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_game
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (activity?.intent?.extras != null) {
-            args = GameActivityArgs.fromBundle(activity?.intent?.extras!!)
-        }
-
-        game01ViewModel.startingPoints = resources.getStringArray(R.array.zero_game_type_array)[args.variantIndex].toInt()
+        game01ViewModel.startingPoints = resources.getStringArray(R.array.game_x01_variant_array)[args.variantIndex].toInt()
         game01ViewModel.isBull25 = args.isBull25
         game01ViewModel.inValue = args.inIndex
         game01ViewModel.outValue = args.outIndex
-        game01ViewModel.nbRounds = resources.getStringArray(R.array.game_01_detail_round)[args.roundIndex].toIntOrNull()
+        game01ViewModel.nbRounds = resources.getStringArray(R.array.game_x01_detail_round)[args.roundIndex].toIntOrNull()
 
         initViews(view)
     }
@@ -123,12 +112,12 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
             ),
             game01ViewModel.isRoundDecreasing
         )
-        val remainingPoints = startingPoints.minus(DartsUtils.getPlayerScore(
-                game01ViewModel.isBull25,
-                game01ViewModel.currentPlayer!!,
-                stack,
-                game01ViewModel.inValue)
-        )
+        val remainingPoints = DartsUtils.get01GamePlayerScore(startingPoints,
+            game01ViewModel.isBull25,
+            game01ViewModel.currentPlayer!!,
+            stack,
+            game01ViewModel.inValue)
+
         _binding.playerPdd.text = String.format(Locale.ENGLISH, resources.getString(R.string.player_ppd),
         DartsUtils.getPlayerPPD(game01ViewModel.currentPlayer!!, stack, args.isBull25))
 
@@ -194,7 +183,7 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
         _binding.playersWaiting.isVisible = (game01ViewModel.players.size > 1)
         _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
 
-        _binding.playerName.text = player.nickname
+        _binding.currentPlayer = player
         _binding.playerRound.text = if (nbRounds == null) {
             resources.getString(R.string.player_round_unlimited, game01ViewModel.currentRound)
         } else {
@@ -221,7 +210,7 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
             x01PlayerList.add(
                 X01PlayerStats(
                     it,
-                    remainingPoints = startingPoints.minus(
+                    currentScore = startingPoints.minus(
                         DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints, args.inIndex)),
                     checkout = DartsUtils.getScoreFromPointList(
                         DartsUtils.getPlayerRoundDarts(it, game01ViewModel.currentRound, game01ViewModel.playersPoints),
@@ -254,22 +243,5 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
             }
         }
         return playersWaiting
-    }
-
-    @SuppressLint("Recycle")
-    private fun startScoreAnimation(textView: AppCompatTextView, start: Int, end: Int) {
-        val valueAnimator = ValueAnimator.ofInt(start, end)
-        valueAnimator.duration = 800
-        valueAnimator.interpolator = LinearOutSlowInInterpolator()
-        valueAnimator.addUpdateListener {
-            textView.text = it.animatedValue.toString()
-        }
-        valueAnimator.start()
-    }
-
-    private fun showTransitionInfo(info: String) {
-        this.findNavController().navigate(
-            R.id.action_game_to_score,
-            GameTransitionInfoFragmentArgs(info).toBundle())
     }
 }

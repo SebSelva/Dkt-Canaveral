@@ -1,13 +1,13 @@
 package com.decathlon.canaveral;
 
 import android.app.Application
-import com.decathlon.canaveral.dashboard.DashboardViewModel
-import com.decathlon.canaveral.game.Game01ViewModel
-import com.decathlon.core.player.data.PlayerRepository
-import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import com.decathlon.canaveral.common.interactors.AddPlayer
 import com.decathlon.canaveral.common.interactors.DeletePlayer
 import com.decathlon.canaveral.common.interactors.GetPlayers
+import com.decathlon.canaveral.dashboard.DashboardViewModel
+import com.decathlon.canaveral.game.x01.Game01ViewModel
+import com.decathlon.core.player.data.PlayerRepository
+import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.android.viewmodel.dsl.viewModel

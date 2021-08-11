@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,7 +77,8 @@
                                 android:id="@+id/game_details_01_game"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:visibility="gone">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="match_parent"
@@ -179,6 +182,71 @@
 
                                         <AutoCompleteTextView
                                             android:id="@+id/input_game_detail_round"
+                                            style="@style/Dkt.TextStyle.SpinnerText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/spinner_height"
+                                            android:background="@drawable/background_spinner"
+                                            tools:text="20"/>
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/game_details_countup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:orientation="vertical">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            style="@style/Dkt.TextStyle.Label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                                            android:text="@string/dashboard_game_detail_bull_value" />
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/input_countup_detail_bull"
+                                            style="@style/Dkt.TextStyle.SpinnerText"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/spinner_height"
+                                            android:background="@drawable/background_spinner"
+                                            tools:text="25/50"/>
+
+                                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                    <androidx.appcompat.widget.LinearLayoutCompat
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            style="@style/Dkt.TextStyle.Label"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                            android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                                            android:text="@string/dashboard_game_detail_rounds" />
+
+                                        <AutoCompleteTextView
+                                            android:id="@+id/input_countup_detail_round"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"

@@ -85,7 +85,7 @@ class PlayersStatsAdapter(
             binding.playerStatsPpd.text = String.format(Locale.ENGLISH,
                 binding.root.context.resources.getString(R.string.game_end_ppd_value), item.ppd)
             binding.playerStatsSecondFieldTitle.text = binding.root.context.resources.getString(R.string.game_end_remaining)
-            binding.playerStatsSecondFieldValue.text = item.remainingPoints.toString()
+            binding.playerStatsSecondFieldValue.text = item.currentScore.toString()
             binding.executePendingBindings()
         }
     }
@@ -103,7 +103,7 @@ class PlayersStatsAdapter(
                 if (isWinViews) {
                     item.checkout
                 } else {
-                    item.remainingPoints
+                    item.currentScore
                 }.toString()
             binding.executePendingBindings()
         }

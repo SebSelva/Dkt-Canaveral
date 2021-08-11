@@ -15,12 +15,17 @@
             android:id="@+id/action_dashboard_to_game"
             app:destination="@id/GameActivity" />
     </fragment>
+
     <activity
         android:id="@+id/GameActivity"
         android:name="com.decathlon.canaveral.game.GameActivity"
         android:label="@string/title_game"
         tools:layout="@layout/activity_game">
 
+        <argument
+            android:name="gameTypeIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
         <argument
             android:name="variantIndex"
             android:defaultValue="0"

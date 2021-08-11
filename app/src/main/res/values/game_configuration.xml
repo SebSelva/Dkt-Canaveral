@@ -5,6 +5,7 @@
     
     <string-array name="game_type_array">
         <item>@string/game_type_01_game</item>
+        <item>@string/game_type_count_up</item>
     </string-array>
 
     <string-array name="versus_type">
@@ -14,12 +15,18 @@
         <item>1 vs 1 vs 1 vs 1</item>
     </string-array>
 
-    <string-array name="zero_game_type_array">
+    <string-array name="game_x01_variant_array">
         <item>301</item>
         <item>501</item>
         <item>701</item>
         <item>901</item>
         <item>1001</item>
+    </string-array>
+
+    <string-array name="game_countup_variant_array">
+        <item>@string/game_variant_countup_standard</item>
+        <item>@string/game_variant_countup_cricket</item>
+        <item>@string/game_variant_countup_bull</item>
     </string-array>
     
     <string-array name="game_detail_inout_values">
@@ -33,11 +40,17 @@
         <item>50/50</item>
     </string-array>
 
-    <string-array name="game_01_detail_round">
+    <string-array name="game_x01_detail_round">
         <item>15</item>
         <item>20</item>
         <item>25</item>
         <item>@string/dashboard_game_detail_round_infinite</item>
+    </string-array>
+
+    <string-array name="game_countup_detail_round">
+        <item>8</item>
+        <item>12</item>
+        <item>16</item>
     </string-array>
 
 </resources>

@@ -14,8 +14,8 @@ class DartsUtils {
 
     companion object {
 
-        const val BULL_VALUE = "Bull"
-        const val MISS_VALUE = "Miss"
+        const val DARTS_SHOTS_NUMBER = 3
+        private const val BULL_VALUE = "Bull"
 
         fun getStringFromPoint(context: Context, point: Point) :String {
             var text = ""
@@ -127,11 +127,11 @@ class DartsUtils {
          * Get the round number for the next point to add
          */
         fun getRoundNumber(players: List<Player>, stackPoints: Stack<PlayerPoint>): Int {
-            return (stackPoints.size / (players.size * 3)) + 1
+            return (stackPoints.size / (players.size * DARTS_SHOTS_NUMBER)) + 1
         }
 
         fun isPlayerRoundComplete(currentPlayer: Player, round: Int, stack: Stack<PlayerPoint>): Boolean {
-            return getPlayerRoundDarts(currentPlayer, round, stack).size == 3
+            return getPlayerRoundDarts(currentPlayer, round, stack).size == DARTS_SHOTS_NUMBER
         }
 
         fun getPlayerPPD(player: Player, stackPoints: Stack<PlayerPoint>, isBull25: Boolean): Float {
@@ -141,6 +141,11 @@ class DartsUtils {
             } else {
                 0F
             }
+        }
+
+        fun get01GamePlayerScore(startingPoints: Int, isBull25: Boolean, player: Player,
+                                 stackPoints: Stack<PlayerPoint>?, inValue: Int) :Int {
+            return startingPoints.minus(getPlayerScore(isBull25, player, stackPoints, inValue))
         }
 
         fun is01GameFinished(startingPoints: Int, isSimpleBull25: Boolean, nbRounds: Int?,
@@ -168,19 +173,12 @@ class DartsUtils {
             return playersScoresMap.toList().sortedBy { (_,value) -> value}.toMap()
         }
 
-        fun get01WinnersNumber(startingPoints: Int, isSimpleBull25: Boolean,
-                               inIndex: Int, players: List<Player>,
-                               stackPoints: Stack<PlayerPoint>): Int {
-            val playersScoresMap = getSorted01PlayersByScore(startingPoints, isSimpleBull25, inIndex, players, stackPoints)
-            var bestScore: Int? = null
-            val winners = emptyList<Player>().toMutableList()
-            playersScoresMap.forEach {
-                if (bestScore == null) bestScore = it.value
-                if (it.value == bestScore) {
-                    winners[winners.size] = it.key
-                }
+        fun isCountUpFinished(nbRounds: Int?, players: List<Player>,
+                              stackPoints: Stack<PlayerPoint>): Boolean {
+            if (nbRounds != null && getRoundNumber(players, stackPoints) > nbRounds) {
+                return true
             }
-            return winners.size
+            return false
         }
     }
 }

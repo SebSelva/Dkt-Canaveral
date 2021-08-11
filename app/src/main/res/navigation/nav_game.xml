@@ -3,13 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_game"
-    app:startDestination="@id/GameFragment">
+    app:startDestination="@id/GameLoading">
 
     <fragment
-        android:id="@+id/GameFragment"
-        android:name="com.decathlon.canaveral.game.GameFragment"
+        android:id="@+id/GameLoading"
+        android:name="com.decathlon.canaveral.loading.LoadingGameFragment"
+        android:label="Loading"
+        tools:layout="@layout/fragment_loading_game">
+
+        <action
+            android:id="@+id/action_loading_to_01game"
+            app:destination="@id/Game01Fragment" />
+        <action
+            android:id="@+id/action_loading_to_countup"
+            app:destination="@id/GameCountUpFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/Game01Fragment"
+        android:name="com.decathlon.canaveral.game.x01.Game01Fragment"
         android:label="@string/title_game"
         tools:layout="@layout/fragment_game">
+
+        <argument
+            android:name="variantIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="isBull25"
+            android:defaultValue="true"
+            app:argType="boolean"/>
+        <argument
+            android:name="roundIndex"
+            android:defaultValue="1"
+            app:argType="integer"/>
+        <argument
+            android:name="inIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="outIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
 
         <action
             android:id="@+id/action_game_to_score"
@@ -69,7 +105,7 @@
         tools:layout="@layout/fragment_game_end">
 
         <action android:id="@+id/action_end_to_new_game"
-            app:destination="@id/GameFragment"/>
+            app:destination="@id/Game01Fragment"/>
 
         <argument
             android:name="x01PlayerList"
@@ -95,6 +131,39 @@
             android:defaultValue="0"
             app:argType="integer"/>
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/GameCountUpFragment"
+        android:name="com.decathlon.canaveral.game.countup.GameCountupFragment"
+        android:label="@string/title_game"
+        tools:layout="@layout/fragment_game">
+
+        <argument
+            android:name="variantIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="isBull25"
+            android:defaultValue="true"
+            app:argType="boolean"/>
+        <argument
+            android:name="roundIndex"
+            android:defaultValue="1"
+            app:argType="integer"/>
+
+        <action
+            android:id="@+id/action_game_to_score"
+            app:destination="@id/ScoreFragment" />
+        <action android:id="@+id/action_game_to_options"
+            app:destination="@id/OptionsFragment" />
+        <action
+            android:id="@+id/action_game_to_end"
+            app:destination="@id/EndGameFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
 </navigation>

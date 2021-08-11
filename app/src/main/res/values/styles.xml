@@ -150,6 +150,15 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <style name="Dkt.TextStyle.Loading.Title" parent="Dkt.TextStyle.White">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Loading.Content" parent="Dkt.TextStyle.White">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 
     // TEXT STYLES - END
 </resources>

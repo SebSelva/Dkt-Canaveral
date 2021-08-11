@@ -6,13 +6,14 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.decathlon.canaveral.game.Game01ViewModel" />
+            name="currentPlayer"
+            type="com.decathlon.canaveral.common.model.Player" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/grey_light">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                         android:contentDescription="@string/image_description"
                         android:scaleType="centerCrop"
                         android:src="@drawable/profile_default"
-                        app:showImage="@{viewModel.currentPlayerLiveData.image}"
+                        app:showImage="@{currentPlayer.image}"
                         tools:src="@drawable/profile_default" />
 
                 </androidx.cardview.widget.CardView>
@@ -93,13 +94,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:textSize="18sp"
-                    android:text="@{viewModel.currentPlayerLiveData.nickname}"
+                    android:text="@{currentPlayer.nickname}"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/player_image_round"
                     tools:text="Player X" />
 
-                <com.decathlon.canaveral.view.ScoreTextView
+                <com.decathlon.canaveral.common.view.ScoreTextView
                     android:id="@+id/player_points_remaining"
                     style="@style/Dkt.TextStyle.PlayerScore.Playing"
                     android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.view
+package com.decathlon.canaveral.common.view
 
 import android.content.Context
 import android.graphics.Typeface
