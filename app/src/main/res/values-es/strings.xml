@@ -47,8 +47,8 @@
     <string name="game_variant_countup_cricket">Cricket</string>
     <string name="game_variant_countup_standard">Standard</string>
     <string name="image_description">image</string>
-    <string name="loading_game_loading">Loading now...</string>
-    <string name="loading_game_tip_bot">Did you know ?\nYou can assign a bot if you’re alone !</string>
+    <string name="loading_game_loading">Loading now…</string>
+    <string name="loading_game_tip_bot">Did you know ?\n You can assign a bot if you\’re alone !</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
