@@ -9,22 +9,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
-import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.X01PlayerStats
+import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
-import com.decathlon.canaveral.databinding.FragmentGameBinding
-import com.decathlon.canaveral.game.GameEndStatsFragmentArgs
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
+import com.decathlon.canaveral.game.GameStatsFragmentArgs
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.collections.ArrayList
 
 class GameCountUpFragment : Game01Fragment() {
 
@@ -200,14 +197,14 @@ class GameCountUpFragment : Game01Fragment() {
     }
 
     private fun goToPlayersStatsScreen() {
-        val x01PlayerList = emptyList<X01PlayerStats>().toMutableList()
+        val x01PlayerList = emptyList<PlayerStats>().toMutableList()
         countUpViewModel.players.forEach {
             x01PlayerList.add(
-                X01PlayerStats(
+                PlayerStats(
                     it,
                     currentScore = DartsUtils.getCountUpPlayerScore(
                         countUpViewModel.isBull25,
-                        countUpViewModel.currentPlayer!!,
+                        it,
                         countUpViewModel.playersPoints
                     ),
                     checkout = DartsUtils.getScoreFromPointList(
@@ -221,7 +218,7 @@ class GameCountUpFragment : Game01Fragment() {
         lifecycleScope.launchWhenResumed {
             delay(1200)
             findNavController().navigate(R.id.action_game_to_end,
-                GameEndStatsFragmentArgs(
+                GameStatsFragmentArgs(
                     x01PlayerList.toTypedArray(),
                     args.variantIndex,
                     args.isBull25,

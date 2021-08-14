@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class X01PlayerStats (
+class PlayerStats (
     val player: Player,
     var currentScore: Int,
     var checkout: Int,

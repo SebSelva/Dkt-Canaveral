@@ -98,7 +98,7 @@
 
     <fragment
         android:id="@+id/EndGameFragment"
-        android:name="com.decathlon.canaveral.game.GameEndStatsFragment"
+        android:name="com.decathlon.canaveral.game.GameStatsFragment"
         android:label="Game End"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
@@ -108,8 +108,8 @@
             app:destination="@id/Game01Fragment"/>
 
         <argument
-            android:name="x01PlayerList"
-            app:argType="com.decathlon.canaveral.common.model.X01PlayerStats[]"/>
+            android:name="playerList"
+            app:argType="com.decathlon.canaveral.common.model.PlayerStats[]"/>
         <argument
             android:name="variantIndex"
             android:defaultValue="0"
