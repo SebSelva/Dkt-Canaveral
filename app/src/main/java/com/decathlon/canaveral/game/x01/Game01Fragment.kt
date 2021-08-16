@@ -12,10 +12,10 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.X01PlayerStats
+import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
-import com.decathlon.canaveral.game.GameEndStatsFragmentArgs
+import com.decathlon.canaveral.game.GameStatsFragmentArgs
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
@@ -200,10 +200,10 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
     }
 
     private fun goToPlayersStatsScreen(startingPoints: Int) {
-        val x01PlayerList = emptyList<X01PlayerStats>().toMutableList()
+        val x01PlayerList = emptyList<PlayerStats>().toMutableList()
         game01ViewModel.players.forEach {
             x01PlayerList.add(
-                X01PlayerStats(
+                PlayerStats(
                     it,
                     currentScore = startingPoints.minus(
                         DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints, args.inIndex)),
@@ -217,7 +217,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         lifecycleScope.launchWhenResumed {
             delay(1200)
             findNavController().navigate(R.id.action_game_to_end,
-                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.roundIndex, args.inIndex, args.outIndex).toBundle())
+                GameStatsFragmentArgs(
+                    x01PlayerList.toTypedArray(),
+                    args.variantIndex,
+                    args.isBull25,
+                    args.roundIndex,
+                    args.inIndex,
+                    args.outIndex
+                ).toBundle())
         }
     }
 }

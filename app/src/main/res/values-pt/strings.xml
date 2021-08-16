@@ -26,6 +26,8 @@
     <string name="game_end_ppd">PPD</string>
     <string name="game_end_ppd_value">%.2f</string>
     <string name="game_end_remaining">Remaining</string>
+    <string name="game_end_score_reached">Reached score</string>
+    <string name="game_end_score_total">Total score</string>
     <string name="game_end_win_one">%s wins !</string>
     <string name="game_end_win_three">%s, %s &amp; %s win !</string>
     <string name="game_end_win_two">%s &amp; %s win !</string>

@@ -8,21 +8,21 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.model.X01PlayerStats
+import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
 
-class GameEndStatsFragment : BaseFragment<FragmentGameEndBinding>() {
+class GameStatsFragment(private val gameTypeIndex: Int) : BaseFragment<FragmentGameEndBinding>() {
 
-    private val args: GameEndStatsFragmentArgs by navArgs()
+    private val args: GameStatsFragmentArgs by navArgs()
     override var layoutId = R.layout.fragment_game_end
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sortedPlayers = args.x01PlayerList
-        sortedPlayers.sortBy { x01Player -> x01Player.currentScore }
-        val winPlayers = emptyList<X01PlayerStats>().toMutableList()
+        val sortedPlayers = args.playerList
+        sortedPlayers.sortByDescending { x01Player -> x01Player.currentScore }
+        val winPlayers = emptyList<PlayerStats>().toMutableList()
         var bestScore: Int? = null
         sortedPlayers.forEach {
             if (bestScore == null) bestScore = it.currentScore
@@ -59,13 +59,13 @@ class GameEndStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         // Winning players
         _binding.endWinningPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val winningPlayersStatsAdapter = PlayersStatsAdapter(true)
+        val winningPlayersStatsAdapter = PlayersStatsAdapter(gameTypeIndex,true)
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val otherPlayersStatsAdapter = PlayersStatsAdapter(winPlayers.size == sortedPlayers.size)
+        val otherPlayersStatsAdapter = PlayersStatsAdapter(gameTypeIndex,winPlayers.size == sortedPlayers.size)
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
         if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
