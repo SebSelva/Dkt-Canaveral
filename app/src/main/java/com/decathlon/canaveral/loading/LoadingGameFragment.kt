@@ -8,7 +8,7 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.databinding.FragmentLoadingGameBinding
 import com.decathlon.canaveral.game.GameActivityArgs
-import com.decathlon.canaveral.game.countup.GameCountupFragmentArgs
+import com.decathlon.canaveral.game.countup.GameCountUpFragmentArgs
 import com.decathlon.canaveral.game.x01.Game01FragmentArgs
 import kotlinx.coroutines.delay
 
@@ -45,15 +45,15 @@ class LoadingGameFragment: BaseFragment<FragmentLoadingGameBinding>() {
                             args.outIndex
                         ).toBundle())
                 }
-                /*resources.getString(R.string.game_type_count_up) -> {
+                resources.getString(R.string.game_type_count_up) -> {
                     Navigation.findNavController(view).navigate(
                         R.id.action_loading_to_countup,
-                        GameCountupFragmentArgs(
+                        GameCountUpFragmentArgs(
                             args.variantIndex,
                             args.isBull25,
                             args.roundIndex
                         ).toBundle())
-                }*/
+                }
                 else -> activity?.finish()
             }
         }

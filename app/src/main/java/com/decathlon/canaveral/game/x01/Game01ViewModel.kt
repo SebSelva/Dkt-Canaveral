@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 
-class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
+open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     var players: List<Player> = emptyList()
     var startingPoints = 0
@@ -38,7 +38,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
         getCurrentPlayer()
     }
 
-    fun addPlayerPoint(point: Point) {
+    open fun addPlayerPoint(point: Point) {
         isStackIncreasing = true
         isRoundDecreasing = false
         currentPlayer?.let {

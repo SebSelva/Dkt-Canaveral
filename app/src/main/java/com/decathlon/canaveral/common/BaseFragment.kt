@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
@@ -44,5 +45,24 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         this.findNavController().navigate(
             R.id.action_game_to_score,
             GameTransitionInfoFragmentArgs(info).toBundle())
+    }
+
+    protected fun getWaitingPlayersOrdered(
+        it: Player,
+        allPlayers: List<Player>
+    ): ArrayList<Player> {
+        val playersWaiting = ArrayList<Player>()
+        for (player in allPlayers) {
+            if (player != it) {
+                if (allPlayers.indexOf(player) < allPlayers.indexOf(it))
+                    playersWaiting.add(playersWaiting.size, player)
+                else
+                    playersWaiting.add(
+                        allPlayers.indexOf(player)
+                                - allPlayers.indexOf(it) - 1, player
+                    )
+            }
+        }
+        return playersWaiting
     }
 }

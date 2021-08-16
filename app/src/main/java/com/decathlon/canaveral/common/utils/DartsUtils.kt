@@ -173,6 +173,11 @@ class DartsUtils {
             return playersScoresMap.toList().sortedBy { (_,value) -> value}.toMap()
         }
 
+        fun getCountUpPlayerScore(isBull25: Boolean, player: Player,
+                                  stackPoints: Stack<PlayerPoint>?) :Int {
+            return getPlayerScore(isBull25, player, stackPoints, 0)
+        }
+
         fun isCountUpFinished(nbRounds: Int?, players: List<Player>,
                               stackPoints: Stack<PlayerPoint>): Boolean {
             if (nbRounds != null && getRoundNumber(players, stackPoints) > nbRounds) {

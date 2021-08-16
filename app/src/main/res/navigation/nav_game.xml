@@ -135,7 +135,7 @@
 
     <fragment
         android:id="@+id/GameCountUpFragment"
-        android:name="com.decathlon.canaveral.game.countup.GameCountupFragment"
+        android:name="com.decathlon.canaveral.game.countup.GameCountUpFragment"
         android:label="@string/title_game"
         tools:layout="@layout/fragment_game">
 

@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.game.x01
+package com.decathlon.canaveral.game.countup
 
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
@@ -19,15 +19,17 @@ import com.decathlon.canaveral.game.GameEndStatsFragmentArgs
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
+import com.decathlon.canaveral.game.x01.Game01Fragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
-open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
+class GameCountUpFragment : Game01Fragment() {
 
-    private val args: Game01FragmentArgs by navArgs()
-    private val game01ViewModel by viewModel<Game01ViewModel>()
+    private val args: GameCountUpFragmentArgs by navArgs()
+    private val countUpViewModel by viewModel<CountUpViewModel>()
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
@@ -37,11 +39,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        game01ViewModel.startingPoints = resources.getStringArray(R.array.game_x01_variant_array)[args.variantIndex].toInt()
-        game01ViewModel.isBull25 = args.isBull25
-        game01ViewModel.inValue = args.inIndex
-        game01ViewModel.outValue = args.outIndex
-        game01ViewModel.nbRounds = resources.getStringArray(R.array.game_x01_detail_round)[args.roundIndex].toIntOrNull()
+        countUpViewModel.isBull25 = args.isBull25
+        countUpViewModel.nbRounds = resources.getStringArray(R.array.game_countup_detail_round)[args.roundIndex].toInt()
 
         initViews(view)
     }
@@ -54,7 +53,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         }
 
         // Player points remaining
-        _binding.playerPointsRemaining.text = game01ViewModel.startingPoints.toString()
+        _binding.playerPointsRemaining.text = countUpViewModel.startingPoints.toString()
 
         val orientationLayout = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
             LinearLayoutManager.HORIZONTAL
@@ -71,86 +70,87 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         // Players waiting
         _binding.playersWaiting.layoutManager =
             LinearLayoutManager(requireContext(), orientationLayout, false)
-        playersWaitingAdapter = PlayersWaitingAdapter(game01ViewModel.startingPoints, game01ViewModel.isBull25, game01ViewModel.inValue)
+        playersWaitingAdapter = PlayersWaitingAdapter(countUpViewModel.isBull25)
         _binding.playersWaiting.adapter = playersWaitingAdapter
 
         // Keyboard
         val keyboardAdapter = KeyboardAdapter(
             view.context,
-            { point -> game01ViewModel.addPlayerPoint(point) },
-            { game01ViewModel.removeLastPlayerPoint() })
+            { point -> countUpViewModel.addPlayerPoint(point) },
+            { countUpViewModel.removeLastPlayerPoint() })
         _binding.keyboardDkt.adapter = keyboardAdapter
 
         // ViewModel observers
-        game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
-            onUpdateCurrentPlayer(it, game01ViewModel.nbRounds, game01ViewModel.startingPoints, playersWaitingAdapter)
-        })
-        game01ViewModel.getCurrentPlayer()
+        countUpViewModel.currentPlayerLiveData.observe(viewLifecycleOwner) {
+            onUpdateCurrentPlayer(
+                it,
+                countUpViewModel.nbRounds,
+                playersWaitingAdapter
+            )
+        }
+        countUpViewModel.getCurrentPlayer()
 
-        game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            onUpdatePlayersPoints(playerPointsAdapter, it, game01ViewModel.startingPoints, game01ViewModel.nbRounds)
-        })
-        game01ViewModel.getPlayersPoints()
+        countUpViewModel.playersPointsLivedata.observe(viewLifecycleOwner) {
+            onUpdatePlayersPoints(
+                playerPointsAdapter,
+                it,
+                countUpViewModel.nbRounds
+            )
+        }
+        countUpViewModel.getPlayersPoints()
     }
 
     private fun onUpdatePlayersPoints(
         playerPointsAdapter: PlayerPointsAdapter,
         stack: Stack<PlayerPoint>,
-        startingPoints: Int,
         nbRounds: Int?
     ) {
         playerPointsAdapter.setData(
             DartsUtils.getPlayerRoundDarts(
-                game01ViewModel.currentPlayer!!,
-                game01ViewModel.currentRound,
+                countUpViewModel.currentPlayer!!,
+                countUpViewModel.currentRound,
                 stack
             ),
-            game01ViewModel.isRoundDecreasing
+            countUpViewModel.isRoundDecreasing
         )
-        val remainingPoints = DartsUtils.get01GamePlayerScore(startingPoints,
-            game01ViewModel.isBull25,
-            game01ViewModel.currentPlayer!!,
-            stack,
-            game01ViewModel.inValue)
+        val currentScore = DartsUtils.getCountUpPlayerScore(
+                countUpViewModel.isBull25,
+                countUpViewModel.currentPlayer!!,
+                stack
+        )
+        _binding.playerPdd.text = String.format(
+            Locale.ENGLISH, resources.getString(R.string.player_ppd),
+            DartsUtils.getPlayerPPD(countUpViewModel.currentPlayer!!, stack, args.isBull25))
 
-        _binding.playerPdd.text = String.format(Locale.ENGLISH, resources.getString(R.string.player_ppd),
-        DartsUtils.getPlayerPPD(game01ViewModel.currentPlayer!!, stack, args.isBull25))
-
-        if ((_binding.playerPointsRemaining.text as String).toInt() != remainingPoints) {
+        if ((_binding.playerPointsRemaining.text as String).toInt() != currentScore) {
             startScoreAnimation(
                 _binding.playerPointsRemaining,
                 (_binding.playerPointsRemaining.text as String).toInt(),
-                remainingPoints
+                currentScore
             )
         }
 
         // Test if game is finished
-        if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
-            goToPlayersStatsScreen(startingPoints)
+        if (DartsUtils.isCountUpFinished(nbRounds, countUpViewModel.players, stack)) {
+            goToPlayersStatsScreen()
         }
 
         // Go to next player
         if (DartsUtils.isPlayerRoundComplete(
-                game01ViewModel.currentPlayerLiveData.value!!,
-                game01ViewModel.currentRound,
+                countUpViewModel.currentPlayerLiveData.value!!,
+                countUpViewModel.currentRound,
                 stack
             )
         ) {
             jobNextPlayer = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                 when {
-                    game01ViewModel.isRoundBusted && game01ViewModel.isStackIncreasing-> {
-                        delay(500)
-                        showTransitionInfo(resources.getString(R.string.game_round_bust))
-                        // Wait to score animation finish
-                        delay(400)
-                    }
-                    game01ViewModel.isStackIncreasing -> {
+                    countUpViewModel.isStackIncreasing -> {
                         delay(2000)
                         showTransitionInfo(
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
-                                    args.inIndex,
-                                    game01ViewModel.currentPlayer!!,
+                                    0,
+                                    countUpViewModel.currentPlayer!!,
                                     stack
                                 ), args.isBull25
                             ).toString()
@@ -162,9 +162,9 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     }
                 }
                 playerPointsAdapter.setData(emptyList(), false)
-                game01ViewModel.selectNextPlayer()
+                countUpViewModel.selectNextPlayer()
             }
-        } else if (!game01ViewModel.isStackIncreasing) {
+        } else if (!countUpViewModel.isStackIncreasing) {
             jobNextPlayer?.cancel()
         }
     }
@@ -172,52 +172,61 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
     private fun onUpdateCurrentPlayer(
         player: Player,
         nbRounds: Int?,
-        startingPoints: Int,
         playersWaitingAdapter: PlayersWaitingAdapter
     ) {
-        _binding.playersWaiting.isVisible = (game01ViewModel.players.size > 1)
-        _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
+        _binding.playersWaiting.isVisible = (countUpViewModel.players.size > 1)
+        _binding.playersWaitingSeparator.isVisible = (countUpViewModel.players.size > 1)
 
         _binding.currentPlayer = player
         _binding.playerRound.text = if (nbRounds == null) {
-            resources.getString(R.string.player_round_unlimited, game01ViewModel.currentRound)
+            resources.getString(R.string.player_round_unlimited, countUpViewModel.currentRound)
         } else {
-            resources.getString(R.string.player_round, game01ViewModel.currentRound, nbRounds)
+            resources.getString(R.string.player_round, countUpViewModel.currentRound, nbRounds)
         }
-        _binding.playerPdd.text = String.format(Locale.ENGLISH, resources.getString(R.string.player_ppd),
-            DartsUtils.getPlayerPPD(player, game01ViewModel.playersPoints, args.isBull25))
+        _binding.playerPdd.text = String.format(
+            Locale.ENGLISH, resources.getString(R.string.player_ppd),
+            DartsUtils.getPlayerPPD(player, countUpViewModel.playersPoints, args.isBull25))
 
-        _binding.playerPointsRemaining.text = startingPoints
-            .minus(DartsUtils.getPlayerScore(args.isBull25, player, game01ViewModel.playersPoints, args.inIndex))
+        _binding.playerPointsRemaining.text =
+            DartsUtils.getCountUpPlayerScore(args.isBull25, player, countUpViewModel.playersPoints)
             .toString()
 
         // Other players ordered
-        val otherPlayers = getWaitingPlayersOrdered(player, game01ViewModel.players)
+        val otherPlayers = getWaitingPlayersOrdered(player, countUpViewModel.players)
         if (otherPlayers.isNotEmpty()) {
-            playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
+            playersWaitingAdapter.setData(otherPlayers, countUpViewModel.playersPoints)
             _binding.playersWaiting.smoothScrollToPosition(0)
         }
     }
 
-    private fun goToPlayersStatsScreen(startingPoints: Int) {
+    private fun goToPlayersStatsScreen() {
         val x01PlayerList = emptyList<X01PlayerStats>().toMutableList()
-        game01ViewModel.players.forEach {
+        countUpViewModel.players.forEach {
             x01PlayerList.add(
                 X01PlayerStats(
                     it,
-                    currentScore = startingPoints.minus(
-                        DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints, args.inIndex)),
+                    currentScore = DartsUtils.getCountUpPlayerScore(
+                        countUpViewModel.isBull25,
+                        countUpViewModel.currentPlayer!!,
+                        countUpViewModel.playersPoints
+                    ),
                     checkout = DartsUtils.getScoreFromPointList(
-                        DartsUtils.getPlayerRoundDarts(it, game01ViewModel.currentRound, game01ViewModel.playersPoints),
+                        DartsUtils.getPlayerRoundDarts(it, countUpViewModel.currentRound, countUpViewModel.playersPoints),
                         args.isBull25
                     ),
-                    ppd = DartsUtils.getPlayerPPD(it, game01ViewModel.playersPoints, args.isBull25)
-            ))
+                    ppd = DartsUtils.getPlayerPPD(it, countUpViewModel.playersPoints, args.isBull25)
+                )
+            )
         }
         lifecycleScope.launchWhenResumed {
             delay(1200)
             findNavController().navigate(R.id.action_game_to_end,
-                GameEndStatsFragmentArgs(x01PlayerList.toTypedArray(), args.variantIndex, args.isBull25, args.roundIndex, args.inIndex, args.outIndex).toBundle())
+                GameEndStatsFragmentArgs(
+                    x01PlayerList.toTypedArray(),
+                    args.variantIndex,
+                    args.isBull25,
+                    args.roundIndex
+                ).toBundle())
         }
     }
 }

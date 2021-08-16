@@ -15,6 +15,8 @@ class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull2
                             private val inIndex: Int)
     : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
+    constructor(isBull25: Boolean) : this(0, isBull25, 0)
+
     private var waitingPlayers = ArrayList<Player>()
     private var stackPoints: Stack<PlayerPoint>? = null
 
@@ -44,9 +46,13 @@ class PlayersWaitingAdapter(private val startingPoints: Int, private val isBull2
 
         override fun bind(item: Player) {
             binding.player = item
-            binding.playerScore.text = startingPoints
-                .minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints, inIndex))
-                .toString()
+            binding.playerScore.text = if (startingPoints > 0) {
+                startingPoints
+                    .minus(DartsUtils.getPlayerScore(isBull25, item, stackPoints, inIndex))
+                    .toString()
+            } else {
+                DartsUtils.getPlayerScore(isBull25, item, stackPoints, inIndex).toString()
+            }
         }
     }
 }
