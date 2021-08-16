@@ -5,10 +5,11 @@
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/Dkt.TextStyle.PlayerShot"
         android:id="@+id/point"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_xlarge"
-        android:layout_marginEnd="@dimen/margin_xlarge"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:gravity="center"
         tools:text="D28"/>
 
 </layout>

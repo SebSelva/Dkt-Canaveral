@@ -2,6 +2,7 @@ package com.decathlon.canaveral.game
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,20 +15,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
-import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.X01PlayerStats
+import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.get
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,9 +38,11 @@ class GameFragment : Fragment() {
     private lateinit var args: GameActivityArgs
     private lateinit var _binding: FragmentGameBinding
 
-    private val game01ViewModel: Game01ViewModel = get()
+    private val game01ViewModel by viewModel<Game01ViewModel>()
 
-    var jobNextPlayer: Job? = null
+    private lateinit var playerPointsAdapter: PlayerPointsAdapter
+    private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
+    private var jobNextPlayer: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +50,6 @@ class GameFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game, container, false)
         _binding = FragmentGameBinding.bind(view)
-        _binding.setLifecycleOwner { viewLifecycleOwner.lifecycle }
         return view
     }
 
@@ -60,16 +60,16 @@ class GameFragment : Fragment() {
             args = GameActivityArgs.fromBundle(activity?.intent?.extras!!)
         }
 
-        initViews(view)
-    }
-
-    private fun initViews(view: View) {
-
         game01ViewModel.startingPoints = resources.getStringArray(R.array.zero_game_type_array)[args.variantIndex].toInt()
         game01ViewModel.isBull25 = args.isBull25
         game01ViewModel.inValue = args.inIndex
         game01ViewModel.outValue = args.outIndex
-        val nbRounds = resources.getStringArray(R.array.game_01_detail_round)[args.roundIndex].toIntOrNull()
+        game01ViewModel.nbRounds = resources.getStringArray(R.array.game_01_detail_round)[args.roundIndex].toIntOrNull()
+
+        initViews(view)
+    }
+
+    private fun initViews(view: View) {
 
         // Options
         _binding.gameOptions.setOnClickListener {
@@ -79,17 +79,22 @@ class GameFragment : Fragment() {
         // Player points remaining
         _binding.playerPointsRemaining.text = game01ViewModel.startingPoints.toString()
 
+        val orientationLayout = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+            LinearLayoutManager.HORIZONTAL
+        } else {
+            LinearLayoutManager.VERTICAL
+        }
         // Player darts points
         _binding.playerDartsPoints.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val playerPointsAdapter = PlayerPointsAdapter()
+            LinearLayoutManager(requireContext(), orientationLayout, false)
+        playerPointsAdapter = PlayerPointsAdapter()
         _binding.playerDartsPoints.adapter = playerPointsAdapter
         playerPointsAdapter.setData(emptyList(), false)
 
         // Players waiting
         _binding.playersWaiting.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val playersWaitingAdapter = PlayersWaitingAdapter(game01ViewModel.startingPoints, args.isBull25, args.inIndex)
+            LinearLayoutManager(requireContext(), orientationLayout, false)
+        playersWaitingAdapter = PlayersWaitingAdapter(game01ViewModel.startingPoints, game01ViewModel.isBull25, game01ViewModel.inValue)
         _binding.playersWaiting.adapter = playersWaitingAdapter
 
         // Keyboard
@@ -101,12 +106,12 @@ class GameFragment : Fragment() {
 
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
-            onUpdateCurrentPlayer(it, nbRounds, game01ViewModel.startingPoints, playersWaitingAdapter)
+            onUpdateCurrentPlayer(it, game01ViewModel.nbRounds, game01ViewModel.startingPoints, playersWaitingAdapter)
         })
         game01ViewModel.getCurrentPlayer()
 
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            onUpdatePlayersPoints(playerPointsAdapter, it, game01ViewModel.startingPoints, nbRounds)
+            onUpdatePlayersPoints(playerPointsAdapter, it, game01ViewModel.startingPoints, game01ViewModel.nbRounds)
         })
         game01ViewModel.getPlayersPoints()
     }
@@ -126,10 +131,10 @@ class GameFragment : Fragment() {
             game01ViewModel.isRoundDecreasing
         )
         val remainingPoints = startingPoints.minus(DartsUtils.getPlayerScore(
-                args.isBull25,
+                game01ViewModel.isBull25,
                 game01ViewModel.currentPlayer!!,
                 stack,
-                args.inIndex)
+                game01ViewModel.inValue)
         )
         _binding.playerPdd.text = String.format(Locale.ENGLISH, resources.getString(R.string.player_ppd),
         DartsUtils.getPlayerPPD(game01ViewModel.currentPlayer!!, stack, args.isBull25))
@@ -143,7 +148,7 @@ class GameFragment : Fragment() {
         }
 
         // Test if game is finished
-        if (DartsUtils.is01GameFinished(startingPoints, args.isBull25, nbRounds, args.inIndex, game01ViewModel.players, stack)) {
+        if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
             goToPlayersStatsScreen(startingPoints)
         }
 
@@ -213,6 +218,7 @@ class GameFragment : Fragment() {
         val otherPlayers = getWaitingPlayersOrdered(player, game01ViewModel.players)
         if (otherPlayers.isNotEmpty()) {
             playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
+            _binding.playersWaiting.smoothScrollToPosition(0)
         }
     }
 

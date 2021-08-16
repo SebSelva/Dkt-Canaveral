@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.decathlon.canaveral.game.Game01ViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/keyboard_dkt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/margin_xlarge"
+                android:layout_marginEnd="@dimen/margin_xlarge"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/player_image_round"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="@dimen/margin_large"
+                    app:cardCornerRadius="21dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/player_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/image_description"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_default"
+                        app:showImage="@{viewModel.currentPlayerLiveData.image}"
+                        tools:src="@drawable/profile_default" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Game.Info"
+                    android:id="@+id/player_round"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xlarge"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/player_pdd"
+                    tools:text="R 1/20" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Game.Info"
+                    android:id="@+id/player_pdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="PPD: 12.56" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/game_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:padding="@dimen/margin_medium"
+                    android:src="@drawable/ic_game_option"
+                    android:background="@color/white"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/player_name"
+                    style="@style/Dkt.TextStyle.PlayerName.Playing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textSize="18sp"
+                    android:text="@{viewModel.currentPlayerLiveData.nickname}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/player_image_round"
+                    tools:text="Player X" />
+
+                <com.decathlon.canaveral.view.ScoreTextView
+                    android:id="@+id/player_points_remaining"
+                    style="@style/Dkt.TextStyle.PlayerScore.Playing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xxlarge"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/player_image_round"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:text="301" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/player_darts_points"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:itemCount="3" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/players_waiting_separator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/separator_line" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/players_waiting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_list_game_player" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <GridView
+            android:id="@+id/keyboard_dkt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="18dp"
+            android:paddingLeft="18dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:gravity="center"
+            android:numColumns="9"
+            android:horizontalSpacing="@dimen/keyboard_item_land_horizontal_spacing"
+            android:verticalSpacing="@dimen/keyboard_item_land_vertical_spacing"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:itemCount="27"
+            tools:listitem="@layout/item_keyboard" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

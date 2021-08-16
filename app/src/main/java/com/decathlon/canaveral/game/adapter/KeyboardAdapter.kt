@@ -1,6 +1,7 @@
 package com.decathlon.canaveral.game.adapter
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.isDigitsOnly
+import androidx.core.view.isVisible
 import com.decathlon.canaveral.common.model.Point
 import kotlinx.coroutines.*
 import com.decathlon.canaveral.R
@@ -19,7 +21,12 @@ class KeyboardAdapter(private val context: Context,
                       val onDartTouchAborted: () -> Unit
                       ) : BaseAdapter()
 {
-    private val keyboardItems : List<String> = context.resources.getStringArray(R.array.keyboard_items).asList()
+    private val isPortraitMode = context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    private val keyboardItems : List<String> = if (isPortraitMode) {
+        context.resources.getStringArray(R.array.keyboard_items)
+    } else {
+        context.resources.getStringArray(R.array.keyboard_items_land)
+    }.asList()
 
     private val mBullValue = context.resources.getString(R.string.game_bull)
     private val mBackValue = context.resources.getString(R.string.game_back)
@@ -44,28 +51,34 @@ class KeyboardAdapter(private val context: Context,
         var view = convertView
 
         if (view == null) {
-            val layoutInflater = LayoutInflater.from(context);
-            view = layoutInflater.inflate(R.layout.item_keyboard, null);
+            view = LayoutInflater.from(context).inflate(R.layout.item_keyboard, null)
         }
 
         val itemText = view?.findViewById<AppCompatTextView>(R.id.keyboard_textview)
         itemText?.apply {
-            height = context.resources.getDimension(R.dimen.keyboard_item_height).toInt()
-            width = context.resources.getDimension(R.dimen.keyboard_item_width).toInt()
+            height = if (isPortraitMode)
+                context.resources.getDimension(R.dimen.keyboard_item_height).toInt()
+            else
+                context.resources.getDimension(R.dimen.keyboard_item_land_height).toInt()
+
+            width = if (isPortraitMode)
+                context.resources.getDimension(R.dimen.keyboard_item_width).toInt()
+            else
+                context.resources.getDimension(R.dimen.keyboard_item_land_width).toInt()
+
             typeface = Typeface.createFromAsset(context.assets, "klavika-bold.otf")
             gravity = Gravity.CENTER
             tag = itemValue
             setOnClickListener { view ->
                 onDartEvent(view as AppCompatTextView)
             }
+            isVisible = itemValue.isNotEmpty()
             setDartTouchColors(this, true)
         }
-        when (itemValue) {
-            mBullValue -> itemText?.textSize = 25F
-            mBackValue, mMissValue -> {
-                itemText?.textSize = 21F
-            }
-            else -> itemText?.textSize = 35F
+        itemText?.textSize = when (itemValue) {
+            mBullValue -> if (isPortraitMode) 25F else 22F
+            mBackValue, mMissValue -> if (isPortraitMode) 21F else 18F
+            else -> if (isPortraitMode) 35F else 32F
         }
         itemText?.text = itemValue
         return view!!

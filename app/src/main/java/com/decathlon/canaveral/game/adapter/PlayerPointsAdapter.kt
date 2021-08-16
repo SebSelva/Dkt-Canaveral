@@ -30,7 +30,6 @@ class PlayerPointsAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         }
         if (listData.size < DARTS_SHOTS_NUMBER)  listData.add(point)
         addDots()
-        notifyDataSetChanged()
     }
 
     fun removeLast() {
@@ -39,7 +38,6 @@ class PlayerPointsAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         }
         if (listData.isNotEmpty()) listData.removeLast()
         addDots()
-        notifyDataSetChanged()
     }
 
     fun setData(points: List<Point>, isLastDartBlink: Boolean) {

@@ -11,7 +11,10 @@ import com.decathlon.canaveral.common.utils.DartsUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.util.*
+
+private val TAG = Game01ViewModel::class.simpleName
 
 class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
@@ -21,6 +24,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     var players: List<Player> = emptyList()
     var startingPoints = 0
+    var nbRounds: Int? = 0
     var isBull25 = true
     var inValue = 0
     var outValue = 0
@@ -34,6 +38,10 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
+
+    init {
+        Timber.d("%s Init", TAG)
+    }
 
     private suspend fun getPlayers() {
         players = interactors.getPlayers().first().map { player -> Player(player) }
