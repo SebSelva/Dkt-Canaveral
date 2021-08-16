@@ -4,9 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,8 +12,8 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.X01PlayerStats
@@ -34,10 +32,9 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class GameFragment : Fragment() {
+class GameFragment : BaseFragment<FragmentGameBinding>() {
 
     private lateinit var args: GameActivityArgs
-    private lateinit var _binding: FragmentGameBinding
 
     private val game01ViewModel by viewModel<Game01ViewModel>()
 
@@ -45,13 +42,8 @@ class GameFragment : Fragment() {
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_game, container, false)
-        _binding = FragmentGameBinding.bind(view)
-        return view
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_game
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

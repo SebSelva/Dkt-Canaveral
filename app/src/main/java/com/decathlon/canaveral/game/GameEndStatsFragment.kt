@@ -2,30 +2,22 @@ package com.decathlon.canaveral.game
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.X01PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
 
-class GameEndStatsFragment : Fragment() {
+class GameEndStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
     private val args: GameEndStatsFragmentArgs by navArgs()
-    private lateinit var _binding: FragmentGameEndBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_game_end, container, false)
-        _binding = FragmentGameEndBinding.bind(view)
-        return view
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_game_end
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,7 +65,6 @@ class GameEndStatsFragment : Fragment() {
         val winningPlayersStatsAdapter = PlayersStatsAdapter(true)
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
-
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -97,8 +88,6 @@ class GameEndStatsFragment : Fragment() {
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             )
         }
-
-
 
         // Buttons
         _binding.buttonCheck.setOnClickListener { activity?.finish() }
