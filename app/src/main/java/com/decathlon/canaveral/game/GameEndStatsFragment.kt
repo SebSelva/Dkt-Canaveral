@@ -15,21 +15,18 @@ import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
 class GameEndStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
     private val args: GameEndStatsFragmentArgs by navArgs()
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_game_end
-    }
+    override var layoutId = R.layout.fragment_game_end
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val sortedPlayers = args.x01PlayerList
-        sortedPlayers.sortBy { x01Player -> x01Player.remainingPoints }
+        sortedPlayers.sortBy { x01Player -> x01Player.currentScore }
         val winPlayers = emptyList<X01PlayerStats>().toMutableList()
         var bestScore: Int? = null
         sortedPlayers.forEach {
-            if (bestScore == null) bestScore = it.remainingPoints
-            if (bestScore == it.remainingPoints) winPlayers.add(it)
+            if (bestScore == null) bestScore = it.currentScore
+            if (bestScore == it.currentScore) winPlayers.add(it)
         }
 
         // Title
@@ -95,6 +92,7 @@ class GameEndStatsFragment : BaseFragment<FragmentGameEndBinding>() {
             Navigation.findNavController(view).navigate(
                 R.id.action_end_to_new_game,
                 GameActivityArgs(
+                    0,
                     args.variantIndex,
                     args.isBull25,
                     args.roundIndex,

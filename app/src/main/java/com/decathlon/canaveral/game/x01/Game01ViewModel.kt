@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.game
+package com.decathlon.canaveral.game.x01
 
 import androidx.lifecycle.MutableLiveData
 import com.decathlon.canaveral.Interactors
@@ -14,13 +14,7 @@ import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 
-private val TAG = Game01ViewModel::class.simpleName
-
 class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
-
-    companion object {
-        private const val DARTS_SHOTS_NUMBER = 3
-    }
 
     var players: List<Player> = emptyList()
     var startingPoints = 0
@@ -39,10 +33,6 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
     val currentPlayerLiveData: MutableLiveData<Player> = MutableLiveData()
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
 
-    init {
-        Timber.d("%s Init", TAG)
-    }
-
     private suspend fun getPlayers() {
         players = interactors.getPlayers().first().map { player -> Player(player) }
         getCurrentPlayer()
@@ -52,7 +42,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
         isStackIncreasing = true
         isRoundDecreasing = false
         currentPlayer?.let {
-            if (DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DARTS_SHOTS_NUMBER) {
+            if (DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints).size < DartsUtils.DARTS_SHOTS_NUMBER) {
                 currentRound = DartsUtils.getRoundNumber(players, playersPoints)
                 isRoundBusted = DartsUtils.isBusted(it, playersPoints, point, startingPoints, isBull25, inValue, outValue)
                 playersPoints.push(PlayerPoint(it, point, currentRound, isRoundBusted))
@@ -67,7 +57,7 @@ class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
             .forEach {
                 it.isBusted = true
             }
-        val nullDartsNumber = DARTS_SHOTS_NUMBER - playersPoints.filter { it.round == currentRound && it.player == currentPlayer }.size
+        val nullDartsNumber = DartsUtils.DARTS_SHOTS_NUMBER - playersPoints.filter { it.round == currentRound && it.player == currentPlayer }.size
         repeat(nullDartsNumber) {
             playersPoints.push(PlayerPoint(currentPlayer, NullPoint(), currentRound, true))
         }

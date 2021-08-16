@@ -43,7 +43,12 @@
     <string name="game_type_cricket">Cricket</string>
     <string name="game_type_killer">Killer</string>
     <string name="game_type_shangai">Shanghai</string>
+    <string name="game_variant_countup_bull">Bull</string>
+    <string name="game_variant_countup_cricket">Cricket</string>
+    <string name="game_variant_countup_standard">Standard</string>
     <string name="image_description">image</string>
+    <string name="loading_game_loading">Loading now...</string>
+    <string name="loading_game_tip_bot">Did you know ?\nYou can assign a bot if you’re alone !</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>

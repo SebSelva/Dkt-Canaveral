@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="21dp"
+        android:paddingStart="199dp"
+        android:paddingEnd="199dp"
+        android:background="@drawable/background_blue">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/dart_big_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:src="@drawable/dart_big_up"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/loading_title"
+            style="@style/Dkt.TextStyle.Loading.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            app:layout_constraintTop_toBottomOf="@id/dart_big_up"
+            app:layout_constraintBottom_toTopOf="@id/loading_text_tips"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Loading.Content"
+            android:id="@+id/loading_text_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            android:text="@string/loading_game_tip_bot"
+            app:layout_constraintTop_toBottomOf="@id/loading_title"
+            app:layout_constraintBottom_toTopOf="@id/loading_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Loading.Content"
+            android:id="@+id/loading_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/loading_game_loading"
+            app:layout_constraintBottom_toTopOf="@id/loading_progress"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loading_progress"
+            android:background="@drawable/background_loading_game"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:indicatorColor="@color/white"
+            app:trackThickness="20dp"
+            app:trackCornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
