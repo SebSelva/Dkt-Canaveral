@@ -11,15 +11,17 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"
-        android:layout_width="67dp"
+        android:layout_width="wrap_content"
         android:layout_height="93dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/white"
         app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -47,8 +49,8 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/player_image_round"
@@ -59,17 +61,21 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/Dkt.TextStyle.Grey"
                     android:id="@+id/player_name"
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
                     android:text="@{player.nickname}"
                     android:textSize="13sp"
-                    tools:text="Player X"/>
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    tools:text="Jean François"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btn_remove_player"
                     android:layout_height="match_parent"
                     android:layout_width="wrap_content"
+                    android:paddingStart="@dimen/margin_medium"
+                    android:paddingEnd="@dimen/margin_medium"
+                    android:gravity="center_vertical"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_garbage"/>
 
