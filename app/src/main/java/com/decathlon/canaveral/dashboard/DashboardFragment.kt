@@ -42,10 +42,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         // Game Type selection
         _binding.inputGame.isEnabled = gameType.size > 1
         _binding.inputGame.setOnItemClickListener { _, _, position, _ ->
+            dashboardViewModel.gameTypeIndex = position
             setFormValues(gameType[position])
             setGameTypeDetailsVisibility(gameType[position])
         }
-        initSpinner(gameType, _binding.inputGame)
+        initSpinner(gameType, dashboardViewModel.gameTypeIndex, _binding.inputGame)
+        setFormValues(gameType[dashboardViewModel.gameTypeIndex])
+        setGameTypeDetailsVisibility(gameType[dashboardViewModel.gameTypeIndex])
 
         // Game Variant selection
         initSpinner(resources.getStringArray(R.array.game_x01_variant_array), _binding.inputVariant)
@@ -158,7 +161,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initSpinner(array: Array<String>, initIndex: Int, field :AutoCompleteTextView?) {
-        field?.setAdapter(MyAdapter(requireContext(),
+        field?.setAdapter(MySpinnerAdapter(requireContext(),
             R.layout.list_textview_item, array))
         field?.setText(array[initIndex],false)
         field?.dropDownVerticalOffset = resources.getInteger(R.integer.dropdown_menu_vertical_offset)
@@ -210,22 +213,5 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                 }
             }
         }
-    }
-
-    /**
-     * Workaround to always have dropdown menu choice list filled
-     */
-    class MyAdapter(context: Context, layoutId: Int, items: Array<String>)
-        : ArrayAdapter<String>(context, layoutId, items) {
-
-        private val noOpFilter = object : Filter() {
-            private val noOpResult = FilterResults()
-            override fun performFiltering(constraint: CharSequence?) = noOpResult
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                // Workaround to not show filtered results
-            }
-        }
-
-        override fun getFilter() = noOpFilter
     }
 }
