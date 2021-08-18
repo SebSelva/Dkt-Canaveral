@@ -99,7 +99,7 @@
                     app:layout_constraintTop_toBottomOf="@id/player_image_round"
                     tools:text="Player X" />
 
-                <com.decathlon.canaveral.common.view.ScoreTextView
+                <com.decathlon.canaveral.common.view.KlavikaBITextView
                     android:id="@+id/player_points_remaining"
                     style="@style/Dkt.TextStyle.PlayerScore.Playing"
                     android:layout_width="wrap_content"

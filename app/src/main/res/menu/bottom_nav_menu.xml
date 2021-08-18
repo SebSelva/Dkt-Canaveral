@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/DashboardFragment"
         android:icon="@drawable/ic_nav_tint"
         android:iconTint="@color/ic_nav_tint"
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_stats"
+        android:id="@+id/UserStatsFragment"
         android:icon="@drawable/ic_stats"
         android:iconTint="@color/ic_nav_tint"
         android:title="@string/title_stats"
         android:enabled="false"/>
 
     <item
-        android:id="@+id/navigation_settings"
+        android:id="@+id/SettingsFragment"
         android:icon="@drawable/ic_settings"
         android:iconTint="@color/ic_nav_tint"
         android:title="@string/title_settings"/>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="languages_code">
+        <item>de</item>
+        <item>en</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>pt</item>
+        <item>ru</item>
+        <item>zh</item>
+        <item>zh-rCN</item>
+        <item>zh-rTW</item>
+    </string-array>
+
+    <string-array name="languages_trad">
+        <item>@string/language_de</item>
+        <item>@string/language_en</item>
+        <item>@string/language_es</item>
+        <item>@string/language_fr</item>
+        <item>@string/language_it</item>
+        <item>@string/language_ja</item>
+        <item>@string/language_ko</item>
+        <item>@string/language_pt</item>
+        <item>@string/language_ru</item>
+        <item>@string/language_zh</item>
+        <item>@string/language_zhCN</item>
+        <item>@string/language_zhTW</item>
+    </string-array>
+</resources>

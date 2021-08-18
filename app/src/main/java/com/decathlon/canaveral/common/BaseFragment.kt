@@ -2,10 +2,16 @@ package com.decathlon.canaveral.common
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.LocaleList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Filter
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -14,7 +20,10 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
+import com.decathlon.canaveral.common.utils.ContextUtils
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
@@ -64,5 +73,34 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             }
         }
         return playersWaiting
+    }
+
+    fun setCurrentLocale(context: Context, locale: Locale) {
+        ContextUtils.updateLocale(context, locale)
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        refreshCurrentFragment()
+    }
+
+    private fun refreshCurrentFragment() {
+        val id = findNavController().currentDestination?.id
+        findNavController().popBackStack(id!!,true)
+        findNavController().navigate(id)
+    }
+
+    /**
+     * Workaround to always have dropdown menu choice list filled
+     */
+    class MySpinnerAdapter(context: Context, layoutId: Int, items: Array<String>)
+        : ArrayAdapter<String>(context, layoutId, items) {
+
+        private val noOpFilter = object : Filter() {
+            private val noOpResult = FilterResults()
+            override fun performFiltering(constraint: CharSequence?) = noOpResult
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                // Workaround to not show filtered results
+            }
+        }
+
+        override fun getFilter() = noOpFilter
     }
 }

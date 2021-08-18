@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import com.decathlon.canaveral.R
 
-class ScoreTextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
+class KlavikaBITextView(context: Context, attrs: AttributeSet) : AppCompatTextView(context, attrs) {
 
     init {
         context.theme.obtainStyledAttributes(

@@ -160,5 +160,29 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="Dkt.TextStyle.Settings.Title" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/settings_title</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginTop">@dimen/settings_title_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/settings_title_margin_bottom</item>
+        <item name="android:layout_marginStart">@dimen/settings_title_margin_start</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Settings.Item" parent="Dkt">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Settings.Value" parent="Dkt.TextStyle.BlueDecat">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Settings.SpinnerText" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/spinner_selector</item>
+        <item name="background">@drawable/spinner_selector_background</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     // TEXT STYLES - END
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Canaveral</string>
+    <string name="app_name">Canaveral 2.0</string>
 
     <string name="title_dashboard">Dashboard</string>
     <string name="title_stats">Stats</string>
@@ -15,18 +15,18 @@
     <string name="dialog_no">No</string>
 
     // Game types
-    <string name="game_type_01_game">01 Game</string>
-    <string name="game_type_cricket">Cricket</string>
-    <string name="game_type_count_up">Count up</string>
-    <string name="game_type_bull_hunter">Bull hunter</string>
-    <string name="game_type_shangai">Shanghai</string>
-    <string name="game_type_around_a_clock">Around a Clock</string>
-    <string name="game_type_killer">Killer</string>
+    <string name="game_type_01_game" translatable="false">01 Game</string>
+    <string name="game_type_cricket" translatable="false">Cricket</string>
+    <string name="game_type_count_up" translatable="false">Count up</string>
+    <string name="game_type_bull_hunter" translatable="false">Bull hunter</string>
+    <string name="game_type_shangai" translatable="false">Shanghai</string>
+    <string name="game_type_around_a_clock" translatable="false">Around a Clock</string>
+    <string name="game_type_killer" translatable="false">Killer</string>
 
     // Countup variants
-    <string name="game_variant_countup_standard">Standard</string>
-    <string name="game_variant_countup_cricket">Cricket</string>
-    <string name="game_variant_countup_bull">Bull</string>
+    <string name="game_variant_countup_standard" translatable="false">Standard</string>
+    <string name="game_variant_countup_cricket" translatable="false">Cricket</string>
+    <string name="game_variant_countup_bull" translatable="false">Bull</string>
 
     // In Out values
     <string name="game_detail_inout_simple">Simple</string>
@@ -57,9 +57,9 @@
     <string name="game_double">D</string>
     <string name="game_triple">T</string>
     <string name="player_remain_point">-</string>
-    <string name="player_round">R %d/%d</string>
-    <string name="player_round_unlimited">R %d</string>
-    <string name="player_ppd">PPD: %.2f</string>
+    <string name="player_round" translatable="false">R %d/%d</string>
+    <string name="player_round_unlimited" translatable="false">R %d</string>
+    <string name="player_ppd" translatable="false">PPD: %.2f</string>
     <string name="game_round_bust">BUST</string>
 
     // Game Options
@@ -78,6 +78,24 @@
     <string name="game_end_score_reached">Reached score</string>
     <string name="game_end_score_total">Total score</string>
     <string name="game_end_ppd">PPD</string>
-    <string name="game_end_ppd_value">%.2f</string>
+    <string name="game_end_ppd_value" translatable="false">%.2f</string>
+
+    // Settings
+    <string name="settings_title">General Settings</string>
+    <string name="settings_languages">Languages</string>
+
+    // Languages
+    <string name="language_de">Deutsch</string>
+    <string name="language_en">English</string>
+    <string name="language_es">Spanish</string>
+    <string name="language_fr">French</string>
+    <string name="language_it">Italian</string>
+    <string name="language_ja">Japanese</string>
+    <string name="language_ko">Korean</string>
+    <string name="language_pt">Portuguese</string>
+    <string name="language_ru">Russian</string>
+    <string name="language_zh">Chinese</string>
+    <string name="language_zhCN">Simplified Chinese</string>
+    <string name="language_zhTW">Traditional Chinese</string>
 
 </resources>
