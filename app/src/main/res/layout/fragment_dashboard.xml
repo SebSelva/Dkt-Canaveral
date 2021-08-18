@@ -100,7 +100,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_in" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_game_detail_in"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -124,7 +124,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_out" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_game_detail_out"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -156,7 +156,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_bull_value" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_game_detail_bull"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_rounds" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_game_detail_round"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -221,7 +221,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_bull_value" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_countup_detail_bull"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -245,7 +245,7 @@
                                             android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                             android:text="@string/dashboard_game_detail_rounds" />
 
-                                        <AutoCompleteTextView
+                                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                             android:id="@+id/input_countup_detail_round"
                                             style="@style/Dkt.TextStyle.SpinnerText"
                                             android:layout_width="match_parent"
@@ -302,7 +302,7 @@
                                 app:layout_constraintTop_toBottomOf="@id/input_versus"
                                 app:layout_constraintLeft_toLeftOf="parent" />
 
-                            <AutoCompleteTextView
+                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/input_game"
                                 style="@style/Dkt.TextStyle.SpinnerText"
                                 android:layout_width="match_parent"
@@ -323,7 +323,7 @@
                                 app:layout_constraintTop_toBottomOf="@id/input_game"
                                 app:layout_constraintLeft_toLeftOf="parent" />
 
-                            <AutoCompleteTextView
+                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/input_variant"
                                 style="@style/Dkt.TextStyle.SpinnerText"
                                 android:layout_width="match_parent"

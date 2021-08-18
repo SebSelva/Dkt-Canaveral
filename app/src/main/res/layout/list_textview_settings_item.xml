@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/item_text"
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_marginStart="98dp"
+            android:layout_marginEnd="98dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:background="@drawable/spinner_selector_background"
+            tools:text="This is an element"
+            style="@style/Dkt.TextStyle.Settings.SpinnerText" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

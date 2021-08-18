@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="add">add</string>
-    <string name="app_name">Canaveral</string>
+    <string name="app_name">Canaveral 2.0</string>
     <string name="dashboard_game_detail_bull_value">Bull Value</string>
     <string name="dashboard_game_detail_in">In</string>
     <string name="dashboard_game_detail_out">Out</string>
@@ -49,12 +49,26 @@
     <string name="game_variant_countup_cricket">Cricket</string>
     <string name="game_variant_countup_standard">Standard</string>
     <string name="image_description">image</string>
+    <string name="language_de">Deutsch</string>
+    <string name="language_en">English</string>
+    <string name="language_es">Spanish</string>
+    <string name="language_fr">French</string>
+    <string name="language_it">Italian</string>
+    <string name="language_ja">Japanese</string>
+    <string name="language_ko">Korean</string>
+    <string name="language_pt">Portuguese</string>
+    <string name="language_ru">Russian</string>
+    <string name="language_zh">Chinese</string>
+    <string name="language_zhCN">Simplified Chinese</string>
+    <string name="language_zhTW">Traditional Chinese</string>
     <string name="loading_game_loading">Loading now…</string>
     <string name="loading_game_tip_bot">Did you know ?\n You can assign a bot if you\’re alone !</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
     <string name="player_round_unlimited">R %d</string>
+    <string name="settings_languages">Languages</string>
+    <string name="settings_title">General Settings</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_game">Game</string>
     <string name="title_round_score">Round Score</string>

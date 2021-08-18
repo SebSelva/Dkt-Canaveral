@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Decathloncanaveralandroidapp">
+        android:configChanges="locale"
+        android:theme="@style/Theme.DecathlonCanaveral">
 
         <activity
             android:name="com.decathlon.canaveral.MainActivity"

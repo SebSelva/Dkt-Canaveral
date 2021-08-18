@@ -16,6 +16,12 @@
             app:destination="@id/GameActivity" />
     </fragment>
 
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.decathlon.canaveral.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings"/>
+
     <activity
         android:id="@+id/GameActivity"
         android:name="com.decathlon.canaveral.game.GameActivity"
