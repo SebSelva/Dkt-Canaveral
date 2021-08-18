@@ -100,14 +100,13 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         ContextUtils.updateLocale(context, locale)
         resources.updateConfiguration(resources.configuration, resources.displayMetrics)
         preferences.saveLocale(locale)
-        refreshCurrentFragment()
     }
 
     fun getCurrentLocale(): Locale? {
         return preferences.getLocale()
     }
 
-    private fun refreshCurrentFragment() {
+    fun refreshCurrentFragment() {
         val id = findNavController().currentDestination?.id
         findNavController().popBackStack(id!!,true)
         findNavController().navigate(id)

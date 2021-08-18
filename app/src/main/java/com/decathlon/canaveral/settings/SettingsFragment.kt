@@ -29,6 +29,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
             _binding.settingsLanguage.text = languages[langIndex]
             toggleItemList(_binding.languageRecyclerview, false)
             setCurrentLocale(view.context, Locale(languageCodes[langIndex]))
+            refreshCurrentFragment()
         }
         _binding.languageRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         _binding.languageRecyclerview.adapter = languagesAdapter
