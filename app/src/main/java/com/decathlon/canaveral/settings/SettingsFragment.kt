@@ -22,10 +22,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
         val languages = resources.getStringArray(R.array.languages_trad)
         val languageCodes = resources.getStringArray(R.array.languages_code)
-        var langIndex = if (languageCodes.contains(Locale.getDefault().language))
-            languageCodes.indexOf(Locale.getDefault().language)
-        else
-            languageCodes.indexOf("en")
+        var langIndex = languageCodes.indexOf(getCurrentLocale()!!.language)
 
         val languagesAdapter = SettingsItemListAdapter {
             langIndex = it
