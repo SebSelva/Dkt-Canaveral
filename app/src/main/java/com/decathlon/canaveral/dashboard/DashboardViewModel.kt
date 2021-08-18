@@ -9,14 +9,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-private val TAG = DashboardViewModel::class.simpleName
-
 class DashboardViewModel (private val interactors: Interactors) : BaseViewModel() {
 
-    init {
-        Timber.d("%s Init", TAG)
-    }
-
+    var gameTypeIndex = 0
     val playerLiveData : MutableLiveData<List<Player>> = MutableLiveData()
 
     fun getPlayers() = viewModelScope.launch(Dispatchers.IO) {
