@@ -50,7 +50,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // Options
         _binding.gameOptions.setOnClickListener {
-            findNavController().navigate(R.id.action_game_to_options)
+            findNavController().navigate(R.id.action_01game_to_options)
         }
 
         // Player points remaining
@@ -140,13 +140,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                 when {
                     game01ViewModel.isRoundBusted && game01ViewModel.isStackIncreasing-> {
                         delay(500)
-                        showTransitionInfo(resources.getString(R.string.game_round_bust))
+                        showTransitionInfo(R.id.action_01game_to_score,
+                            resources.getString(R.string.game_round_bust))
                         // Wait to score animation finish
                         delay(400)
                     }
                     game01ViewModel.isStackIncreasing -> {
                         delay(2000)
-                        showTransitionInfo(
+                        showTransitionInfo(R.id.action_01game_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
                                     args.inIndex,
@@ -215,10 +216,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
             ))
         }
         lifecycleScope.launchWhenResumed {
-            delay(1200)
-            findNavController().navigate(R.id.action_game_to_end,
+            // Time to show transition then back to this screen
+            // Before transition max = 2000
+            // Added to transition = 2000
+            delay(4200)
+            findNavController().navigate(R.id.action_01game_to_end,
                 GameStatsFragmentArgs(
                     x01PlayerList.toTypedArray(),
+                    args.gameTypeIndex,
                     args.variantIndex,
                     args.isBull25,
                     args.roundIndex,

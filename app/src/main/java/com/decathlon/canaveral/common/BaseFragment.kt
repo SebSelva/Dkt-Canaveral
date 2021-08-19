@@ -71,9 +71,9 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         valueAnimator.start()
     }
 
-    protected fun showTransitionInfo(info: String) {
+    protected fun showTransitionInfo(actionId: Int, info: String) {
         this.findNavController().navigate(
-            R.id.action_game_to_score,
+            actionId,
             GameTransitionInfoFragmentArgs(info).toBundle())
     }
 
