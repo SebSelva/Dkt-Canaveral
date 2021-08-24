@@ -38,6 +38,7 @@ class LoadingGameFragment: BaseFragment<FragmentLoadingGameBinding>() {
                     Navigation.findNavController(view).navigate(
                         R.id.action_loading_to_01game,
                         Game01FragmentArgs(
+                            args.gameTypeIndex,
                             args.variantIndex,
                             args.isBull25,
                             args.roundIndex,
@@ -49,6 +50,7 @@ class LoadingGameFragment: BaseFragment<FragmentLoadingGameBinding>() {
                     Navigation.findNavController(view).navigate(
                         R.id.action_loading_to_countup,
                         GameCountUpFragmentArgs(
+                            args.gameTypeIndex,
                             args.variantIndex,
                             args.isBull25,
                             args.roundIndex

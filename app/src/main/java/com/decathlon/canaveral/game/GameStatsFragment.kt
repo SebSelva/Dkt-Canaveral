@@ -11,8 +11,10 @@ import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
+import com.decathlon.canaveral.game.countup.GameCountUpFragmentArgs
+import com.decathlon.canaveral.game.x01.Game01FragmentArgs
 
-class GameStatsFragment(private val gameTypeIndex: Int) : BaseFragment<FragmentGameEndBinding>() {
+class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
     private val args: GameStatsFragmentArgs by navArgs()
     override var layoutId = R.layout.fragment_game_end
@@ -21,7 +23,10 @@ class GameStatsFragment(private val gameTypeIndex: Int) : BaseFragment<FragmentG
         super.onViewCreated(view, savedInstanceState)
 
         val sortedPlayers = args.playerList
-        sortedPlayers.sortByDescending { x01Player -> x01Player.currentScore }
+        when(resources.getStringArray(R.array.game_type_array)[args.gameTypeIndex]) {
+            resources.getString(R.string.game_type_01_game) -> sortedPlayers.sortBy { x01Player -> x01Player.currentScore }
+            resources.getString(R.string.game_type_count_up) -> sortedPlayers.sortByDescending { x01Player -> x01Player.currentScore }
+        }
         val winPlayers = emptyList<PlayerStats>().toMutableList()
         var bestScore: Int? = null
         sortedPlayers.forEach {
@@ -30,42 +35,18 @@ class GameStatsFragment(private val gameTypeIndex: Int) : BaseFragment<FragmentG
         }
 
         // Title
-        _binding.endTitle.text = if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
-            resources.getString(R.string.game_end_draw)
-        } else {
-            val winPlayersIterator = winPlayers.iterator()
-            when (winPlayers.size) {
-                1 -> resources.getString(
-                    R.string.game_end_win_one,
-                    winPlayersIterator.next().player.nickname
-                )
-
-                2 -> resources.getString(
-                    R.string.game_end_win_two,
-                    winPlayersIterator.next().player.nickname,
-                    winPlayersIterator.next().player.nickname
-                )
-
-                3 -> resources.getString(
-                    R.string.game_end_win_three,
-                    winPlayersIterator.next().player.nickname,
-                    winPlayersIterator.next().player.nickname,
-                    winPlayersIterator.next().player.nickname
-                )
-                else -> resources.getString(R.string.game_end_draw)
-            }
-        }
+        _binding.endTitle.text = getStatsTitle(sortedPlayers, winPlayers)
 
         // Winning players
         _binding.endWinningPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val winningPlayersStatsAdapter = PlayersStatsAdapter(gameTypeIndex,true)
+        val winningPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,true)
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val otherPlayersStatsAdapter = PlayersStatsAdapter(gameTypeIndex,winPlayers.size == sortedPlayers.size)
+        val otherPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,winPlayers.size == sortedPlayers.size)
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
         if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
@@ -89,17 +70,56 @@ class GameStatsFragment(private val gameTypeIndex: Int) : BaseFragment<FragmentG
         // Buttons
         _binding.buttonCheck.setOnClickListener { activity?.finish() }
         _binding.buttonReload.setOnClickListener {
-            Navigation.findNavController(view).navigate(
-                R.id.action_end_to_new_game,
-                GameActivityArgs(
-                    0,
-                    args.variantIndex,
-                    args.isBull25,
-                    args.roundIndex,
-                    args.inIndex,
-                    args.outIndex
-                ).toBundle())
+            val actionId = getReloadDirectionId()
+            if (actionId != null) {
+                Navigation.findNavController(view).navigate(
+                    actionId,
+                    GameActivityArgs(
+                        args.gameTypeIndex,
+                        args.variantIndex,
+                        args.isBull25,
+                        args.roundIndex,
+                        args.inIndex,
+                        args.outIndex
+                    ).toBundle())
+            }
         }
     }
+
+    private fun getStatsTitle(
+        sortedPlayers: Array<PlayerStats>,
+        winPlayers: MutableList<PlayerStats>
+    ) = if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
+        resources.getString(R.string.game_end_draw)
+    } else {
+        val winPlayersIterator = winPlayers.iterator()
+        when (winPlayers.size) {
+            1 -> resources.getString(
+                R.string.game_end_win_one,
+                winPlayersIterator.next().player.nickname
+            )
+
+            2 -> resources.getString(
+                R.string.game_end_win_two,
+                winPlayersIterator.next().player.nickname,
+                winPlayersIterator.next().player.nickname
+            )
+
+            3 -> resources.getString(
+                R.string.game_end_win_three,
+                winPlayersIterator.next().player.nickname,
+                winPlayersIterator.next().player.nickname,
+                winPlayersIterator.next().player.nickname
+            )
+            else -> resources.getString(R.string.game_end_draw)
+        }
+    }
+
+    private fun getReloadDirectionId() =
+        when (resources.getStringArray(R.array.game_type_array)[args.gameTypeIndex]) {
+            resources.getString(R.string.game_type_01_game) -> R.id.action_end_to_new_01game
+            resources.getString(R.string.game_type_count_up) -> R.id.action_end_to_new_countup
+            else -> null
+        }
 
 }

@@ -46,7 +46,7 @@ class GameCountUpFragment : Game01Fragment() {
 
         // Options
         _binding.gameOptions.setOnClickListener {
-            findNavController().navigate(R.id.action_game_to_options)
+            findNavController().navigate(R.id.action_countup_to_options)
         }
 
         // Player points remaining
@@ -143,7 +143,7 @@ class GameCountUpFragment : Game01Fragment() {
                 when {
                     countUpViewModel.isStackIncreasing -> {
                         delay(2000)
-                        showTransitionInfo(
+                        showTransitionInfo(R.id.action_countup_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
                                     0,
@@ -216,10 +216,11 @@ class GameCountUpFragment : Game01Fragment() {
             )
         }
         lifecycleScope.launchWhenResumed {
-            delay(1200)
-            findNavController().navigate(R.id.action_game_to_end,
+            delay(4200)
+            findNavController().navigate(R.id.action_countup_to_end,
                 GameStatsFragmentArgs(
                     x01PlayerList.toTypedArray(),
+                    args.gameTypeIndex,
                     args.variantIndex,
                     args.isBull25,
                     args.roundIndex

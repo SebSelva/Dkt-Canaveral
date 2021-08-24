@@ -27,6 +27,10 @@
         tools:layout="@layout/fragment_game">
 
         <argument
+            android:name="gameTypeIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
             android:name="variantIndex"
             android:defaultValue="0"
             app:argType="integer"/>
@@ -48,13 +52,13 @@
             app:argType="integer"/>
 
         <action
-            android:id="@+id/action_game_to_score"
+            android:id="@+id/action_01game_to_score"
             app:destination="@id/ScoreFragment" />
-        <action android:id="@+id/action_game_to_options"
+        <action android:id="@+id/action_01game_to_options"
             app:destination="@id/OptionsFragment" />
         <action
-            android:id="@+id/action_game_to_end"
-            app:destination="@id/EndGameFragment"
+            android:id="@+id/action_01game_to_end"
+            app:destination="@id/GameStatsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -97,19 +101,25 @@
         tools:layout="@layout/dialogfragment_game_quit" />
 
     <fragment
-        android:id="@+id/EndGameFragment"
+        android:id="@+id/GameStatsFragment"
         android:name="com.decathlon.canaveral.game.GameStatsFragment"
-        android:label="Game End"
+        android:label="Game Stats"
         app:popEnterAnim="@android:anim/slide_in_left"
         app:popExitAnim="@android:anim/slide_out_right"
         tools:layout="@layout/fragment_game_end">
 
-        <action android:id="@+id/action_end_to_new_game"
+        <action android:id="@+id/action_end_to_new_01game"
             app:destination="@id/Game01Fragment"/>
+        <action android:id="@+id/action_end_to_new_countup"
+            app:destination="@id/GameCountUpFragment"/>
 
         <argument
             android:name="playerList"
             app:argType="com.decathlon.canaveral.common.model.PlayerStats[]"/>
+        <argument
+            android:name="gameTypeIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
         <argument
             android:name="variantIndex"
             android:defaultValue="0"
@@ -140,6 +150,10 @@
         tools:layout="@layout/fragment_game">
 
         <argument
+            android:name="gameTypeIndex"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
             android:name="variantIndex"
             android:defaultValue="0"
             app:argType="integer"/>
@@ -153,13 +167,13 @@
             app:argType="integer"/>
 
         <action
-            android:id="@+id/action_game_to_score"
+            android:id="@+id/action_countup_to_score"
             app:destination="@id/ScoreFragment" />
-        <action android:id="@+id/action_game_to_options"
+        <action android:id="@+id/action_countup_to_options"
             app:destination="@id/OptionsFragment" />
         <action
-            android:id="@+id/action_game_to_end"
-            app:destination="@id/EndGameFragment"
+            android:id="@+id/action_countup_to_end"
+            app:destination="@id/GameStatsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
