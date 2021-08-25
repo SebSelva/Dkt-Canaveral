@@ -48,6 +48,11 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="Dkt.TextStyle.SelectSpinnerText" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="Dkt.TextStyle.Label" parent="Dkt.TextStyle.Grey">
         <item name="android:textSize">13sp</item>
     </style>
@@ -179,7 +184,7 @@
     </style>
 
     <style name="Dkt.TextStyle.Settings.SpinnerText" parent="Dkt.TextStyle">
-        <item name="android:textColor">@color/spinner_selector</item>
+        <item name="android:textColor">@color/spinner_item_selector</item>
         <item name="background">@drawable/spinner_selector_background</item>
         <item name="android:textSize">18sp</item>
     </style>
