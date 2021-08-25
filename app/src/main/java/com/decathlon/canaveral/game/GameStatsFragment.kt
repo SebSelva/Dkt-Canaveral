@@ -11,8 +11,6 @@ import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
-import com.decathlon.canaveral.game.countup.GameCountUpFragmentArgs
-import com.decathlon.canaveral.game.x01.Game01FragmentArgs
 
 class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
@@ -40,13 +38,19 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         // Winning players
         _binding.endWinningPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val winningPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,true)
+        val winningPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
+            true,
+            winPlayers.size == sortedPlayers.size
+        )
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
         // Losing players
         _binding.endLostPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val otherPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,winPlayers.size == sortedPlayers.size)
+        val otherPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
+            winPlayers.size == sortedPlayers.size,
+            winPlayers.size == sortedPlayers.size
+        )
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
         if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {

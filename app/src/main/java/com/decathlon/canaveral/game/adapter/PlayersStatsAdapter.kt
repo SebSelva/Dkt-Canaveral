@@ -2,11 +2,7 @@ package com.decathlon.canaveral.game.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingComponent
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
@@ -18,8 +14,9 @@ import java.util.*
 
 class PlayersStatsAdapter(
     private val gameTypeIndex: Int,
-    private val isWinViews: Boolean
-): RecyclerView.Adapter<BaseViewHolder<PlayerStats>>()  {
+    private val isWinViews: Boolean,
+    private val isDraw: Boolean
+): RecyclerView.Adapter<BaseViewHolder<PlayerStats>>() {
 
     companion object {
         private const val SMALL = 0
@@ -125,10 +122,10 @@ class PlayersStatsAdapter(
     private fun getSecondFieldTitle(context: Context): String {
         val stringResId = when(context.resources.getStringArray(R.array.game_type_array)[gameTypeIndex]) {
             context.resources.getString(R.string.game_type_01_game) -> {
-                if (isWinViews) R.string.game_end_checkout else R.string.game_end_remaining
+                if (isDraw || !isWinViews) R.string.game_end_remaining else R.string.game_end_checkout
             }
             context.resources.getString(R.string.game_type_count_up) -> {
-                if (isWinViews) R.string.game_end_score_total else R.string.game_end_score_reached
+                R.string.game_end_score_reached
             }
             else -> null
         }
@@ -138,7 +135,7 @@ class PlayersStatsAdapter(
     private fun getSecondFieldValue(context: Context, playerStats: PlayerStats): String {
         return when (context.resources.getStringArray(R.array.game_type_array)[gameTypeIndex]) {
             context.resources.getString(R.string.game_type_01_game) -> {
-                if (isWinViews) { playerStats.checkout } else { playerStats.currentScore }.toString()
+                if (isDraw || !isWinViews) { playerStats.currentScore } else { playerStats.checkout }.toString()
             }
             context.resources.getString(R.string.game_type_count_up) -> {
                 playerStats.currentScore.toString()
