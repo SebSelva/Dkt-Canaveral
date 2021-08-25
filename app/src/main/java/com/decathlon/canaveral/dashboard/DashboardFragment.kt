@@ -50,29 +50,11 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         setFormValues(gameType[dashboardViewModel.gameTypeIndex])
         setGameTypeDetailsVisibility(gameType[dashboardViewModel.gameTypeIndex])
 
-        // Game Variant selection
-        initSpinner(resources.getStringArray(R.array.game_x01_variant_array), _binding.inputVariant)
-
         // Players
         val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
             {dashboardViewModel.addPlayer(it)}, {dashboardViewModel.removePlayer(it)})
         _binding.playersRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         _binding.playersRecyclerView.adapter = playerAdapter
-
-        // Game details - In
-        initSpinner(resources.getStringArray(R.array.game_detail_inout_values), _binding.inputGameDetailIn)
-
-        // Game details - Out
-        initSpinner(resources.getStringArray(R.array.game_detail_inout_values), _binding.inputGameDetailOut)
-
-        // Game details - Bull
-        initSpinner(resources.getStringArray(R.array.game_detail_bull_values), _binding.inputGameDetailBull)
-
-        // Game details - Round
-        initSpinner(resources.getStringArray(R.array.game_x01_detail_round), 1, _binding.inputGameDetailRound)
-
-        // Game details layout animation
-        addGameDetailsAnimation(view)
 
         // Start button
         _binding.startBtn.setOnClickListener {
@@ -117,29 +99,45 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
     private fun setFormValues(gameType: String) {
         when (gameType) {
             resources.getString(R.string.game_type_count_up) -> {
+                // Variant
                 initSpinner(
                     resources.getStringArray(R.array.game_countup_variant_array),
                     _binding.inputVariant
                 )
+                // Rounds
                 initSpinner(
                     resources.getStringArray(R.array.game_countup_detail_round),
                     _binding.inputCountupDetailRound
                 )
+                // Bull values
                 initSpinner(
                     resources.getStringArray(R.array.game_detail_bull_values),
                     _binding.inputCountupDetailBull
                 )
             }
             else -> {
+                // Variant
                 initSpinner(
                     resources.getStringArray(R.array.game_x01_variant_array),
                     _binding.inputVariant
                 )
+                // Game details - In
+                initSpinner(
+                    resources.getStringArray(R.array.game_detail_inout_values),
+                    _binding.inputGameDetailIn
+                )
+                // Game details - Out
+                initSpinner(
+                    resources.getStringArray(R.array.game_detail_inout_values),
+                    _binding.inputGameDetailOut
+                )
+                // Rounds
                 initSpinner(
                     resources.getStringArray(R.array.game_x01_detail_round),
                     1,
                     _binding.inputGameDetailRound
                 )
+                // Bull values
                 initSpinner(
                     resources.getStringArray(R.array.game_detail_bull_values),
                     _binding.inputGameDetailBull
@@ -168,50 +166,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         field?.setOnTouchListener { _, _ ->
             field.showDropDown()
             true
-        }
-    }
-
-    private fun addGameDetailsAnimation(view : View) {
-        val detailTitle = view.findViewById<LinearLayoutCompat>(R.id.game_details_title)
-        val detailLeftIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_left)
-        val detailRightIcon = view.findViewById<AppCompatImageView>(R.id.game_details_title_right)
-        val detailLayout = view.findViewById<LinearLayoutCompat>(R.id.game_details_layout)
-        val animationDuration = resources.getInteger(R.integer.animation_duration).toLong()
-
-        // Init layout state
-        detailLayout.animate().apply {
-            duration = animationDuration
-            translationY(-detailLayout.height.toFloat())
-            alpha(0F)
-            detailLayout.isVisible = false
-        }
-
-        // Layout animation
-        detailTitle.setOnClickListener {
-            val isOpened = detailLayout.isVisible
-            detailLeftIcon.rotation = if (isOpened) 0F else 90F
-            detailRightIcon.rotation = if (isOpened) 180F else 90F
-            if (isOpened) {
-                detailLayout.animate().apply {
-                    duration = animationDuration
-                    translationY(-detailLayout.height.toFloat())
-                    alpha(0F)
-                    setListener(object :AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            super.onAnimationEnd(animation)
-                            detailLayout.isVisible = false
-                        }
-                    })
-                }
-            } else {
-                detailLayout.isVisible = true
-                detailLayout.animate().apply {
-                    duration = animationDuration
-                    translationY(0F)
-                    alpha(1F)
-                    setListener(null)
-                }
-            }
         }
     }
 }

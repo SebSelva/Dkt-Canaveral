@@ -56,29 +56,32 @@
                         tools:itemCount="1"
                         tools:listitem="@layout/item_list_player" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <androidx.constraintlayout.motion.widget.MotionLayout
+                        android:id="@+id/constraintLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/cardview_padding_side"
                         android:layout_marginEnd="@dimen/cardview_padding_side"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        app:layoutDescription="@xml/fragment_dashboard_xml_constraintlayout_scene">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:id="@+id/game_details_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_large"
                             android:orientation="vertical"
-                            android:visibility="gone"
-                            tools:visibility="visible"
-                            app:layout_constraintTop_toBottomOf="@id/game_base_layout"
-                            app:layout_constraintLeft_toLeftOf="parent">
+                            android:visibility="visible"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/game_details_title"
+                            tools:visibility="visible">
 
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:id="@+id/game_details_01_game"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:layout_width="match_parent"
@@ -88,8 +91,8 @@
                                     <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
                                         android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:layout_weight="1"
                                         android:orientation="vertical">
 
                                         <androidx.appcompat.widget.AppCompatTextView
@@ -106,7 +109,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="Simple"/>
+                                            tools:text="Simple" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -130,7 +133,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="Master"/>
+                                            tools:text="Master" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -144,8 +147,8 @@
                                     <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
                                         android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:layout_weight="1"
                                         android:orientation="vertical">
 
                                         <androidx.appcompat.widget.AppCompatTextView
@@ -162,7 +165,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="25/50"/>
+                                            tools:text="25/50" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -186,7 +189,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="20"/>
+                                            tools:text="20" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -209,8 +212,8 @@
                                     <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="1"
                                         android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:layout_weight="1"
                                         android:orientation="vertical">
 
                                         <androidx.appcompat.widget.AppCompatTextView
@@ -227,7 +230,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="25/50"/>
+                                            tools:text="25/50" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -251,7 +254,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
-                                            tools:text="20"/>
+                                            tools:text="20" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -265,11 +268,11 @@
                             android:id="@+id/game_base_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:background="@color/white"
-                            app:layout_constraintTop_toTopOf="parent"
+                            android:orientation="vertical"
                             app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent">
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/input_versus_label"
@@ -278,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spinner_label_marginTop"
                                 android:layout_marginBottom="@dimen/spinner_label_marginBottom"
-                                android:text="@string/dashboard_select_versus"/>
+                                android:text="@string/dashboard_select_versus" />
 
                             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/input_versus"
@@ -287,9 +290,9 @@
                                 android:layout_height="@dimen/spinner_height"
                                 android:background="@drawable/background_spinner"
                                 android:enabled="false"
-                                tools:text="1 VS 1"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_versus_label"
-                                app:layout_constraintLeft_toLeftOf="parent"/>
+                                tools:text="1 VS 1" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/input_game_label"
@@ -299,8 +302,8 @@
                                 android:layout_marginTop="@dimen/spinner_label_marginTop"
                                 android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                 android:text="@string/dashboard_select_game"
-                                app:layout_constraintTop_toBottomOf="@id/input_versus"
-                                app:layout_constraintLeft_toLeftOf="parent" />
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/input_versus" />
 
                             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/input_game"
@@ -308,9 +311,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/spinner_height"
                                 android:background="@drawable/background_spinner"
-                                tools:text="01 Game"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_game_label"
-                                app:layout_constraintLeft_toLeftOf="parent"/>
+                                tools:text="01 Game" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/input_variant_label"
@@ -320,8 +323,8 @@
                                 android:layout_marginTop="@dimen/spinner_label_marginTop"
                                 android:layout_marginBottom="@dimen/spinner_label_marginBottom"
                                 android:text="@string/dashboard_select_variant"
-                                app:layout_constraintTop_toBottomOf="@id/input_game"
-                                app:layout_constraintLeft_toLeftOf="parent" />
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/input_game" />
 
                             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                                 android:id="@+id/input_variant"
@@ -329,52 +332,49 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/spinner_height"
                                 android:background="@drawable/background_spinner"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_variant_label"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                tools:text="301"/>
-
-                            <androidx.appcompat.widget.LinearLayoutCompat
-                                android:id="@+id/game_details_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="@dimen/margin_xxlarge"
-                                android:layout_marginBottom="@dimen/margin_large"
-                                android:orientation="horizontal"
-                                app:layout_constraintTop_toBottomOf="@id/input_variant"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintRight_toRightOf="parent">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/game_details_title_left"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:paddingStart="6dp"
-                                    android:paddingEnd="6dp"
-                                    android:layout_marginEnd="@dimen/margin_large"
-                                    android:src="@drawable/ic_game_details_left" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/Dkt.TextStyle.Link"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/dashboard_game_details" />
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/game_details_title_right"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:paddingStart="6dp"
-                                    android:paddingEnd="6dp"
-                                    android:layout_marginStart="@dimen/margin_large"
-                                    android:rotation="180"
-                                    android:src="@drawable/ic_game_details_left" />
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
+                                tools:text="301" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/game_details_title_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="@dimen/margin_large"
+                            android:paddingStart="6dp"
+                            android:paddingEnd="6dp"
+                            android:src="@drawable/ic_game_details_left"
+                            app:layout_constraintBottom_toBottomOf="@id/game_details_title"
+                            app:layout_constraintEnd_toStartOf="@+id/game_details_title"
+                            app:layout_constraintTop_toTopOf="@id/game_details_title" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/game_details_title"
+                            style="@style/Dkt.TextStyle.Link"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_xxlarge"
+                            android:text="@string/dashboard_game_details"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/game_base_layout" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/game_details_title_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="@dimen/margin_large"
+                            android:paddingStart="6dp"
+                            android:paddingEnd="6dp"
+                            android:rotation="180"
+                            android:src="@drawable/ic_game_details_left"
+                            app:layout_constraintBottom_toBottomOf="@id/game_details_title"
+                            app:layout_constraintStart_toEndOf="@+id/game_details_title"
+                            app:layout_constraintTop_toTopOf="@id/game_details_title" />
+
+                    </androidx.constraintlayout.motion.widget.MotionLayout>
 
                 </LinearLayout>
 
