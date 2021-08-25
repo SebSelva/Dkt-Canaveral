@@ -51,12 +51,12 @@
     <string name="loading_game_loading">Loading now…</string>
 
     // Game
-    <string name="game_bull">Bull</string>
-    <string name="game_miss">Miss</string>
-    <string name="game_back">Back</string>
-    <string name="game_double">D</string>
-    <string name="game_triple">T</string>
-    <string name="player_remain_point">-</string>
+    <string name="game_bull" translatable="false">Bull</string>
+    <string name="game_miss" translatable="false">Miss</string>
+    <string name="game_back" translatable="false">Back</string>
+    <string name="game_double" translatable="false">D</string>
+    <string name="game_triple" translatable="false">T</string>
+    <string name="player_remain_point" translatable="false">-</string>
     <string name="player_round" translatable="false">R %d/%d</string>
     <string name="player_round_unlimited" translatable="false">R %d</string>
     <string name="player_ppd" translatable="false">PPD: %.2f</string>
@@ -73,11 +73,11 @@
     <string name="game_end_win_one">%s wins !</string>
     <string name="game_end_win_two">%s &amp; %s win !</string>
     <string name="game_end_win_three">%s, %s &amp; %s win !</string>
-    <string name="game_end_checkout">Checkout</string>
+    <string name="game_end_checkout" translatable="false">Checkout</string>
     <string name="game_end_remaining">Remaining</string>
     <string name="game_end_score_reached">Reached score</string>
     <string name="game_end_score_total">Total score</string>
-    <string name="game_end_ppd">PPD</string>
+    <string name="game_end_ppd" translatable="false">PPD</string>
     <string name="game_end_ppd_value" translatable="false">%.2f</string>
 
     // Settings

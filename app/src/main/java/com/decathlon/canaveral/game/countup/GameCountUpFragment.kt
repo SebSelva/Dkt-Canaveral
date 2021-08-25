@@ -18,6 +18,7 @@ import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
+import com.decathlon.canaveral.game.adapter.KeyboardType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,6 +37,7 @@ class GameCountUpFragment : Game01Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        countUpViewModel.variant = args.variantIndex
         countUpViewModel.isBull25 = args.isBull25
         countUpViewModel.nbRounds = resources.getStringArray(R.array.game_countup_detail_round)[args.roundIndex].toInt()
 
@@ -46,7 +48,11 @@ class GameCountUpFragment : Game01Fragment() {
 
         // Options
         _binding.gameOptions.setOnClickListener {
-            findNavController().navigate(R.id.action_countup_to_options)
+            lifecycleScope.launchWhenResumed {
+                if (jobNextPlayer?.isActive != true) {
+                    findNavController().navigate(R.id.action_countup_to_options)
+                }
+            }
         }
 
         // Player points remaining
@@ -73,6 +79,7 @@ class GameCountUpFragment : Game01Fragment() {
         // Keyboard
         val keyboardAdapter = KeyboardAdapter(
             view.context,
+            getKeyboardType(),
             { point -> countUpViewModel.addPlayerPoint(point) },
             { countUpViewModel.removeLastPlayerPoint() })
         _binding.keyboardDkt.adapter = keyboardAdapter
@@ -95,6 +102,14 @@ class GameCountUpFragment : Game01Fragment() {
             )
         }
         countUpViewModel.getPlayersPoints()
+    }
+
+    override fun getKeyboardType(): KeyboardType {
+        return when(resources.getStringArray(R.array.game_countup_variant_array)[countUpViewModel.variant]) {
+            resources.getString(R.string.game_variant_countup_cricket) -> KeyboardType.CRICKET
+            resources.getString(R.string.game_variant_countup_bull) -> KeyboardType.BULL
+            else -> KeyboardType.NORMAL
+        }
     }
 
     private fun onUpdatePlayersPoints(

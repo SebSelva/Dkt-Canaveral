@@ -50,7 +50,11 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // Options
         _binding.gameOptions.setOnClickListener {
-            findNavController().navigate(R.id.action_01game_to_options)
+            lifecycleScope.launchWhenResumed {
+                if (jobNextPlayer?.isActive != true) {
+                    findNavController().navigate(R.id.action_01game_to_options)
+                }
+            }
         }
 
         // Player points remaining
@@ -77,6 +81,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         // Keyboard
         val keyboardAdapter = KeyboardAdapter(
             view.context,
+            getKeyboardType(),
             { point -> game01ViewModel.addPlayerPoint(point) },
             { game01ViewModel.removeLastPlayerPoint() })
         _binding.keyboardDkt.adapter = keyboardAdapter
