@@ -17,6 +17,7 @@ import java.util.*
 open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
 
     var players: List<Player> = emptyList()
+    var variant = 0
     var startingPoints = 0
     var nbRounds: Int? = 0
     var isBull25 = true

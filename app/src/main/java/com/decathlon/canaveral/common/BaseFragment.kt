@@ -2,11 +2,8 @@ package com.decathlon.canaveral.common
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.os.LocaleList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +14,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.utils.CanaveralPreferences
 import com.decathlon.canaveral.common.utils.ContextUtils
+import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,9 +71,11 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     }
 
     protected fun showTransitionInfo(actionId: Int, info: String) {
-        this.findNavController().navigate(
-            actionId,
-            GameTransitionInfoFragmentArgs(info).toBundle())
+        lifecycleScope.launchWhenResumed {
+            findNavController().navigate(
+                actionId,
+                GameTransitionInfoFragmentArgs(info).toBundle())
+        }
     }
 
     protected fun getWaitingPlayersOrdered(
@@ -111,6 +112,8 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         findNavController().popBackStack(id!!,true)
         findNavController().navigate(id)
     }
+
+    open fun getKeyboardType() = KeyboardType.NORMAL
 
     /**
      * Workaround to always have dropdown menu choice list filled

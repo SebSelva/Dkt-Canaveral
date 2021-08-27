@@ -17,6 +17,7 @@ import kotlinx.coroutines.*
 import com.decathlon.canaveral.R
 
 class KeyboardAdapter(private val context: Context,
+                      private val type: KeyboardType,
                       val onDartTouched: (Point) -> Unit,
                       val onDartTouchAborted: () -> Unit
                       ) : BaseAdapter()
@@ -68,7 +69,8 @@ class KeyboardAdapter(private val context: Context,
 
             typeface = Typeface.createFromAsset(context.assets, "klavika-bold.otf")
             gravity = Gravity.CENTER
-            tag = itemValue
+            text = itemValue
+            tag = getItemValue(itemValue)
             setOnClickListener { view ->
                 onDartEvent(view as AppCompatTextView)
             }
@@ -80,13 +82,22 @@ class KeyboardAdapter(private val context: Context,
             mBackValue, mMissValue -> if (isPortraitMode) 21F else 18F
             else -> if (isPortraitMode) 35F else 32F
         }
-        itemText?.text = itemValue
         return view!!
+    }
+
+    private fun getItemValue(itemValue: String): String {
+        val cricketMissedValues = context.resources.getStringArray(R.array.keyboard_cricket_miss)
+        val bullMissedValues = context.resources.getStringArray(R.array.keyboard_bull_miss)
+        return when(type) {
+            KeyboardType.NORMAL -> itemValue
+            KeyboardType.CRICKET -> if (cricketMissedValues.contains(itemValue)) mMissValue else itemValue
+            KeyboardType.BULL -> if (bullMissedValues.contains(itemValue)) mMissValue else itemValue
+        }
     }
 
     private fun setDartTouchColors(view: AppCompatTextView?, isReleased :Boolean) {
         if (isReleased) {
-            if (view?.tag == mMissValue || view?.tag == mBackValue) {
+            if (view?.text == mMissValue || view?.text == mBackValue) {
                 view.apply {
                     setTextColor(AppCompatResources.getColorStateList(context, R.color.white))
                     background = AppCompatResources.getDrawable(context, R.drawable.keyboard_background_grey)
@@ -146,4 +157,10 @@ class KeyboardAdapter(private val context: Context,
             memoryKeyboardItem = null
         }
     }
+}
+
+enum class KeyboardType {
+    NORMAL,
+    CRICKET,
+    BULL
 }
