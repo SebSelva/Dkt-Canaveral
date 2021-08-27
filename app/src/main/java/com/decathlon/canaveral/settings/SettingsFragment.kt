@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
@@ -42,6 +43,9 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
             (_binding.languageRecyclerview.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(if (langIndex > 1) langIndex-1 else 0, 0)
             toggleItemList(_binding.languageRecyclerview, false)
         }
+
+        // VERSION
+        _binding.versionApp.text = resources.getString(R.string.app_name_version, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
     }
 
     private fun toggleItemList(view: View, forceClose: Boolean) {
