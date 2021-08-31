@@ -69,6 +69,17 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <com.decathlon.canaveral.common.view.KlavikaBITextView
+            style="@style/Dkt.TextStyle.Options.Item"
+            android:id="@+id/version_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Canaveral 2.0.0 (164)"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

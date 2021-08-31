@@ -70,6 +70,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_large"
+                            android:layout_marginBottom= "@dimen/margin_small"
                             android:orientation="vertical"
                             android:visibility="visible"
                             app:layout_constraintLeft_toLeftOf="parent"
@@ -109,6 +110,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="Simple" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -133,6 +135,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="Master" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -165,6 +168,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="25/50" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -189,6 +193,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="20" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -230,6 +235,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="25/50" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -254,6 +260,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/background_spinner"
+                                            android:inputType="textNoSuggestions"
                                             tools:text="20" />
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -290,6 +297,7 @@
                                 android:layout_height="@dimen/spinner_height"
                                 android:background="@drawable/background_spinner"
                                 android:enabled="false"
+                                android:inputType="textNoSuggestions"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_versus_label"
                                 tools:text="1 VS 1" />
@@ -310,6 +318,7 @@
                                 style="@style/Dkt.TextStyle.SpinnerText"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/spinner_height"
+                                android:inputType="textNoSuggestions"
                                 android:background="@drawable/background_spinner"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_game_label"
@@ -331,6 +340,7 @@
                                 style="@style/Dkt.TextStyle.SpinnerText"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/spinner_height"
+                                android:inputType="textNoSuggestions"
                                 android:background="@drawable/background_spinner"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/input_variant_label"
