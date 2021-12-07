@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "728052988965",
+    "project_id": "homedartsclub-crvh",
+    "storage_bucket": "homedartsclub-crvh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728052988965:android:51c55d8b301246709813cc",
+        "android_client_info": {
+          "package_name": "com.decathlon.canaveral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "728052988965-3kion4kmjapr33cf3uaijnvpamd69m4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1ZSYws5OdUIlR3QwrVxlvPilFUmxM0ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "728052988965-3kion4kmjapr33cf3uaijnvpamd69m4e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
