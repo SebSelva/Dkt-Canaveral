@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.DecathlonCanaveral" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.DecathlonCanaveral" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_dkt</item>
         <item name="colorPrimaryVariant">@color/blue_dkt</item>
@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.DecathlonCanaveral.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.DecathlonCanaveral.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="Theme.DecathlonCanaveral.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     // TEXT STYLES - START
@@ -187,6 +187,10 @@
         <item name="android:textColor">@color/spinner_item_selector</item>
         <item name="background">@drawable/spinner_selector_background</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Splash.Version" parent="Dkt.TextStyle.White">
+        <item name="android:textSize">14sp</item>
     </style>
 
     // TEXT STYLES - END
