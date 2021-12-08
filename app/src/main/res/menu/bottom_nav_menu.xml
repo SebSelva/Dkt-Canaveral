@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/DashboardFragment"
-        android:icon="@drawable/ic_nav_tint"
+        android:icon="@drawable/ic_play_setup"
         android:iconTint="@color/ic_nav_tint"
         android:title="@string/title_dashboard" />
 
