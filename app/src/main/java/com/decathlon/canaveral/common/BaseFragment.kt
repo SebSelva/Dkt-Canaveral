@@ -16,12 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.utils.CanaveralPreferences
 import com.decathlon.canaveral.common.utils.ContextUtils
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -29,6 +33,8 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     protected lateinit var _binding: B
     abstract var layoutId: Int
+
+    protected lateinit var firebaseAnalytics: FirebaseAnalytics
 
     private lateinit var preferences: CanaveralPreferences
 
@@ -38,6 +44,13 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         initPreferences()
+
+        firebaseAnalytics = Firebase.analytics
+        val parameters = Bundle().apply {
+            this.putString("app_version", BuildConfig.VERSION_NAME)
+        }
+        firebaseAnalytics.setDefaultEventParameters(parameters)
+
         _binding = DataBindingUtil.inflate(layoutInflater, layoutId, container, false)!!
         return _binding.root
     }

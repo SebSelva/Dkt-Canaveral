@@ -17,6 +17,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
+import com.decathlon.canaveral.common.utils.FirebaseEventNames
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -58,6 +59,25 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
         // Start button
         _binding.startBtn.setOnClickListener {
+            val parameters = Bundle().apply {
+                putString(
+                    FirebaseEventNames.GAME_START_GAME_TYPE,
+                    gameType[dashboardViewModel.gameTypeIndex]
+                )
+                putString(
+                    FirebaseEventNames.GAME_START_GAME_VARIANT,
+                    _binding.inputVariant.text.toString()
+                )
+                putInt(
+                    FirebaseEventNames.GAME_START_PLAYER_NUMBER,
+                    dashboardViewModel.playerLiveData.value!!.size
+                )
+                putString(
+                    FirebaseEventNames.GAME_START_SCORING_METHOD,
+                    "Manual"
+                )
+            }
+            firebaseAnalytics.logEvent(FirebaseEventNames.GAME_START, parameters)
             Navigation.findNavController(view).navigate(
                 R.id.action_dashboard_to_game,
                 getGameBundle(_binding.inputGame.text.toString()))
