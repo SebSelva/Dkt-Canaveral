@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import android.os.LocaleList
+import com.decathlon.canaveral.R
 import java.util.*
 
 class ContextUtils(base: Context) : ContextWrapper(base) {
@@ -38,6 +39,12 @@ class ContextUtils(base: Context) : ContextWrapper(base) {
             configuration.locale = locale
             context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
             return ContextUtils(context)
+        }
+
+        fun getLanguageNameFromCode(context: Context, code: String): String {
+            val languages = context.resources.getStringArray(R.array.languages_trad)
+            val languageCodes = context.resources.getStringArray(R.array.languages_code)
+            return languages[languageCodes.indexOf(code)]
         }
     }
 }

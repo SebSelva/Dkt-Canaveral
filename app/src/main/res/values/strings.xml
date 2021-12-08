@@ -86,6 +86,7 @@
     <string name="settings_languages">Languages</string>
 
     // Languages
+    <string name="language_coming_soon">%s (coming soon)</string>
     <string name="language_de">Deutsch</string>
     <string name="language_en">English</string>
     <string name="language_es">Spanish</string>

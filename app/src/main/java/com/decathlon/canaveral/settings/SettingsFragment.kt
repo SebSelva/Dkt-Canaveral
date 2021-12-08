@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
+import com.decathlon.canaveral.common.utils.ContextUtils
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
 import java.util.*
 
@@ -21,25 +21,25 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val languages = resources.getStringArray(R.array.languages_trad)
         val languageCodes = resources.getStringArray(R.array.languages_code)
-        var langIndex = languageCodes.indexOf(getCurrentLocale()!!.language)
+        var langCode = getCurrentLocale()!!.language
 
         val languagesAdapter = SettingsItemListAdapter {
-            langIndex = it
-            _binding.settingsLanguage.text = languages[langIndex]
+            langCode = languageCodes[it]
+            _binding.settingsLanguage.text = ContextUtils.getLanguageNameFromCode(view.context, langCode)
             toggleItemList(_binding.languageRecyclerview, false)
-            setCurrentLocale(view.context, Locale(languageCodes[langIndex]))
+            setCurrentLocale(view.context, Locale(langCode))
             refreshCurrentFragment()
         }
         _binding.languageRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         _binding.languageRecyclerview.adapter = languagesAdapter
-        languagesAdapter.setData(languages.asList(), languages[langIndex])
+        languagesAdapter.setData(languageCodes.asList(), langCode)
         toggleItemList(_binding.languageRecyclerview, true) // Hide list at startup
 
-        _binding.settingsLanguage.text = languages[langIndex]
+        _binding.settingsLanguage.text = ContextUtils.getLanguageNameFromCode(view.context, langCode)
         _binding.settingsLanguage.setOnClickListener {
             // Open recycler view
+            val langIndex = languageCodes.indexOf(langCode)
             (_binding.languageRecyclerview.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(if (langIndex > 1) langIndex-1 else 0, 0)
             toggleItemList(_binding.languageRecyclerview, false)
         }

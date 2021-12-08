@@ -58,11 +58,12 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     private fun initPreferences() {
         preferences = CanaveralPreferences(requireContext())
 
-        val availableLocales = resources.getStringArray(R.array.languages_code)
+        val availableLocales = resources.getStringArray(R.array.languages_code_available)
         val currentLocale = Locale.getDefault()
         val locale = getCurrentLocale()
         if (locale == null) {
             if (!availableLocales.contains(currentLocale.language)) {
+                // Set available locale in default value : en
                 setCurrentLocale(requireContext(), Locale("en"))
             } else {
                 setCurrentLocale(requireContext(), currentLocale)
