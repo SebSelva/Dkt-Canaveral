@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/SplashScreen">
+
+    <fragment
+        android:id="@+id/SplashScreen"
+        android:name="com.decathlon.canaveral.intro.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash_screen">
+
+        <action
+            android:id="@+id/action_splash_to_dashboard"
+            app:destination="@id/MainActivity"/>
+
+    </fragment>
+
+    <activity
+        android:id="@+id/MainActivity"
+        android:name="com.decathlon.canaveral.MainActivity"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard"/>
+
+</navigation>
