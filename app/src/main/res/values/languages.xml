@@ -15,6 +15,10 @@
         <item>zh-rTW</item>
     </string-array>
 
+    <string-array name="languages_code_available">
+        <item>en</item>
+    </string-array>
+
     <string-array name="languages_trad">
         <item>@string/language_de</item>
         <item>@string/language_en</item>
