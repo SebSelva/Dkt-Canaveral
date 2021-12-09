@@ -76,4 +76,6 @@
     <string name="title_round_score">回合得分</string>
     <string name="title_settings">设置</string>
     <string name="title_stats">统计数据</string>
+    <string name="versus_type_single">Single player</string>
+    <string name="versus_type_team">Team player</string>
 </resources>

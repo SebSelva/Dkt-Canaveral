@@ -1,21 +1,13 @@
 package com.decathlon.canaveral.dashboard
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Filter
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.utils.FirebaseEventNames
@@ -87,8 +79,6 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         // Data launch
         dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
             playerAdapter.setData(it)
-            val versusIndex = if (it.isEmpty()) 0 else (it.size-1)
-            _binding.inputVersus.setText(versusMode[versusIndex],false)
         })
         dashboardViewModel.getPlayers()
     }

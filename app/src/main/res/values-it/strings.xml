@@ -76,4 +76,6 @@
     <string name="title_round_score">Round Score</string>
     <string name="title_settings">Parameters</string>
     <string name="title_stats">Stats</string>
+    <string name="versus_type_single">Single player</string>
+    <string name="versus_type_team">Team player</string>
 </resources>

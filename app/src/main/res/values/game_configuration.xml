@@ -9,14 +9,8 @@
     </string-array>
 
     <string-array name="versus_type">
-        <item>Alone</item>
-        <item>1 vs 1</item>
-        <item>1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1 vs 1 vs 1 vs 1</item>
-        <item>1 vs 1 vs 1 vs 1 vs 1 vs 1 vs 1 vs 1</item>
+        <item>@string/versus_type_single</item>
+        <item>@string/versus_type_team</item>
     </string-array>
 
     <string-array name="game_x01_variant_array">

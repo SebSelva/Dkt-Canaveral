@@ -71,11 +71,11 @@
     <string name="player_round_unlimited">R‪%d‬</string>
     <string name="settings_languages">语言</string>
     <string name="settings_title">常规设置</string>
-    <string name="title_dashboard">仪表盘
-</string>
+    <string name="title_dashboard">仪表盘</string>
     <string name="title_game">游戏</string>
     <string name="title_round_score">一轮成绩</string>
     <string name="title_settings">设定</string>
-    <string name="title_stats">游戏统计
-</string>
+    <string name="title_stats">游戏统计</string>
+    <string name="versus_type_single">Single player</string>
+    <string name="versus_type_team">Team player</string>
 </resources>
