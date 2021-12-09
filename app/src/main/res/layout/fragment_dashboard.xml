@@ -37,15 +37,6 @@
                     android:background="@color/white"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/Dkt.TextStyle.Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/cardview_padding_side"
-                        android:layout_marginEnd="@dimen/cardview_padding_side"
-                        android:layout_marginBottom="@dimen/margin_medium"
-                        android:text="@string/dashboard_select_players" />
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/players_recycler_view"
                         android:layout_width="wrap_content"

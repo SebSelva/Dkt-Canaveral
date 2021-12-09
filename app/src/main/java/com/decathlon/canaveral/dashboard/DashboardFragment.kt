@@ -14,6 +14,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
@@ -54,7 +55,7 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         // Players
         val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
             {dashboardViewModel.addPlayer(it)}, {dashboardViewModel.removePlayer(it)})
-        _binding.playersRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        _binding.playersRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4, GridLayoutManager.VERTICAL, false)
         _binding.playersRecyclerView.adapter = playerAdapter
 
         // Start button
