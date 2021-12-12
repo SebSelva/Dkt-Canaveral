@@ -147,7 +147,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:gravity="center"
-            android:numColumns="5"
+            android:numColumns="10"
             android:horizontalSpacing="@dimen/keyboard_item_horizontal_spacing"
             android:verticalSpacing="@dimen/keyboard_item_vertical_spacing"
             app:layout_constraintBottom_toBottomOf="parent"

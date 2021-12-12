@@ -3,10 +3,13 @@ package com.decathlon.canaveral.game.countup
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
@@ -58,23 +61,36 @@ class GameCountUpFragment : Game01Fragment() {
         // Player points remaining
         _binding.playerPointsRemaining.text = countUpViewModel.startingPoints.toString()
 
-        val orientationLayout = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
-            LinearLayoutManager.HORIZONTAL
-        } else {
-            LinearLayoutManager.VERTICAL
-        }
         // Player darts points
-        _binding.playerDartsPoints.layoutManager =
-            LinearLayoutManager(requireContext(), orientationLayout, false)
         playerPointsAdapter = PlayerPointsAdapter()
-        _binding.playerDartsPoints.adapter = playerPointsAdapter
+        _binding.playerDartsPoints.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+                    LinearLayoutManager.HORIZONTAL
+                } else {
+                    LinearLayoutManager.VERTICAL
+                },
+                false)
+            adapter = playerPointsAdapter
+        }
         playerPointsAdapter.setData(emptyList(), false)
 
         // Players waiting
-        _binding.playersWaiting.layoutManager =
-            LinearLayoutManager(requireContext(), orientationLayout, false)
-        playersWaitingAdapter = PlayersWaitingAdapter(countUpViewModel.isBull25)
-        _binding.playersWaiting.adapter = playersWaitingAdapter
+        playersWaitingAdapter = PlayersWaitingAdapter(countUpViewModel.startingPoints, countUpViewModel.isBull25, countUpViewModel.inValue)
+        _binding.playersWaiting.apply {
+            layoutManager = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            } else {
+                val dividerItemDecoration =
+                    DividerItemDecoration(context, GridLayoutManager.HORIZONTAL)
+                AppCompatResources.getDrawable(context, R.drawable.vertical_divider)
+                    ?.let { dividerItemDecoration.setDrawable(it) }
+                addItemDecoration(dividerItemDecoration)
+                GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
+            }
+            adapter = playersWaitingAdapter
+        }
 
         // Keyboard
         val keyboardAdapter = KeyboardAdapter(
@@ -88,15 +104,13 @@ class GameCountUpFragment : Game01Fragment() {
         countUpViewModel.currentPlayerLiveData.observe(viewLifecycleOwner) {
             onUpdateCurrentPlayer(
                 it,
-                countUpViewModel.nbRounds,
-                playersWaitingAdapter
+                countUpViewModel.nbRounds
             )
         }
         countUpViewModel.getCurrentPlayer()
 
         countUpViewModel.playersPointsLivedata.observe(viewLifecycleOwner) {
             onUpdatePlayersPoints(
-                playerPointsAdapter,
                 it,
                 countUpViewModel.nbRounds
             )
@@ -113,7 +127,6 @@ class GameCountUpFragment : Game01Fragment() {
     }
 
     private fun onUpdatePlayersPoints(
-        playerPointsAdapter: PlayerPointsAdapter,
         stack: Stack<PlayerPoint>,
         nbRounds: Int?
     ) {
@@ -183,8 +196,7 @@ class GameCountUpFragment : Game01Fragment() {
 
     private fun onUpdateCurrentPlayer(
         player: Player,
-        nbRounds: Int?,
-        playersWaitingAdapter: PlayersWaitingAdapter
+        nbRounds: Int?
     ) {
         _binding.playersWaiting.isVisible = (countUpViewModel.players.size > 1)
         _binding.playersWaitingSeparator.isVisible = (countUpViewModel.players.size > 1)
