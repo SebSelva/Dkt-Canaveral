@@ -3,10 +3,13 @@ package com.decathlon.canaveral.game.x01
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
@@ -60,23 +63,35 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         // Player points remaining
         _binding.playerPointsRemaining.text = game01ViewModel.startingPoints.toString()
 
-        val orientationLayout = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
-            LinearLayoutManager.HORIZONTAL
-        } else {
-            LinearLayoutManager.VERTICAL
-        }
         // Player darts points
-        _binding.playerDartsPoints.layoutManager =
-            LinearLayoutManager(requireContext(), orientationLayout, false)
         playerPointsAdapter = PlayerPointsAdapter()
-        _binding.playerDartsPoints.adapter = playerPointsAdapter
+        _binding.playerDartsPoints.apply {
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+                    LinearLayoutManager.HORIZONTAL
+                } else {
+                    LinearLayoutManager.VERTICAL
+                },
+                false)
+            adapter = playerPointsAdapter
+        }
         playerPointsAdapter.setData(emptyList(), false)
 
         // Players waiting
-        _binding.playersWaiting.layoutManager =
-            LinearLayoutManager(requireContext(), orientationLayout, false)
         playersWaitingAdapter = PlayersWaitingAdapter(game01ViewModel.startingPoints, game01ViewModel.isBull25, game01ViewModel.inValue)
-        _binding.playersWaiting.adapter = playersWaitingAdapter
+        _binding.playersWaiting.apply {
+            if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            } else {
+                val dividerItemDecoration = DividerItemDecoration(context, GridLayoutManager.HORIZONTAL)
+                AppCompatResources.getDrawable(context, R.drawable.vertical_divider)
+                    ?.let { dividerItemDecoration.setDrawable(it) }
+                addItemDecoration(dividerItemDecoration)
+                layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
+            }
+            adapter = playersWaitingAdapter
+        }
 
         // Keyboard
         val keyboardAdapter = KeyboardAdapter(
@@ -88,18 +103,17 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // ViewModel observers
         game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
-            onUpdateCurrentPlayer(it, game01ViewModel.nbRounds, game01ViewModel.startingPoints, playersWaitingAdapter)
+            onUpdateCurrentPlayer(it, game01ViewModel.nbRounds, game01ViewModel.startingPoints)
         })
         game01ViewModel.getCurrentPlayer()
 
         game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
-            onUpdatePlayersPoints(playerPointsAdapter, it, game01ViewModel.startingPoints, game01ViewModel.nbRounds)
+            onUpdatePlayersPoints(it, game01ViewModel.startingPoints, game01ViewModel.nbRounds)
         })
         game01ViewModel.getPlayersPoints()
     }
 
     private fun onUpdatePlayersPoints(
-        playerPointsAdapter: PlayerPointsAdapter,
         stack: Stack<PlayerPoint>,
         startingPoints: Int,
         nbRounds: Int?
@@ -178,8 +192,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
     private fun onUpdateCurrentPlayer(
         player: Player,
         nbRounds: Int?,
-        startingPoints: Int,
-        playersWaitingAdapter: PlayersWaitingAdapter
+        startingPoints: Int
     ) {
         _binding.playersWaiting.isVisible = (game01ViewModel.players.size > 1)
         _binding.playersWaitingSeparator.isVisible = (game01ViewModel.players.size > 1)
