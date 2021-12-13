@@ -59,6 +59,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                 }
             }
         }
+        val isPortraitMode = resources.configuration.orientation == ORIENTATION_PORTRAIT
 
         // Player points remaining
         _binding.playerPointsRemaining.text = game01ViewModel.startingPoints.toString()
@@ -68,11 +69,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         _binding.playerDartsPoints.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
-                if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
-                    LinearLayoutManager.HORIZONTAL
-                } else {
-                    LinearLayoutManager.VERTICAL
-                },
+                if (isPortraitMode) LinearLayoutManager.HORIZONTAL
+                else LinearLayoutManager.VERTICAL,
                 false)
             adapter = playerPointsAdapter
         }
@@ -81,14 +79,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         // Players waiting
         playersWaitingAdapter = PlayersWaitingAdapter(game01ViewModel.startingPoints, game01ViewModel.isBull25, game01ViewModel.inValue)
         _binding.playersWaiting.apply {
-            if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = if (isPortraitMode) {
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             } else {
                 val dividerItemDecoration = DividerItemDecoration(context, GridLayoutManager.HORIZONTAL)
                 AppCompatResources.getDrawable(context, R.drawable.vertical_divider)
                     ?.let { dividerItemDecoration.setDrawable(it) }
                 addItemDecoration(dividerItemDecoration)
-                layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
+                GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
             }
             adapter = playersWaitingAdapter
         }
@@ -99,6 +97,19 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
             getKeyboardType(),
             { point -> game01ViewModel.addPlayerPoint(point) },
             { game01ViewModel.removeLastPlayerPoint() })
+        val layoutManager = GridLayoutManager(
+            context,
+            if (isPortraitMode) { 10 } else { 9 },
+            GridLayoutManager.VERTICAL,
+            false)
+        layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int =
+                if (isPortraitMode && position >= 20) {
+                    2
+                }
+                else 1
+        }
+        _binding.keyboardDkt.layoutManager = layoutManager
         _binding.keyboardDkt.adapter = keyboardAdapter
 
         // ViewModel observers

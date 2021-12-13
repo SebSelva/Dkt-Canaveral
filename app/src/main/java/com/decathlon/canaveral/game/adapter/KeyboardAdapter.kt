@@ -5,22 +5,26 @@ import android.content.res.Configuration
 import android.graphics.Typeface
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.isVisible
-import com.decathlon.canaveral.common.model.Point
-import kotlinx.coroutines.*
+import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.BaseViewHolder
+import com.decathlon.canaveral.common.model.Point
+import com.decathlon.canaveral.databinding.ItemKeyboardBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class KeyboardAdapter(private val context: Context,
                       private val type: KeyboardType,
                       val onDartTouched: (Point) -> Unit,
                       val onDartTouchAborted: () -> Unit
-                      ) : BaseAdapter()
+                      ) : RecyclerView.Adapter<BaseViewHolder<*>>()
 {
     private val isPortraitMode = context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
     private val keyboardItems : List<String> = if (isPortraitMode) {
@@ -37,53 +41,19 @@ class KeyboardAdapter(private val context: Context,
 
     private var memoryKeyboardItem :AppCompatTextView? = null
 
-    override fun getCount(): Int = keyboardItems.size
-
-    override fun getItem(position: Int): Any {
-        return keyboardItems[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
+        return KeyboardItemViewHolder(
+            ItemKeyboardBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
+        (holder as KeyboardItemViewHolder).bind(keyboardItems[position])
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val itemValue = keyboardItems[position]
-        var view = convertView
-
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_keyboard, null)
-        }
-
-        val itemText = view?.findViewById<AppCompatTextView>(R.id.keyboard_textview)
-        itemText?.apply {
-            height = if (isPortraitMode)
-                context.resources.getDimension(R.dimen.keyboard_item_height).toInt()
-            else
-                context.resources.getDimension(R.dimen.keyboard_item_land_height).toInt()
-
-            width = if (isPortraitMode)
-                context.resources.getDimension(R.dimen.keyboard_item_width).toInt()
-            else
-                context.resources.getDimension(R.dimen.keyboard_item_land_width).toInt()
-
-            typeface = Typeface.createFromAsset(context.assets, "klavika-bold.otf")
-            gravity = Gravity.CENTER
-            text = itemValue
-            tag = getItemValue(itemValue)
-            setOnClickListener { view ->
-                onDartEvent(view as AppCompatTextView)
-            }
-            isVisible = itemValue.isNotEmpty()
-            setDartTouchColors(this, true)
-        }
-        itemText?.textSize = when (itemValue) {
-            mBullValue -> if (isPortraitMode) 25F else 22F
-            mBackValue, mMissValue -> if (isPortraitMode) 21F else 18F
-            else -> if (isPortraitMode) 35F else 32F
-        }
-        return view!!
-    }
+    override fun getItemCount(): Int = keyboardItems.size
 
     private fun getItemValue(itemValue: String): String {
         val cricketMissedValues = context.resources.getStringArray(R.array.keyboard_cricket_miss)
@@ -100,21 +70,20 @@ class KeyboardAdapter(private val context: Context,
             if (view?.text == mMissValue || view?.text == mBackValue) {
                 view.apply {
                     setTextColor(AppCompatResources.getColorStateList(context, R.color.white))
-                    background = AppCompatResources.getDrawable(context, R.drawable.keyboard_background_grey)
+                    setBackgroundColor(resources.getColor(R.color.grey_kb_background, null))
                 }
             } else {
                 view?.apply {
                     setTextColor(AppCompatResources.getColorStateList(context, R.color.grey_kb_text))
-                    background = null
+                    setBackgroundColor(resources.getColor(android.R.color.transparent, null))
                 }
             }
         } else {
             view?.apply {
                 setTextColor(AppCompatResources.getColorStateList(context, R.color.white))
-                background = AppCompatResources.getDrawable(context, R.drawable.keyboard_background_blue)
+                setBackgroundColor(resources.getColor(R.color.blue_dkt_secondary, null))
             }
         }
-
     }
 
     private fun onDartEvent(eventView: AppCompatTextView) {
@@ -141,8 +110,8 @@ class KeyboardAdapter(private val context: Context,
                 handleTouchFeedback(eventView)
             }
             else -> {
-                setDartTouchColors (eventView, false)
-                setDartTouchColors (memoryKeyboardItem, true)
+                setDartTouchColors(eventView, false)
+                setDartTouchColors(memoryKeyboardItem, true)
                 memoryKeyboardItem = if (memoryKeyboardItem != eventView) { eventView } else { null }
             }
         }
@@ -157,6 +126,25 @@ class KeyboardAdapter(private val context: Context,
             memoryKeyboardItem = null
         }
     }
+
+    inner class KeyboardItemViewHolder(private val binding: ItemKeyboardBinding):
+        BaseViewHolder<String>(binding.root) {
+            override fun bind(itemValue: String) {
+
+                binding.keyboardTextview.apply {
+                    typeface = Typeface.createFromAsset(context.assets, "klavika-medium.otf")
+                    gravity = Gravity.CENTER
+                    textSize = if (isPortraitMode) 25F else 18F
+                    text = itemValue
+                    setDartTouchColors(this, true)
+                    tag = getItemValue(itemValue)
+                    setOnClickListener { view ->
+                        onDartEvent(view as AppCompatTextView)
+                    }
+                    isVisible = itemValue.isNotEmpty()
+                }
+            }
+        }
 }
 
 enum class KeyboardType {
