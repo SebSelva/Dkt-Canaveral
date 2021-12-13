@@ -15,6 +15,10 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
 
+    // Versus types
+    <string name="versus_type_single">Single player</string>
+    <string name="versus_type_team">Team player</string>
+
     // Game types
     <string name="game_type_01_game" translatable="false">01 Game</string>
     <string name="game_type_cricket" translatable="false">Cricket</string>

@@ -13,11 +13,11 @@
 
     /// Cardview
     <dimen name="cardview_margin_side">@dimen/margin_medium</dimen>
-    <dimen name="cardview_padding">@dimen/margin_xxlarge</dimen>
+    <dimen name="cardview_padding">@dimen/margin_large</dimen>
     <dimen name="cardview_padding_side">52dp</dimen>
 
     /// Spinner or AutoCompleteTextView
-    <dimen name="spinner_label_marginTop">@dimen/margin_large</dimen>
+    <dimen name="spinner_label_marginTop">@dimen/margin_xlarge</dimen>
     <dimen name="spinner_label_marginBottom">@dimen/margin_small</dimen>
     <dimen name="spinner_height">38dp</dimen>
 
