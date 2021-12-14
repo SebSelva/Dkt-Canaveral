@@ -64,11 +64,7 @@ class GameCountUpFragment : Game01Fragment() {
         _binding.playerDartsPoints.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
-                if (isPortraitMode) {
-                    LinearLayoutManager.HORIZONTAL
-                } else {
-                    LinearLayoutManager.VERTICAL
-                },
+                LinearLayoutManager.HORIZONTAL,
                 false)
             adapter = playerPointsAdapter
         }
@@ -104,10 +100,7 @@ class GameCountUpFragment : Game01Fragment() {
             false)
         layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int =
-                if (isPortraitMode && position >= 20) {
-                    2
-                }
-                else 1
+                if (isPortraitMode && position >= 20) 2 else 1
         }
         _binding.keyboardDkt.layoutManager = layoutManager
         _binding.keyboardDkt.adapter = keyboardAdapter

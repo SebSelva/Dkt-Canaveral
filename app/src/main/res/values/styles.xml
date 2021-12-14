@@ -74,28 +74,24 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Dkt.TextStyle.Game.Info" parent="Dkt.TextStyle.BlueDecatSecondary">
+    <style name="Dkt.TextStyle.Game.Ppd" parent="Dkt.TextStyle.White">
         <item name="android:textSize">15sp</item>
     </style>
 
-    <style name="Dkt.TextStyle.PlayerName.Waiting" parent="Dkt.TextStyle.BlueDecatSecondary">
-        <item name="android:textSize">14sp</item>
+    <style name="Dkt.TextStyle.Game.Round" parent="Dkt.TextStyle.BlueDecatSecondary">
+        <item name="android:textSize">25sp</item>
     </style>
 
-    <style name="Dkt.TextStyle.PlayerName.Playing" parent="Dkt.TextStyle.BlueDecatSecondary">
+    <style name="Dkt.TextStyle.PlayerName.Playing" parent="Dkt.TextStyle.White">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Dkt.TextStyle.PlayerScore.Waiting" parent="Dkt.TextStyle.BlueDecatSecondary">
-        <item name="android:textSize">55sp</item>
-    </style>
-
     <style name="Dkt.TextStyle.PlayerScore.Playing" parent="Dkt.TextStyle.BlueDecatSecondary">
-        <item name="android:textSize">100sp</item>
+        <item name="android:textSize">180sp</item>
     </style>
 
     <style name="Dkt.TextStyle.PlayerShot" parent="Dkt.TextStyle.BlueDecatSecondary">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">30sp</item>
     </style>
 
     <style name="Dkt.TextStyle.Options.Title" parent="Dkt.TextStyle.White">
