@@ -22,13 +22,14 @@
     <dimen name="spinner_height">38dp</dimen>
 
     /// Keyboard
-    <dimen name="keyboard_item_height">51dp</dimen>
-    <dimen name="keyboard_item_width">51dp</dimen>
+    <dimen name="keyboard_item_height">30dp</dimen>
+    <dimen name="keyboard_item_width">35dp</dimen>
+    <dimen name="keyboard_item_double_width">70dp</dimen>
     <dimen name="keyboard_item_vertical_spacing">@dimen/margin_medium</dimen>
-    <dimen name="keyboard_item_horizontal_spacing">@dimen/margin_xlarge</dimen>
+    <dimen name="keyboard_item_horizontal_spacing">@dimen/margin_large</dimen>
     /// Keyboard Land
-    <dimen name="keyboard_item_land_height">45dp</dimen>
-    <dimen name="keyboard_item_land_width">45dp</dimen>
+    <dimen name="keyboard_item_land_height">30dp</dimen>
+    <dimen name="keyboard_item_land_width">40dp</dimen>
     <dimen name="keyboard_item_land_vertical_spacing">@dimen/margin_small</dimen>
     <dimen name="keyboard_item_land_horizontal_spacing">@dimen/margin_xxlarge</dimen>
 

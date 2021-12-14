@@ -16,12 +16,9 @@ import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
-import com.decathlon.canaveral.game.adapter.KeyboardAdapter
-import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
-import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
-import com.decathlon.canaveral.game.adapter.KeyboardType
+import com.decathlon.canaveral.game.adapter.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -57,6 +54,7 @@ class GameCountUpFragment : Game01Fragment() {
                 }
             }
         }
+        val isPortraitMode = resources.configuration.orientation == ORIENTATION_PORTRAIT
 
         // Player points remaining
         _binding.playerPointsRemaining.text = countUpViewModel.startingPoints.toString()
@@ -66,7 +64,7 @@ class GameCountUpFragment : Game01Fragment() {
         _binding.playerDartsPoints.apply {
             layoutManager = LinearLayoutManager(
                 requireContext(),
-                if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+                if (isPortraitMode) {
                     LinearLayoutManager.HORIZONTAL
                 } else {
                     LinearLayoutManager.VERTICAL
@@ -79,7 +77,7 @@ class GameCountUpFragment : Game01Fragment() {
         // Players waiting
         playersWaitingAdapter = PlayersWaitingAdapter(countUpViewModel.startingPoints, countUpViewModel.isBull25, countUpViewModel.inValue)
         _binding.playersWaiting.apply {
-            layoutManager = if (resources.configuration.orientation == ORIENTATION_PORTRAIT) {
+            layoutManager = if (isPortraitMode) {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             } else {
                 val dividerItemDecoration =
@@ -98,6 +96,20 @@ class GameCountUpFragment : Game01Fragment() {
             getKeyboardType(),
             { point -> countUpViewModel.addPlayerPoint(point) },
             { countUpViewModel.removeLastPlayerPoint() })
+
+        val layoutManager = GridLayoutManager(
+            context,
+            if (isPortraitMode) { 10 } else { 9 },
+            GridLayoutManager.VERTICAL,
+            false)
+        layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int =
+                if (isPortraitMode && position >= 20) {
+                    2
+                }
+                else 1
+        }
+        _binding.keyboardDkt.layoutManager = layoutManager
         _binding.keyboardDkt.adapter = keyboardAdapter
 
         // ViewModel observers
