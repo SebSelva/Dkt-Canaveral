@@ -29,100 +29,108 @@
             app:layout_constraintVertical_weight="1">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin_xlarge"
-                android:layout_marginEnd="@dimen/margin_xlarge"
-                android:layout_marginBottom="@dimen/margin_large"
-                android:layout_weight="1">
+                android:background="@color/game_play_background"
+                android:padding="8dp">
 
-                <androidx.cardview.widget.CardView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/player_image_round"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_marginTop="@dimen/margin_large"
-                    app:cardCornerRadius="21dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/player_image"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:contentDescription="@string/image_description"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/profile_default"
-                        app:showImage="@{currentPlayer.image}"
-                        tools:src="@drawable/profile_default" />
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/player_round"
-                    style="@style/Dkt.TextStyle.Game.Info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginTop="@dimen/margin_xlarge"
-                    app:layout_constraintBottom_toTopOf="@id/player_pdd"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    tools:text="R 1/20" />
+                    android:src="@drawable/profile_circle_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/player_pdd"
-                    style="@style/Dkt.TextStyle.Game.Info"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/player_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    tools:text="PPD: 12.56" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/game_options"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/white"
-                    android:padding="@dimen/margin_large"
-                    android:src="@drawable/ic_game_option"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+                    android:src="@drawable/profile_default_white"
+                    app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:layout_constraintStart_toStartOf="@id/player_image_round"
+                    app:layout_constraintTop_toTopOf="@id/player_image_round" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/player_name"
                     style="@style/Dkt.TextStyle.PlayerName.Playing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_xlarge"
                     android:text="@{currentPlayer.nickname}"
                     android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/player_image_round"
                     tools:text="Player X" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/player_pdd"
+                    style="@style/Dkt.TextStyle.Game.Ppd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/player_name"
+                    tools:text="PPD: 12.56" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/game_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_medium"
+                    android:src="@drawable/ic_game_option"
+                    android:background="@color/game_play_background"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_weight="1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/player_round"
+                    style="@style/Dkt.TextStyle.Game.Round"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xlarge"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="R 1/20" />
 
                 <com.decathlon.canaveral.common.view.KlavikaBITextView
                     android:id="@+id/player_points_remaining"
                     style="@style/Dkt.TextStyle.PlayerScore.Playing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_xxlarge"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/player_image_round"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/player_round"
                     tools:text="301" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/player_darts_points"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:itemCount="3" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_list_player_point"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:itemCount="1"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_list_game_player" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -155,7 +163,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:itemCount="27"
+            tools:itemCount="3"
             tools:listitem="@layout/item_keyboard" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

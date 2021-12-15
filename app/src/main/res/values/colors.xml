@@ -6,6 +6,8 @@
     <color name="grey_kb_background">#C7C7C7</color>
     <color name="grey_kb_text">#ACACAC</color>
     <color name="dashboard_disabled_icon">#898989</color>
+    <color name="dashboard_enabled_icon">#006CB1</color>
+    <color name="game_play_background">#007DBC</color>
     <color name="grey_dark">#707070</color>
 
     <color name="purple_200">#FFBB86FC</color>
