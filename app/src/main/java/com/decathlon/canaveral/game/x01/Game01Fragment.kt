@@ -131,7 +131,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                 game01ViewModel.currentRound,
                 stack
             ),
-            game01ViewModel.isRoundDecreasing
+            game01ViewModel.isPointBlinking
         )
         val remainingPoints = DartsUtils.get01GamePlayerScore(startingPoints,
             game01ViewModel.isBull25,

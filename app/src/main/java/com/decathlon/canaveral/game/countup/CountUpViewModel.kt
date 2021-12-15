@@ -9,6 +9,7 @@ import com.decathlon.canaveral.game.x01.Game01ViewModel
 class CountUpViewModel(interactors: Interactors) : Game01ViewModel(interactors) {
 
     override fun addPlayerPoint(point: Point) {
+        isPointBlinking = false
         isStackIncreasing = true
         isRoundDecreasing = false
         currentPlayer?.let {
