@@ -141,7 +141,7 @@ class GameCountUpFragment : Game01Fragment() {
                 countUpViewModel.currentRound,
                 stack
             ),
-            countUpViewModel.isRoundDecreasing
+            countUpViewModel.isPointBlinking
         )
         val currentScore = DartsUtils.getCountUpPlayerScore(
                 countUpViewModel.isBull25,

@@ -11,7 +11,6 @@ import com.decathlon.canaveral.common.utils.DartsUtils
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.util.*
 
 open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
@@ -27,6 +26,7 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
     var playersPoints: Stack<PlayerPoint> = Stack()
     var currentPlayer: Player? = null
     var currentRound: Int = 1
+    var isPointBlinking: Boolean = false
     var isStackIncreasing: Boolean = true
     var isRoundDecreasing: Boolean = false
     var isRoundBusted = false
@@ -40,6 +40,7 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
     }
 
     open fun addPlayerPoint(point: Point) {
+        isPointBlinking = false
         isStackIncreasing = true
         isRoundDecreasing = false
         currentPlayer?.let {
@@ -80,11 +81,22 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
                 currentRound = playersPoints.peek().round
                 isRoundBusted = playersPoints.peek().isBusted
                 isRoundDecreasing = true
+                isPointBlinking = true
                 currentPlayerLiveData.postValue(currentPlayer)
             } else {
                 var isNullDart = true
                 while (isNullDart) {
-                    isNullDart = playersPoints.pop().point is NullPoint
+                    isNullDart = playersPoints.peek().point is NullPoint
+                    if (isNullDart) {
+                        playersPoints.pop()
+                    }
+                    else if(!isPointBlinking) {
+                        isPointBlinking = true
+                    }
+                    else {
+                        isPointBlinking = false
+                        playersPoints.pop()
+                    }
                 }
                 removePlayerRoundBusted(currentRound, currentPlayer)
             }
