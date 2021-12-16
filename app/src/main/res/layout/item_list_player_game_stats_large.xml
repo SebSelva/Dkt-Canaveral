@@ -9,74 +9,90 @@
             type="com.decathlon.canaveral.common.model.Player" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="139dp"
-        android:layout_height="197dp"
-        android:layout_margin="6dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="109dp"
+        android:layout_height="155dp"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_xlarge"
+        android:layout_marginEnd="@dimen/margin_xlarge"
         android:padding="@dimen/margin_medium"
         android:orientation="vertical"
         android:background="@drawable/background_player_game_stats">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Large"
+            android:id="@+id/player_name"
+            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_gravity="center_horizontal"
             android:text="@{player.nickname}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Player X"/>
 
-        <androidx.cardview.widget.CardView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/player_image_round"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_gravity="center_horizontal"
-            app:cardCornerRadius="25dp">
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/profile_circle_white"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_name"/>
 
-            <ImageView
-                android:id="@+id/player_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:contentDescription="@string/image_description"
-                android:scaleType="centerCrop"
-                android:src="@drawable/profile_default"
-                app:showImage="@{player.image}"
-                tools:src="@drawable/profile_default" />
-
-        </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/player_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="@dimen/margin_medium"
+            android:src="@drawable/profile_default_white"
+            app:layout_constraintTop_toTopOf="@id/player_image_round"
+            app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+            app:layout_constraintStart_toStartOf="@id/player_image_round"
+            app:layout_constraintEnd_toEndOf="@id/player_image_round"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Large"
+            android:id="@+id/player_stats_ppd_title"
+            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:text="@string/game_end_ppd"/>
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/game_end_ppd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_image_round"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_ppd"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Large"
+            style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_stats_ppd_title"
             tools:text="37.20"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_second_field_title"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Large"
+            style="@style/Dkt.TextStyle.Player.Stats.Item.Title.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_stats_ppd"
             android:text="@string/game_end_checkout"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_second_field_value"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Large"
+            style="@style/Dkt.TextStyle.Player.Stats.Item.Value.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_stats_second_field_title"
             tools:text="51"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

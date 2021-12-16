@@ -7,9 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.model.PlayerStats
-import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsLargeBinding
-import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsMediumBinding
-import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsSmallBinding
+import com.decathlon.canaveral.databinding.*
 import java.util.*
 
 class PlayersStatsAdapter(
@@ -20,8 +18,9 @@ class PlayersStatsAdapter(
 
     companion object {
         private const val SMALL = 0
-        private const val MEDIUM = 1
-        private const val LARGE = 2
+        private const val LARGE = 1
+        private const val WIN_SMALL = 2
+        private const val WIN_LARGE = 3
     }
 
     private var players: List<PlayerStats> = emptyList()
@@ -35,9 +34,9 @@ class PlayersStatsAdapter(
     override fun getItemViewType(position: Int): Int {
 
         return if (isWinViews) {
-            if (players.size > 2 && isPortraitMode) MEDIUM else LARGE
+            if (players.size > 4 && isPortraitMode) WIN_SMALL else WIN_LARGE
         } else {
-            if (players.size > 2 && isPortraitMode) SMALL else MEDIUM
+            if (players.size > 4 && isPortraitMode) SMALL else LARGE
         }
     }
 
@@ -52,17 +51,25 @@ class PlayersStatsAdapter(
                     )
                 )
             }
-            MEDIUM -> {
-                PlayerStatsViewMediumHolder(
-                    ItemListPlayerGameStatsMediumBinding.inflate(
+            LARGE -> {
+                PlayerStatsViewLargeHolder(
+                    ItemListPlayerGameStatsLargeBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent, false
                     )
                 )
             }
-            LARGE -> {
-                PlayerStatsViewLargeHolder(
-                    ItemListPlayerGameStatsLargeBinding.inflate(
+            WIN_SMALL -> {
+                WinnerStatsViewSmallHolder(
+                    ItemListWinnerGameStatsSmallBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent, false
+                    )
+                )
+            }
+            WIN_LARGE -> {
+                WinnerStatsViewLargeHolder(
+                    ItemListWinnerGameStatsLargeBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent, false
                     )
@@ -93,7 +100,7 @@ class PlayersStatsAdapter(
         }
     }
 
-    inner class PlayerStatsViewMediumHolder(private var binding: ItemListPlayerGameStatsMediumBinding) :
+    inner class PlayerStatsViewLargeHolder(private var binding: ItemListPlayerGameStatsLargeBinding) :
         BaseViewHolder<PlayerStats>(binding.root) {
 
         override fun bind(item: PlayerStats) {
@@ -106,7 +113,20 @@ class PlayersStatsAdapter(
         }
     }
 
-    inner class PlayerStatsViewLargeHolder(private var binding: ItemListPlayerGameStatsLargeBinding) :
+    inner class WinnerStatsViewSmallHolder(private var binding: ItemListWinnerGameStatsSmallBinding) :
+        BaseViewHolder<PlayerStats>(binding.root) {
+
+        override fun bind(item: PlayerStats) {
+            binding.player = item.player
+            binding.playerStatsPpd.text = String.format(Locale.ENGLISH,
+                binding.root.context.resources.getString(R.string.game_end_ppd_value), item.ppd)
+            binding.playerStatsSecondFieldTitle.text = getSecondFieldTitle(binding.root.context)
+            binding.playerStatsSecondFieldValue.text = getSecondFieldValue(binding.root.context, item)
+            binding.executePendingBindings()
+        }
+    }
+
+    inner class WinnerStatsViewLargeHolder(private var binding: ItemListWinnerGameStatsLargeBinding) :
         BaseViewHolder<PlayerStats>(binding.root) {
 
         override fun bind(item: PlayerStats) {

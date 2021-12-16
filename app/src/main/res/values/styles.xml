@@ -35,6 +35,14 @@
         <item name="android:textColor">@color/blue_dkt_secondary</item>
     </style>
 
+    <style name="Dkt.TextStyle.BlueDkt400" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/blue_dkt_400</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Winner.Stats" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/winner_stat_text</item>
+    </style>
+
     <style name="Dkt.TextStyle.Grey" parent="Dkt.TextStyle">
         <item name="android:textColor">@color/grey_dark</item>
     </style>
@@ -138,16 +146,35 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    // Player stats - Large
-    <style name="Dkt.TextStyle.Player.Stats.Name.Large" parent="Dkt.TextStyle.Player.Stats.Name">
+    // Winner stats - Small
+    <style name="Dkt.TextStyle.Winner.Stats.Name.Small" parent="Dkt.TextStyle.Winner.Stats">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Winner.Stats.Item.Title.Small" parent="Dkt.TextStyle.Winner.Stats">
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Winner.Stats.Item.Value.Small" parent="Dkt.TextStyle.Winner.Stats">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    // Winner stats - Large
+    <style name="Dkt.TextStyle.Winner.Stats.Name.Large" parent="Dkt.TextStyle.Winner.Stats">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">11sp</item>
     </style>
 
-    <style name="Dkt.TextStyle.Player.Stats.Item.Title.Large" parent="Dkt.TextStyle.Player.Stats.Item.Title">
+    <style name="Dkt.TextStyle.Winner.Stats.Item.Title.Large" parent="Dkt.TextStyle.Winner.Stats">
         <item name="android:textSize">10sp</item>
     </style>
 
-    <style name="Dkt.TextStyle.Player.Stats.Item.Value.Large" parent="Dkt.TextStyle.Player.Stats.Item.Value">
+    <style name="Dkt.TextStyle.Winner.Stats.Item.Value.Large" parent="Dkt.TextStyle.Winner.Stats">
+        <item name="android:layout_gravity">end</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">22sp</item>
     </style>
 
@@ -187,6 +214,17 @@
 
     <style name="Dkt.TextStyle.Splash.Version" parent="Dkt.TextStyle.White">
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Button" parent="Dkt.TextStyle.BlueDkt400">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">56dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18sp</item>
+        <item name="cornerRadius">9dp</item>
     </style>
 
     // TEXT STYLES - END

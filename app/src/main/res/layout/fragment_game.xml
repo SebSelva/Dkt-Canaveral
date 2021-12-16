@@ -31,7 +31,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/game_play_background"
+                android:background="@color/blue_dkt_400"
                 android:padding="8dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -80,7 +80,7 @@
                     android:id="@+id/game_options"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/game_play_background"
+                    android:background="@color/blue_dkt_400"
                     android:padding="@dimen/margin_medium"
                     android:src="@drawable/ic_game_option"
                     android:scaleType="centerInside"

@@ -150,6 +150,16 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
             )
         }
 
+        // Other players ordered
+        game01ViewModel.currentPlayerLiveData.value?.let {
+            val otherPlayers = getWaitingPlayersOrdered(
+                it, game01ViewModel.players)
+            if (otherPlayers.isNotEmpty()) {
+                playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
+                _binding.playersWaiting.smoothScrollToPosition(0)
+            }
+        }
+
         // Test if game is finished
         if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
             goToPlayersStatsScreen(startingPoints)
