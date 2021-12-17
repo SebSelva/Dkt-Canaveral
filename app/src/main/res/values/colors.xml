@@ -7,7 +7,8 @@
     <color name="grey_kb_text">#ACACAC</color>
     <color name="dashboard_disabled_icon">#898989</color>
     <color name="dashboard_enabled_icon">#006CB1</color>
-    <color name="game_play_background">#007DBC</color>
+    <color name="blue_dkt_400">#007DBC</color>
+    <color name="winner_stat_text">#036FB2</color>
     <color name="grey_dark">#707070</color>
 
     <color name="purple_200">#FFBB86FC</color>

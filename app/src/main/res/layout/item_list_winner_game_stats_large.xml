@@ -10,16 +10,19 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="98dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="6dp"
+        android:layout_width="139dp"
+        android:layout_height="197dp"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:layout_marginStart="@dimen/margin_xlarge"
+        android:layout_marginEnd="@dimen/margin_xlarge"
         android:padding="@dimen/margin_medium"
         android:orientation="vertical"
-        android:background="@drawable/background_player_game_stats">
+        android:background="@drawable/background_winner_game_stats">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_name"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title"
+            style="@style/Dkt.TextStyle.Winner.Stats.Item.Title.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_medium"
@@ -32,10 +35,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/player_image_round"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:src="@drawable/profile_circle_white"
-            android:layout_marginStart="@dimen/margin_small"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:src="@drawable/profile_circle_blue"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginBottom="2dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,9 +46,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/player_image"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="@dimen/margin_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/winner_stat_text"
             android:src="@drawable/profile_default_white"
             app:layout_constraintTop_toTopOf="@id/player_image_round"
             app:layout_constraintBottom_toBottomOf="@id/player_image_round"
@@ -55,27 +57,27 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_ppd_title"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title"
+            style="@style/Dkt.TextStyle.Winner.Stats.Item.Title.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
             android:text="@string/game_end_ppd"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/player_image_round"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_ppd"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Value"
+            style="@style/Dkt.TextStyle.Winner.Stats.Item.Value.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/player_stats_ppd_title"
             tools:text="37.20"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_second_field_title"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Title"
+            style="@style/Dkt.TextStyle.Winner.Stats.Item.Title.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,10 +86,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/player_stats_second_field_value"
-            style="@style/Dkt.TextStyle.Player.Stats.Item.Value"
+            style="@style/Dkt.TextStyle.Winner.Stats.Item.Value.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/player_stats_second_field_title"
             tools:text="51"/>

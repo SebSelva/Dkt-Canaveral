@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.PlayerStats
@@ -36,8 +36,16 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         _binding.endTitle.text = getStatsTitle(sortedPlayers, winPlayers)
 
         // Winning players
+        val winSpan = if (winPlayers.size != 1) {
+            if (winPlayers.size > 4) 3 else 2
+        } else 1
         _binding.endWinningPlayers.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(
+                requireContext(),
+                winSpan,
+                GridLayoutManager.VERTICAL,
+                false)
+
         val winningPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
             true,
             winPlayers.size == sortedPlayers.size
@@ -45,15 +53,23 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
         // Losing players
+        val lostPlayers = sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size)
+        val lostSpan = if (lostPlayers.size != 1) {
+            if (lostPlayers.size > 4) 3 else 2
+        } else 1
         _binding.endLostPlayers.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            GridLayoutManager(
+                requireContext(),
+                lostSpan,
+                GridLayoutManager.VERTICAL,
+                false)
         val otherPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
             winPlayers.size == sortedPlayers.size,
             winPlayers.size == sortedPlayers.size
         )
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
-        if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
+        /*if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
             winningPlayersStatsAdapter.setData(
                 winPlayers.subList(0,2),
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
@@ -61,15 +77,15 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
                 sortedPlayers.toList().subList(2, sortedPlayers.size),
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             )
-        } else {
+        } else {*/
             winningPlayersStatsAdapter.setData(
                 winPlayers,
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             otherPlayersStatsAdapter.setData(
-                sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size),
+                lostPlayers,
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             )
-        }
+        //}
 
         // Buttons
         _binding.buttonCheck.setOnClickListener { activity?.finish() }

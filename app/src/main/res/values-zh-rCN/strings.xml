@@ -22,11 +22,13 @@
     <string name="game_detail_inout_master">大师</string>
     <string name="game_detail_inout_simple">简单</string>
     <string name="game_double">D</string>
+    <string name="game_end_back_to_menu">Back to menu</string>
     <string name="game_end_checkout">"查看 "</string>
     <string name="game_end_draw">牵引！</string>
     <string name="game_end_ppd">PPD</string>
     <string name="game_end_ppd_value">‪%.2f‬</string>
     <string name="game_end_remaining">其余</string>
+    <string name="game_end_replay">Replay</string>
     <string name="game_end_score_reached">"达到分数 "</string>
     <string name="game_end_score_total">总得分</string>
     <string name="game_end_win_one">‪%s‬胜利！</string>

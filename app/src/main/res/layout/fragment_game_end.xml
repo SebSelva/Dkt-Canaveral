@@ -6,89 +6,99 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="40dp"
-        android:paddingBottom="40dp"
-        android:paddingLeft="@dimen/margin_small"
-        android:paddingRight="@dimen/margin_small"
-        android:background="@drawable/background_blue"
-        android:orientation="vertical">
+        android:background="@drawable/background_dkt_blue">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Dkt.TextStyle.End.Title"
-            android:id="@+id/end_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            tools:text="@string/game_end_draw"/>
+            app:layout_constraintBottom_toTopOf="@id/game_end_bottom">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/end_winning_players"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/end_title"
-            app:layout_constraintBottom_toTopOf="@id/end_lost_players"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:listitem="@layout/item_list_player_game_stats_small"
-            tools:itemCount="1"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="40dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/end_lost_players"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/end_winning_players"
-            app:layout_constraintBottom_toTopOf="@id/game_end_bottom"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:listitem="@layout/item_list_player_game_stats_small"
-            tools:itemCount="1"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.End.Title"
+                    android:id="@+id/end_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:text="@string/game_end_draw"/>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/end_winning_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xxlarge"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/end_title"
+                    app:layout_constraintBottom_toTopOf="@id/end_lost_players"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:listitem="@layout/item_list_winner_game_stats_small"
+                    tools:itemCount="1"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/end_lost_players"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xxlarge"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/end_winning_players"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:listitem="@layout/item_list_player_game_stats_small"
+                    tools:itemCount="1"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/game_end_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_medium"
-            android:layout_marginRight="@dimen/margin_medium"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
+            android:paddingBottom="@dimen/margin_xlarge"
+            android:paddingStart="35dp"
+            android:paddingEnd="35dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Dkt.TextStyle.Button"
+                android:id="@+id/button_reload"
+                android:text="@string/game_end_replay"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/button_check" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Dkt.TextStyle.White"
                 android:id="@+id/button_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_white_bg_blue_check"
-                android:background="@null"/>
+                android:layout_height="22dp"
+                android:paddingStart="35dp"
+                android:paddingEnd="35dp"
+                android:textSize="16sp"
+                android:text="@string/game_end_back_to_menu"
+                android:textAllCaps="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_reload"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/button_reload"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_retry_white"
-                android:background="@null"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
