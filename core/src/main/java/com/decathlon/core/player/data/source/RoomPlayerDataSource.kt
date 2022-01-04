@@ -17,8 +17,15 @@ class RoomPlayerDataSource(context: Context) : PlayerDataSource {
         playerDao.insert(PlayerEntity(player))
     }
 
-    override suspend fun removePlayer(player: Player) =
-        playerDao.deletePlayer(PlayerEntity(player))
+    override suspend fun removePlayer(player: Player): Unit =
+        getEntityById(player.id).let {
+            if (it != null) {
+                playerDao.deletePlayer(it)
+            }
+        }
+
+    override suspend fun getEntityById(id: Long): PlayerEntity? =
+        playerDao.findUserById(id)
 
     override suspend fun getUserByNickname(nickname: String) =
         playerDao.findUsersByNickname(nickname)?.map {playerEntity -> Player(playerEntity) }

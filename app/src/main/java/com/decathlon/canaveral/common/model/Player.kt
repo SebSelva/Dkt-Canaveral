@@ -4,7 +4,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Player (
-        override var id: Int,
+        override var id: Long,
         var nickname: String,
         var firstname: String,
         var lastname: String,
@@ -26,7 +26,7 @@ class Player (
         }
 
         override fun hashCode(): Int {
-                var result = id
+                var result = id.toInt()
                 result = 31 * result + nickname.hashCode()
                 result = 31 * result + firstname.hashCode()
                 result = 31 * result + lastname.hashCode()

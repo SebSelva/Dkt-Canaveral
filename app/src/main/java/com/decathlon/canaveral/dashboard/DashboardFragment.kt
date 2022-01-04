@@ -10,7 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.utils.FirebaseEventNames
+import com.decathlon.canaveral.dashboard.player.PlayerEditionFragmentArgs
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -46,31 +46,25 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
         // Players
         val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
-            {dashboardViewModel.addPlayer(it)}, {dashboardViewModel.removePlayer(it)})
+            {dashboardViewModel.addPlayer(it)},
+            {dashboardViewModel.removePlayer(it)},
+            {
+                Navigation.findNavController(view).navigate(
+                    R.id.action_dashboard_to_player_edition,
+                    PlayerEditionFragmentArgs(it).toBundle())
+            })
         _binding.playersRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4, GridLayoutManager.VERTICAL, false)
         _binding.playersRecyclerView.adapter = playerAdapter
 
         // Start button
         _binding.startBtn.setOnClickListener {
-            val parameters = Bundle().apply {
-                putString(
-                    FirebaseEventNames.GAME_START_GAME_TYPE,
-                    gameType[dashboardViewModel.gameTypeIndex]
-                )
-                putString(
-                    FirebaseEventNames.GAME_START_GAME_VARIANT,
-                    _binding.inputVariant.text.toString()
-                )
-                putInt(
-                    FirebaseEventNames.GAME_START_PLAYER_NUMBER,
-                    dashboardViewModel.playerLiveData.value!!.size
-                )
-                putString(
-                    FirebaseEventNames.GAME_START_SCORING_METHOD,
-                    "Manual"
-                )
-            }
-            firebaseAnalytics.logEvent(FirebaseEventNames.GAME_START, parameters)
+            firebaseManager?.logGameStartEvent(
+                gameType[dashboardViewModel.gameTypeIndex],
+                _binding.inputVariant.text.toString(),
+                dashboardViewModel.playerLiveData.value!!.size,
+                "Manual"
+            )
+
             Navigation.findNavController(view).navigate(
                 R.id.action_dashboard_to_game,
                 getGameBundle(_binding.inputGame.text.toString()))

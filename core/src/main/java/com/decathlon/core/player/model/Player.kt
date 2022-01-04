@@ -6,13 +6,14 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Player (
-        var id: Int,
+        var id: Long,
         var nickname: String,
         var firstname: String,
         var lastname: String,
         var image: String?
 
 ) : Parcelable {
-        constructor(playerEntity: PlayerEntity) : this(playerEntity.uid, playerEntity.nickname,
+        constructor(playerEntity: PlayerEntity) : this(
+                playerEntity.uid, playerEntity.nickname,
                 playerEntity.firstname, playerEntity.lastname, playerEntity.image)
 }

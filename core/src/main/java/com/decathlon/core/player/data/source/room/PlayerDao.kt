@@ -13,7 +13,7 @@ interface PlayerDao : BaseDao<PlayerEntity> {
     fun getPlayers(): Flow<List<PlayerEntity>>
 
     @Query("SELECT * FROM player WHERE uid LIKE :id")
-    fun findUsersById(id: String?): List<PlayerEntity?>?
+    fun findUserById(id: Long): PlayerEntity?
 
     @Query("SELECT * FROM player WHERE nickname LIKE :nickname")
     fun findUsersByNickname(nickname: String?): List<PlayerEntity>?

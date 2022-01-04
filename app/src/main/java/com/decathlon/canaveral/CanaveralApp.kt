@@ -4,6 +4,7 @@ import android.app.Application
 import com.decathlon.canaveral.common.interactors.AddPlayer
 import com.decathlon.canaveral.common.interactors.DeletePlayer
 import com.decathlon.canaveral.common.interactors.GetPlayers
+import com.decathlon.canaveral.common.interactors.UpdatePlayer
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
 import com.decathlon.canaveral.game.x01.Game01ViewModel
@@ -47,7 +48,8 @@ class CanaveralApp : Application() {
             Interactors(
                 GetPlayers(get()),
                 AddPlayer(get()),
-                DeletePlayer(get())
+                DeletePlayer(get()),
+                UpdatePlayer(get())
             )
         }
     }

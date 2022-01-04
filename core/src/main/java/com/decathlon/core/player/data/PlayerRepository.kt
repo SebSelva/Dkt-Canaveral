@@ -13,4 +13,7 @@ class PlayerRepository(private val playerDataSource: PlayerDataSource) {
 
     fun getPlayers() =
         playerDataSource.getPlayers()
+
+    suspend fun updatePlayer(player: Player) =
+        playerDataSource.updatePlayer(player)
 }

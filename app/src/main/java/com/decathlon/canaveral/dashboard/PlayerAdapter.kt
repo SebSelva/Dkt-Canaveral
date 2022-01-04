@@ -6,15 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.decathlon.canaveral.common.BaseViewHolder
+import com.decathlon.canaveral.common.model.BaseItem
 import com.decathlon.canaveral.common.model.Button
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.databinding.ItemListButtonBinding
 import com.decathlon.canaveral.databinding.ItemListPlayerBinding
-import com.decathlon.canaveral.common.model.BaseItem
+import timber.log.Timber
 
 class PlayerAdapter(val maxPlayers :Int,
                     val addClickListener : (Player) -> Unit,
-                    val delClickListener: (Player) -> Unit) : ListAdapter<Player, BaseViewHolder<*>>(DiffCallback()) {
+                    val delClickListener: (Player) -> Unit,
+                    val editClickListener : (Player) -> Unit
+) : ListAdapter<Player, BaseViewHolder<*>>(DiffCallback()) {
 
     companion object {
         private const val TYPE_PLAYER = 0
@@ -45,7 +48,7 @@ class PlayerAdapter(val maxPlayers :Int,
         if (listData.size < maxPlayers) {
             listData.add(
                 listData.size, Button(
-                    maxPlayers,
+                    0,
                     ""
                 )
             )
@@ -102,7 +105,7 @@ class PlayerAdapter(val maxPlayers :Int,
             binding.btnAddPlayer.setOnClickListener {
                 if (listData.size <= maxPlayers) {
                     val player = Player(
-                        listData.size, "Player " + listData.size,
+                        0, "Player " + listData.size,
                         "null", "Null", null
                     )
                     addClickListener.invoke(player)
@@ -118,18 +121,23 @@ class PlayerAdapter(val maxPlayers :Int,
 
         override fun bind(item: Player) {
             binding.player = item
+            Timber.d("bind item id:%d", item.id)
             // remove button
             if (position == 0) {
-                binding.btnRemovePlayer.visibility = View.GONE
+                binding.optionBin.visibility = View.GONE
             }
 
-            binding.btnRemovePlayer.setOnClickListener {
+            binding.optionEdit.setOnClickListener {
+                editClickListener.invoke(item)
+            }
+            binding.optionBin.setOnClickListener {
                 notifyItemRemoved(adapterPosition)
+                Timber.d("remove item id:%d", item.id)
                 listData.remove(item)
                 delClickListener.invoke(item)
 
                 if (itemCount == maxPlayers - 1 && listData.last() !is Button) {
-                    listData.add(Button(maxPlayers, ""))
+                    listData.add(Button(0, ""))
                     notifyItemInserted(itemCount)
                 }
             }

@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.model.PlayerStats
-import com.decathlon.canaveral.databinding.*
+import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsLargeBinding
+import com.decathlon.canaveral.databinding.ItemListPlayerGameStatsSmallBinding
+import com.decathlon.canaveral.databinding.ItemListWinnerGameStatsLargeBinding
+import com.decathlon.canaveral.databinding.ItemListWinnerGameStatsSmallBinding
 import java.util.*
 
 class PlayersStatsAdapter(

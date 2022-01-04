@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 class Button (
 
-        override val id: Int,
+        override val id: Long,
         var text: String
 
 ) : BaseItem()
