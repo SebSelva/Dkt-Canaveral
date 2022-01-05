@@ -3,6 +3,7 @@
     <string name="add">add</string>
     <string name="app_name">CANAVERAL</string>
     <string name="app_version">V%s</string>
+    <string name="cancel">Cancel</string>
     <string name="dashboard_game_detail_bull_value">Bull Value</string>
     <string name="dashboard_game_detail_in">In</string>
     <string name="dashboard_game_detail_out">Out</string>
@@ -67,6 +68,8 @@
     <string name="language_zhTW">Traditional Chinese</string>
     <string name="loading_game_loading">Loading now…</string>
     <string name="loading_game_tip_bot">Did you know ?\n You can assign a bot if you\’re alone !</string>
+    <string name="player_edition_nickname">Pseudo</string>
+    <string name="player_edition_title">Player Edition</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
@@ -78,6 +81,8 @@
     <string name="title_round_score">Round Score</string>
     <string name="title_settings">Settings</string>
     <string name="title_stats">Stats</string>
+    <string name="user_login">Log in</string>
+    <string name="validate">Validate</string>
     <string name="versus_type_single">Single player</string>
     <string name="versus_type_team">Team player</string>
 </resources>

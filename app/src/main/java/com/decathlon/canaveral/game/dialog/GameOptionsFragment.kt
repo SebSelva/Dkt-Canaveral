@@ -3,26 +3,15 @@ package com.decathlon.canaveral.game.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
+import com.decathlon.canaveral.common.BaseDialogFragment
 import com.decathlon.canaveral.databinding.FragmentGameOptionsBinding
 
-class GameOptionsFragment: DialogFragment() {
+class GameOptionsFragment: BaseDialogFragment<FragmentGameOptionsBinding>() {
 
-    private lateinit var _binding: FragmentGameOptionsBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_game_options, container, false)
-        _binding = FragmentGameOptionsBinding.bind(view)
-        return view
-    }
+    override var layoutId = R.layout.fragment_game_options
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

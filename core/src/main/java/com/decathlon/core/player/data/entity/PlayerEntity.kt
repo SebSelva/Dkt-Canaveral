@@ -6,16 +6,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.decathlon.core.player.model.Player
 import kotlinx.parcelize.Parcelize
-import org.jetbrains.annotations.NotNull
 
 @Parcelize
 @Entity(tableName = "player")
 data class PlayerEntity(
 
     @PrimaryKey(autoGenerate = true)
-    @NotNull
-    @ColumnInfo(name = "uid")
-    var uid: Int,
+    var uid: Long,
 
     @ColumnInfo(name = "nickname")
     var nickname: String,
@@ -30,5 +27,5 @@ data class PlayerEntity(
     var image: String?
 
 ) : Parcelable {
-    constructor(player: Player) :this(player.id, player.nickname, player.firstname, player.lastname, player.image)
+    constructor(player: Player) :this(0, player.nickname, player.firstname, player.lastname, player.image)
 }

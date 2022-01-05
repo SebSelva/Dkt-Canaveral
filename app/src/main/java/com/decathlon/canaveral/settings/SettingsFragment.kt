@@ -22,13 +22,13 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         val languageCodes = resources.getStringArray(R.array.languages_code)
-        var langCode = getCurrentLocale()!!.language
+        var langCode = localeUtils.getCurrentLocale()!!.language
 
         val languagesAdapter = SettingsItemListAdapter {
             langCode = languageCodes[it]
             _binding.settingsLanguage.text = ContextUtils.getLanguageNameFromCode(view.context, langCode)
             toggleItemList(_binding.languageRecyclerview, false)
-            setCurrentLocale(view.context, Locale(langCode))
+            localeUtils.setCurrentLocale(view.context, Locale(langCode))
             refreshCurrentFragment()
         }
         _binding.languageRecyclerview.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

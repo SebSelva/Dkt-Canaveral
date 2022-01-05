@@ -14,7 +14,23 @@
         <action
             android:id="@+id/action_dashboard_to_game"
             app:destination="@id/GameActivity" />
+        <action
+            android:id="@+id/action_dashboard_to_player_edition"
+            app:destination="@id/PlayerEditionDialog"/>
+
     </fragment>
+
+    <dialog
+        android:id="@+id/PlayerEditionDialog"
+        android:name="com.decathlon.canaveral.dashboard.player.PlayerEditionFragment"
+        android:label="@string/player_edition_title"
+        tools:layout="@layout/dialog_player_edition">
+
+        <argument
+            android:name="player"
+            app:argType="com.decathlon.canaveral.common.model.Player"/>
+
+    </dialog>
 
     <fragment
         android:id="@+id/SettingsFragment"

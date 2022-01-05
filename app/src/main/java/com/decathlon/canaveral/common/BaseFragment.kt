@@ -16,61 +16,37 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.decathlon.canaveral.BuildConfig
-import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.utils.CanaveralPreferences
-import com.decathlon.canaveral.common.utils.ContextUtils
+import com.decathlon.canaveral.common.utils.FirebaseManager
+import com.decathlon.canaveral.common.utils.LocaleUtils
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
-import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     protected lateinit var _binding: B
     abstract var layoutId: Int
 
-    protected lateinit var firebaseAnalytics: FirebaseAnalytics
-
     private lateinit var preferences: CanaveralPreferences
+    lateinit var localeUtils: LocaleUtils
+    var firebaseManager: FirebaseManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        initPreferences()
-
-        firebaseAnalytics = Firebase.analytics
-        val parameters = Bundle().apply {
-            this.putString("app_version", BuildConfig.VERSION_NAME)
-        }
-        firebaseAnalytics.setDefaultEventParameters(parameters)
+        init()
 
         _binding = DataBindingUtil.inflate(layoutInflater, layoutId, container, false)!!
         return _binding.root
     }
 
-    private fun initPreferences() {
+    private fun init() {
+        firebaseManager = FirebaseManager()
         preferences = CanaveralPreferences(requireContext())
-
-        val availableLocales = resources.getStringArray(R.array.languages_code_available)
-        val currentLocale = Locale.getDefault()
-        val locale = getCurrentLocale()
-        if (locale == null) {
-            if (!availableLocales.contains(currentLocale.language)) {
-                // Set available locale in default value : en
-                setCurrentLocale(requireContext(), Locale("en"))
-            } else {
-                setCurrentLocale(requireContext(), currentLocale)
-            }
-        } else if (currentLocale.language != locale.language) {
-            setCurrentLocale(requireContext(), locale)
-        }
+        localeUtils = LocaleUtils(requireContext(), preferences)
     }
 
     @SuppressLint("Recycle")
@@ -109,16 +85,6 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
             }
         }
         return playersWaiting
-    }
-
-    fun setCurrentLocale(context: Context, locale: Locale) {
-        ContextUtils.updateLocale(context, locale)
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-        preferences.saveLocale(locale)
-    }
-
-    fun getCurrentLocale(): Locale? {
-        return preferences.getLocale()
     }
 
     fun refreshCurrentFragment() {
