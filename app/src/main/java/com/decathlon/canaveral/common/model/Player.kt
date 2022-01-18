@@ -14,6 +14,8 @@ class Player (
         constructor(player: com.decathlon.core.player.model.Player) : this(player.id, player.nickname,
                 player.firstname, player.lastname, player.image)
 
+        constructor() : this(0, "", "","",null)
+
         fun toCore(): com.decathlon.core.player.model.Player {
                 return com.decathlon.core.player.model.Player(id, nickname, firstname, lastname, image)
         }

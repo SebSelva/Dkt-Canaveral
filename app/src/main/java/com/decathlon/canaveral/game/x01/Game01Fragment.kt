@@ -233,6 +233,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
             playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
             _binding.playersWaiting.smoothScrollToPosition(0)
         }
+        _binding.invalidateAll()
     }
 
     private fun goToPlayersStatsScreen(startingPoints: Int) {

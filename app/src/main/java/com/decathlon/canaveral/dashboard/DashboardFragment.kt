@@ -10,9 +10,9 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.dashboard.player.PlayerEditionFragmentArgs
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
+import com.decathlon.canaveral.player.PlayerEditionFragmentArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

@@ -27,5 +27,5 @@ data class PlayerEntity(
     var image: String?
 
 ) : Parcelable {
-    constructor(player: Player) :this(0, player.nickname, player.firstname, player.lastname, player.image)
+    constructor(player: Player) :this(player.id, player.nickname, player.firstname, player.lastname, player.image)
 }

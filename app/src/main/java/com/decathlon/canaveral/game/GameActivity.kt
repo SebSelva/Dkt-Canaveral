@@ -8,6 +8,8 @@ import com.decathlon.canaveral.common.BaseActivity
 
 class GameActivity : BaseActivity() {
 
+    override fun getLayoutId(): Int = R.layout.activity_game
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // remove title
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -21,7 +23,4 @@ class GameActivity : BaseActivity() {
         // Do not back while playing
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_game
-    }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.model.BaseItem
 import com.decathlon.canaveral.common.model.Button
@@ -27,14 +28,7 @@ class PlayerAdapter(val maxPlayers :Int,
     private var listData = ArrayList<BaseItem>()
 
     private fun addPlayer1() {
-
-        val player1 = Player(
-            1, "Player 1", "null", "Null",
-            null
-        )
-        addClickListener.invoke(player1)
-        val newListData : List<Player> = listOf(player1)
-        listData.addAll(newListData)
+        addClickListener.invoke(Player())
     }
 
     fun setData(players: List<Player>) {
@@ -91,6 +85,7 @@ class PlayerAdapter(val maxPlayers :Int,
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
 
         val element = listData[position]
+        holder.setIsRecyclable(false)
         when (holder) {
             is PlayerViewHolder -> holder.bind(element as Player)
             is ButtonViewHolder -> holder.bind(element as Button)
@@ -104,11 +99,7 @@ class PlayerAdapter(val maxPlayers :Int,
         override fun bind(item: Button) {
             binding.btnAddPlayer.setOnClickListener {
                 if (listData.size <= maxPlayers) {
-                    val player = Player(
-                        0, "Player " + listData.size,
-                        "null", "Null", null
-                    )
-                    addClickListener.invoke(player)
+                    addClickListener.invoke(Player())
                 }
                 binding.executePendingBindings()
             }
@@ -121,9 +112,10 @@ class PlayerAdapter(val maxPlayers :Int,
 
         override fun bind(item: Player) {
             binding.player = item
+
             Timber.d("bind item id:%d", item.id)
             // remove button
-            if (position == 0) {
+            if (bindingAdapterPosition == 0) {
                 binding.optionBin.visibility = View.GONE
             }
 
@@ -131,7 +123,7 @@ class PlayerAdapter(val maxPlayers :Int,
                 editClickListener.invoke(item)
             }
             binding.optionBin.setOnClickListener {
-                notifyItemRemoved(adapterPosition)
+                notifyItemRemoved(bindingAdapterPosition)
                 Timber.d("remove item id:%d", item.id)
                 listData.remove(item)
                 delClickListener.invoke(item)
@@ -143,6 +135,12 @@ class PlayerAdapter(val maxPlayers :Int,
             }
             binding.executePendingBindings()
         }
+
+        private fun getPlayerNickname(player: Player) :String =
+            if (player.nickname.isEmpty()) {
+                binding.root.context.resources.getString(R.string.player_number, player.id)
+            }
+            else player.nickname
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Player>() {

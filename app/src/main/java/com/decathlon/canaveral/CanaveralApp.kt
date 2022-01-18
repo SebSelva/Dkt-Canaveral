@@ -8,6 +8,7 @@ import com.decathlon.canaveral.common.interactors.player.GetPlayers
 import com.decathlon.canaveral.common.interactors.player.UpdatePlayer
 import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
+import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
 import com.decathlon.canaveral.game.x01.Game01ViewModel
 import com.decathlon.canaveral.intro.IntroViewModel
@@ -75,6 +76,7 @@ class CanaveralApp : Application() {
 
     private val viewModelsModule = module {
         viewModel { DashboardViewModel(get()) }
+        viewModel { PlayerEditionViewModel(get()) }
         viewModel { Game01ViewModel(get()) }
         viewModel { CountUpViewModel(get()) }
         viewModel { IntroViewModel(get()) }
