@@ -35,6 +35,13 @@ android {
                 }
             }
         }
+
+        manifestPlaceholders = [appAuthRedirectScheme: 'homedartsclub']
+    }
+
+    signingConfigs {
+        debug {}
+        release {}
     }
 
     buildTypes {
@@ -54,6 +61,19 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions 'default'
+    productFlavors {
+        preprod {
+            dimension 'default'
+            signingConfig signingConfigs.debug
+            getIsDefault().set(true)
+        }
+        prod {
+            dimension 'default'
+            signingConfig signingConfigs.release
+        }
     }
 }
 

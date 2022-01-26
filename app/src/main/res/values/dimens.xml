@@ -10,6 +10,7 @@
     <dimen name="margin_large">12dp</dimen>
     <dimen name="margin_xlarge">18dp</dimen>
     <dimen name="margin_xxlarge">24dp</dimen>
+    <dimen name="margin_xxxlarge">36dp</dimen>
 
     /// Cardview
     <dimen name="cardview_margin_side">@dimen/margin_medium</dimen>

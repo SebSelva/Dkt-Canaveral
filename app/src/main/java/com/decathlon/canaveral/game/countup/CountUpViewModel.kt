@@ -1,6 +1,6 @@
 package com.decathlon.canaveral.game.countup
 
-import com.decathlon.canaveral.Interactors
+import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.Point
 import com.decathlon.canaveral.common.utils.DartsUtils

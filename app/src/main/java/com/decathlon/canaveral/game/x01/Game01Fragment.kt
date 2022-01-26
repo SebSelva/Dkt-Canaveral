@@ -24,7 +24,7 @@ import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 open class Game01Fragment : BaseFragment<FragmentGameBinding>() {

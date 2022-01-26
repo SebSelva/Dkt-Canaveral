@@ -12,10 +12,22 @@
     <string name="add">add</string>
     <string name="cancel">Cancel</string>
     <string name="validate">Validate</string>
+    <string name="player">Player</string>
+    <string name="player_number">Player %d</string>
 
     // Common
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
+    <string name="common_internet_error">Network error</string>
+
+    // Welcome
+    <string name="welcome_title">Welcome on your Home Darts Club !</string>
+    <string name="welcome_content">This app will offer you a global darts experience.\n\nFor
+        the moment you will be able to play offline, using manual scoring. But some more
+        exciting features will come soon.</string>
+    <string name="welcome_login">Connexion | Inscription</string>
+    <string name="welcome_guest">Play as guest</string>
+    <string name="welcome_login_success">Your account is associated!</string>
 
     // Versus types
     <string name="versus_type_single">Single player</string>

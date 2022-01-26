@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_xxlarge"
+        android:layout_marginBottom="@dimen/margin_xxlarge"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="34dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/welcome_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hdc_welcome"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Welcome.Title"
+            android:id="@+id/welcome_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xxlarge"
+            android:text="@string/welcome_title"
+            app:layout_constraintTop_toBottomOf="@id/welcome_image"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Welcome.Content"
+            android:id="@+id/welcome_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            android:layout_marginBottom="@dimen/margin_xxxlarge"
+            android:text="@string/welcome_content"
+            app:layout_constraintTop_toBottomOf="@id/welcome_title"
+            app:layout_constraintBottom_toTopOf="@id/welcome_login"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Dkt.TextStyle.Welcome.Login"
+            android:id="@+id/welcome_login"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:background="@color/blue_dkt_400"
+            android:text="@string/welcome_login"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@id/welcome_guest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Link"
+            android:id="@+id/welcome_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_guest"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

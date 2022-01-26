@@ -4,6 +4,7 @@
     <string name="app_name">CANAVERAL</string>
     <string name="app_version">V%s</string>
     <string name="cancel">Cancel</string>
+    <string name="common_internet_error">Network error</string>
     <string name="dashboard_game_detail_bull_value">Bull Value</string>
     <string name="dashboard_game_detail_in">In</string>
     <string name="dashboard_game_detail_out">Out</string>
@@ -68,8 +69,10 @@
     <string name="language_zhTW">Traditional Chinese</string>
     <string name="loading_game_loading">Loading now…</string>
     <string name="loading_game_tip_bot">Did you know ?\n You can assign a bot if you\’re alone !</string>
+    <string name="player">Player</string>
     <string name="player_edition_nickname">Pseudo</string>
     <string name="player_edition_title">Player Edition</string>
+    <string name="player_number">Player %d</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
@@ -85,4 +88,11 @@
     <string name="validate">Validate</string>
     <string name="versus_type_single">Single player</string>
     <string name="versus_type_team">Team player</string>
+    <string name="welcome_content">This app will offer you a global darts experience.\n\nFor
+        the moment you will be able to play offline, using manual scoring. But some more
+        exciting features will come soon.</string>
+    <string name="welcome_guest">Play as guest</string>
+    <string name="welcome_login">Connexion | Inscription</string>
+    <string name="welcome_login_success">Your account is associated!</string>
+    <string name="welcome_title">Welcome on your Home Darts Club !</string>
 </resources>

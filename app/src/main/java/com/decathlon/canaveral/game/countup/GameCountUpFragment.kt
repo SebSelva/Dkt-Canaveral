@@ -24,7 +24,7 @@ import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class GameCountUpFragment : Game01Fragment() {
