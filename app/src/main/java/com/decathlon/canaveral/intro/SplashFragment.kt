@@ -14,7 +14,7 @@ import org.koin.androidx.navigation.koinNavGraphViewModel
 class SplashFragment : BaseFragment<FragmentSplashScreenBinding>() {
 
     override var layoutId = R.layout.fragment_splash_screen
-    private val introViewModel by koinNavGraphViewModel<IntroViewModel>(R.id.nav_intro)
+    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_intro)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,7 +23,7 @@ class SplashFragment : BaseFragment<FragmentSplashScreenBinding>() {
 
         lifecycleScope.launchWhenResumed {
             delay(1000)
-            if (introViewModel.isLogin()) {
+            if (loginViewModel.isLogin()) {
                 findNavController().navigate(
                     R.id.action_splash_to_dashboard
                 )

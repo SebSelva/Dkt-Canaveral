@@ -10,9 +10,10 @@ import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
 import com.decathlon.canaveral.game.x01.Game01ViewModel
-import com.decathlon.canaveral.intro.IntroViewModel
+import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.intro.UserConsentManager
 import com.decathlon.canaveral.player.PlayerEditionViewModel
+import com.decathlon.canaveral.settings.SettingsViewModel
 import com.decathlon.core.Constants
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
@@ -90,7 +91,8 @@ class CanaveralApp : Application() {
         viewModel { PlayerEditionViewModel(get()) }
         viewModel { Game01ViewModel(get()) }
         viewModel { CountUpViewModel(get()) }
-        viewModel { IntroViewModel(get(), get()) }
+        viewModel { LoginViewModel(get(), get()) }
+        viewModel { SettingsViewModel(get()) }
     }
 
     private val interactorsModule = module {
@@ -102,14 +104,12 @@ class CanaveralApp : Application() {
                 UpdatePlayer(get()),
                 InitLogin(get()),
                 UserLogin(get()),
+                UserLogout(get()),
                 UserLoginState(get()),
                 GetUserInfo(get()),
                 CompleteUserInfo(get()),
-                GetUsers(get()),
-                AddUser(get()),
-                UpdateUser(get()),
+                UserActions(get()),
                 UserConsent(get()),
-
             )
         }
     }

@@ -8,10 +8,10 @@ import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.core.user.model.User
 import kotlinx.coroutines.launch
 
-class IntroViewModel(
+class LoginViewModel(
     private val interactors: Interactors,
     private val userConsentManager: UserConsentManager
-    ) :BaseViewModel<IntroViewModel.LoginUiState>() {
+    ) :BaseViewModel<LoginViewModel.LoginUiState>() {
 
     init {
         viewModelScope.launch {
@@ -46,8 +46,12 @@ class IntroViewModel(
 
     private fun addUser(user: User) {
         viewModelScope.launch {
-            interactors.addUser(user)
+            interactors.userActions.addUser(user)
         }
+    }
+
+    suspend fun getMainUser(): User? {
+        return interactors.userActions.getMainUser()
     }
 
     private suspend fun getUserInfo() {
@@ -70,12 +74,18 @@ class IntroViewModel(
     private fun launchCompleteUserInfo() {
         viewModelScope.launch {
             interactors.completeUserInfo(
-                {
-                    getUserInfo()
-                    loginState(LoginUiState.UserInfoSuccess)
-                },
-                { loginState(LoginUiState.UserInfoFailed) },
+                { getUserInfo() },
+                { loginState(LoginUiState.UserInfoIncomplete) },
                 { loginState(LoginUiState.UserInfoFailed) }
+            )
+        }
+    }
+
+    fun requestLogout() {
+        viewModelScope.launch {
+            interactors.userLogout.invoke(
+                { loginState(LoginUiState.LogoutSuccess) },
+                { loginState(LoginUiState.LogoutFailed) }
             )
         }
     }
@@ -88,6 +98,9 @@ class IntroViewModel(
         object LoginInProgress : LoginUiState()
         object LoginFailed : LoginUiState()
         object UserInfoSuccess: LoginUiState()
+        object UserInfoIncomplete : LoginUiState()
         object UserInfoFailed : LoginUiState()
+        object LogoutSuccess : LoginUiState()
+        object LogoutFailed : LoginUiState()
     }
 }

@@ -70,7 +70,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.10"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
-    api 'com.decathlon:decathlon-login:1.0.4'
+    api 'com.decathlon:decathlon-login:1.0.5'
 
     //datastore
     implementation "androidx.datastore:datastore:$datastore_version"

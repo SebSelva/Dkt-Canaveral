@@ -12,6 +12,7 @@
     <color name="grey_dark">#707070</color>
     <color name="grey_text_clickable">#687787</color>
 
+    <color name="red_dkt_400">#E3262F</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
