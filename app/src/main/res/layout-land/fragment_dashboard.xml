@@ -43,6 +43,7 @@
                         android:layout_gravity="center_horizontal"
                         android:minWidth="279dp"
                         android:orientation="horizontal"
+                        tools:visibility="gone"
                         tools:itemCount="1"
                         tools:listitem="@layout/item_list_player" />
 
@@ -71,18 +72,13 @@
                                 android:id="@+id/game_details_01_game"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
+                                android:orientation="horizontal"
                                 android:visibility="visible">
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:layout_marginEnd="@dimen/margin_large"
                                         android:layout_weight="1"
                                         android:orientation="vertical">
 
@@ -109,6 +105,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
+                                        android:layout_marginEnd="@dimen/margin_large"
                                         android:orientation="vertical">
 
                                         <androidx.appcompat.widget.AppCompatTextView
@@ -130,17 +127,10 @@
 
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
                                     <androidx.appcompat.widget.LinearLayoutCompat
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginEnd="@dimen/margin_xxlarge"
+                                        android:layout_marginEnd="@dimen/margin_large"
                                         android:layout_weight="1"
                                         android:orientation="vertical">
 
@@ -189,8 +179,6 @@
                                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <androidx.appcompat.widget.LinearLayoutCompat
                                 android:id="@+id/game_details_countup"
@@ -266,75 +254,101 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@color/white"
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/input_versus_label"
-                                style="@style/Dkt.TextStyle.Label"
-                                android:layout_width="wrap_content"
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spinner_label_marginTop"
-                                android:layout_marginBottom="@dimen/spinner_label_marginBottom"
-                                android:text="@string/dashboard_select_versus" />
+                                android:layout_marginEnd="@dimen/margin_large"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                                android:id="@+id/input_versus"
-                                style="@style/Dkt.TextStyle.SpinnerText"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/spinner_height"
-                                android:background="@drawable/background_spinner"
-                                android:enabled="false"
-                                android:inputType="textNoSuggestions"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/input_versus_label"
-                                tools:text="1 VS 1" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/input_versus_label"
+                                    style="@style/Dkt.TextStyle.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                    android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                                    android:text="@string/dashboard_select_versus" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/input_game_label"
-                                style="@style/Dkt.TextStyle.Label"
-                                android:layout_width="wrap_content"
+                                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                    android:id="@+id/input_versus"
+                                    style="@style/Dkt.TextStyle.SpinnerText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:background="@drawable/background_spinner"
+                                    android:enabled="false"
+                                    android:inputType="textNoSuggestions"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/input_versus_label"
+                                    tools:text="1 VS 1" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spinner_label_marginTop"
-                                android:layout_marginBottom="@dimen/spinner_label_marginBottom"
-                                android:text="@string/dashboard_select_game"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/input_versus" />
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                                android:id="@+id/input_game"
-                                style="@style/Dkt.TextStyle.SpinnerText"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/spinner_height"
-                                android:inputType="textNoSuggestions"
-                                android:background="@drawable/background_spinner"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/input_game_label"
-                                tools:text="01 Game" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/input_game_label"
+                                    style="@style/Dkt.TextStyle.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                    android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                                    android:text="@string/dashboard_select_game"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/input_versus" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/input_variant_label"
-                                style="@style/Dkt.TextStyle.Label"
-                                android:layout_width="wrap_content"
+                                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                    android:id="@+id/input_game"
+                                    style="@style/Dkt.TextStyle.SpinnerText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:background="@drawable/background_spinner"
+                                    android:inputType="textNoSuggestions"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/input_game_label"
+                                    tools:text="01 Game" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/spinner_label_marginTop"
-                                android:layout_marginBottom="@dimen/spinner_label_marginBottom"
-                                android:text="@string/dashboard_select_variant"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/input_game" />
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/margin_large"
+                                android:orientation="vertical">
 
-                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                                android:id="@+id/input_variant"
-                                style="@style/Dkt.TextStyle.SpinnerText"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/spinner_height"
-                                android:inputType="textNoSuggestions"
-                                android:background="@drawable/background_spinner"
-                                app:layout_constraintLeft_toLeftOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/input_variant_label"
-                                tools:text="301" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/input_variant_label"
+                                    style="@style/Dkt.TextStyle.Label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/spinner_label_marginTop"
+                                    android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                                    android:text="@string/dashboard_select_variant"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/input_game" />
+
+                                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                    android:id="@+id/input_variant"
+                                    style="@style/Dkt.TextStyle.SpinnerText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:background="@drawable/background_spinner"
+                                    android:inputType="textNoSuggestions"
+                                    app:layout_constraintLeft_toLeftOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/input_variant_label"
+                                    tools:text="301" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
