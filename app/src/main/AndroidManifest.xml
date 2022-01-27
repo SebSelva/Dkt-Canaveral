@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.decathlon.canaveral">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.decathlon.canaveral.CanaveralApp"
@@ -18,7 +18,8 @@
 
         <activity
             android:name="com.decathlon.canaveral.intro.IntroActivity"
-            android:theme="@style/Theme.DecathlonCanaveral">
+            android:theme="@style/Theme.DecathlonCanaveral"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -28,7 +29,8 @@
         </activity>
 
         <activity android:name=".MainActivity"
-            android:theme="@style/Theme.DecathlonCanaveral">
+            android:theme="@style/Theme.DecathlonCanaveral"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -37,7 +39,8 @@
         </activity>
 
         <activity android:name=".game.GameActivity"
-            android:theme="@style/Theme.DecathlonCanaveral">
+            android:theme="@style/Theme.DecathlonCanaveral"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

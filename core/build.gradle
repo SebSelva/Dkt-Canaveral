@@ -19,6 +19,11 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
+    signingConfigs {
+        debug {}
+        release {}
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -33,6 +38,19 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    flavorDimensions 'default'
+    productFlavors {
+        preprod {
+            dimension 'default'
+            signingConfig signingConfigs.debug
+            getIsDefault().set(true)
+        }
+        prod {
+            dimension 'default'
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 
@@ -43,16 +61,18 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'com.google.android.material:material:1.4.0'
 
-    //room
+    // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
-    //retrofit2
+    // RXJava2
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.6.2"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.10"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
-    //coroutine flow
-
+    api 'com.decathlon:decathlon-login:1.0.4'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

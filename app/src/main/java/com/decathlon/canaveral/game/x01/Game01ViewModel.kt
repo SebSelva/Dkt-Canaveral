@@ -1,7 +1,7 @@
 package com.decathlon.canaveral.game.x01
 
 import androidx.lifecycle.MutableLiveData
-import com.decathlon.canaveral.Interactors
+import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.model.NullPoint
 import com.decathlon.canaveral.common.model.Player
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel() {
+open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel<Game01ViewModel.GameUiState>() {
 
     var players: List<Player> = emptyList()
     var variant = 0
@@ -134,4 +134,7 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
         playersPointsLivedata.postValue(playersPoints)
     }
 
+    sealed class GameUiState {
+
+    }
 }

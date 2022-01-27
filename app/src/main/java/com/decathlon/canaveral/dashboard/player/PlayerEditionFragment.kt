@@ -10,7 +10,7 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseDialogFragment
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.databinding.DialogPlayerEditionBinding
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
     override var layoutId = R.layout.dialog_player_edition

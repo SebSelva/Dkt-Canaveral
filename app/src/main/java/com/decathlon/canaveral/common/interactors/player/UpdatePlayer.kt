@@ -1,4 +1,4 @@
-package com.decathlon.canaveral.common.interactors
+package com.decathlon.canaveral.common.interactors.player
 
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.core.player.data.PlayerRepository

@@ -3,6 +3,8 @@ package com.decathlon.canaveral.common.utils
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.ContextWrapper
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.LocaleList
 import com.decathlon.canaveral.R
@@ -45,6 +47,16 @@ class ContextUtils(base: Context) : ContextWrapper(base) {
             val languages = context.resources.getStringArray(R.array.languages_trad)
             val languageCodes = context.resources.getStringArray(R.array.languages_code)
             return languages[languageCodes.indexOf(code)]
+        }
+
+        fun isInternetAvailable(context: Context): Boolean {
+            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            return capabilities?.let {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                        || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+                        || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+            } == true
         }
     }
 }

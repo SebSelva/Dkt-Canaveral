@@ -5,7 +5,7 @@ import com.decathlon.core.player.data.entity.PlayerEntity
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Player (
+data class Player (
         var id: Long,
         var nickname: String,
         var firstname: String,

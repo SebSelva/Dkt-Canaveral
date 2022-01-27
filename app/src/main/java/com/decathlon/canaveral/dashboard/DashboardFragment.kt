@@ -13,7 +13,7 @@ import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.dashboard.player.PlayerEditionFragmentArgs
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
