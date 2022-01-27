@@ -102,6 +102,7 @@
     <string name="game_end_ppd_value" translatable="false">%.2f</string>
 
     // Settings
+    <string name="profile_title">Profile</string>
     <string name="settings_title">General Settings</string>
     <string name="settings_languages">Languages</string>
 
