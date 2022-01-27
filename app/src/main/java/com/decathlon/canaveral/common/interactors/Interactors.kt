@@ -18,5 +18,6 @@ data class Interactors(
     val completeUserInfo: CompleteUserInfo,
     val getUsers: GetUsers,
     val addUser: AddUser,
-    val updateUser: UpdateUser
+    val updateUser: UpdateUser,
+    val userConsent: UserConsent
 )

@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.utils.ContextUtils
+import com.decathlon.canaveral.common.utils.isInternetAvailable
 import com.decathlon.canaveral.common.utils.showSnackBar
 import com.decathlon.canaveral.databinding.FragmentWelcomeBinding
 import org.koin.androidx.navigation.koinNavGraphViewModel
@@ -21,12 +21,12 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         _binding.welcomeGuest.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_welcome_to_dashboard)
+            findNavController().navigate(R.id.action_welcome_to_dashboard)
         }
         _binding.welcomeLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                if (ContextUtils.isInternetAvailable(requireContext())) {
+                if (isInternetAvailable(requireContext())) {
+                    introViewModel.showFirstTimeConsent(requireActivity())
                     introViewModel.requestLogIn()
                 } else {
                     showSnackBar(getString(R.string.common_internet_error))
@@ -41,7 +41,7 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
                 }
                 is IntroViewModel.LoginUiState.LoginInProgress -> {
                     Timber.d("Authentication login in progress")
-                    Toast.makeText(requireContext(), "User login failed", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(requireContext(), "User login in progress", Toast.LENGTH_LONG).show()
                 }
                 is IntroViewModel.LoginUiState.UserInfoSuccess -> {
                     Timber.d("Login & UserInfo success")

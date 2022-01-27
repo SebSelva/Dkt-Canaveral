@@ -22,15 +22,18 @@ import com.decathlon.canaveral.common.utils.FirebaseManager
 import com.decathlon.canaveral.common.utils.LocaleUtils
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
+import com.decathlon.canaveral.intro.UserConsentManager
+import org.koin.android.ext.android.inject
 
 abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
 
     protected lateinit var _binding: B
     abstract var layoutId: Int
 
+    private val consentManager: UserConsentManager by inject()
+    var firebaseManager: FirebaseManager? = null
     private lateinit var preferences: CanaveralPreferences
     lateinit var localeUtils: LocaleUtils
-    var firebaseManager: FirebaseManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,6 +97,12 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     }
 
     open fun getKeyboardType() = KeyboardType.NORMAL
+
+    // Consent action to User
+    protected suspend fun userConsentAction() {
+        consentManager.initDidomi()
+        consentManager.didomiControl(requireActivity())
+    }
 
     /**
      * Workaround to always have dropdown menu choice list filled

@@ -72,6 +72,10 @@ dependencies {
 
     api 'com.decathlon:decathlon-login:1.0.4'
 
+    //datastore
+    implementation "androidx.datastore:datastore:$datastore_version"
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
     //androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     //androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
