@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.model.BaseItem
 import com.decathlon.canaveral.common.model.Button
@@ -85,7 +84,6 @@ class PlayerAdapter(val maxPlayers :Int,
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
 
         val element = listData[position]
-        holder.setIsRecyclable(false)
         when (holder) {
             is PlayerViewHolder -> holder.bind(element as Player)
             is ButtonViewHolder -> holder.bind(element as Button)
@@ -136,11 +134,10 @@ class PlayerAdapter(val maxPlayers :Int,
             binding.executePendingBindings()
         }
 
-        private fun getPlayerNickname(player: Player) :String =
-            if (player.nickname.isEmpty()) {
+        /*private fun getPlayerNickname(player: Player) :String =
+            player.nickname.ifEmpty {
                 binding.root.context.resources.getString(R.string.player_number, player.id)
-            }
-            else player.nickname
+            }*/
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Player>() {

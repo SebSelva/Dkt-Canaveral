@@ -4,9 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.CAMERA"/> <!-- Compliant -->
 
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -57,7 +55,7 @@
         <activity android:name=".camera.CameraActivity"
             android:theme="@style/Theme.DecathlonCanaveral"
             android:configChanges="orientation"
-            android:exported="true"/>
+            android:exported="false"/>
     </application>
 
 </manifest>

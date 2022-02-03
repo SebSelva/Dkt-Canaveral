@@ -15,28 +15,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/button_camera_layout"/>
+            app:layout_constraintBottom_toTopOf="@+id/takePicture"/>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/button_camera_layout"
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/takePicture"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="48dp"
-            android:paddingBottom="48dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="48dp"
+            android:src="@drawable/ic_camera"
+            android:contentDescription="Take picture"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/previewView">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/takePicture"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_camera"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            app:layout_constraintTop_toBottomOf="@id/previewView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.OrientationEventListener
 import android.view.Surface
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageButton
 import androidx.camera.core.*
 import androidx.camera.core.ImageCapture.OutputFileOptions
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -17,10 +16,9 @@ import androidx.navigation.navArgs
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseActivity
 import com.decathlon.canaveral.common.utils.CameraUtils
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.common.util.concurrent.ListenableFuture
 import timber.log.Timber
-import java.text.SimpleDateFormat
-import java.util.*
 
 class CameraActivity : BaseActivity() {
 
@@ -31,7 +29,7 @@ class CameraActivity : BaseActivity() {
     private lateinit var imageCapture: ImageCapture
 
     private lateinit var previewView: PreviewView
-    private lateinit var takePicture: AppCompatImageButton
+    private lateinit var takePicture: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -192,8 +190,7 @@ class CameraActivity : BaseActivity() {
 
 
     private fun captureImage(onResult: (result: String?) -> Unit) {
-        val dateTimeString = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
-        val outputFileOptions = OutputFileOptions.Builder(CameraUtils(this).getImageFile(args.filename +"_" +dateTimeString)).build()
+        val outputFileOptions = OutputFileOptions.Builder(CameraUtils(this).getImageFile(args.filename)).build()
         imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(this), object: ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 onResult(outputFileResults.savedUri?.toString())

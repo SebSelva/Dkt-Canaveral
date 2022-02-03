@@ -2,14 +2,12 @@ package com.decathlon.canaveral.player
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
@@ -28,34 +26,29 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
     private val args: PlayerEditionFragmentArgs by navArgs()
 
     private val playerEditionViewModel by viewModel<PlayerEditionViewModel>()
-    private var playerImageUri: Uri? = null
+
+    private val galleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            result.data?.let { setPlayerPictureUri(it.data?.toString()) }
+        }
+    }
 
     private val requestCameraPermissionResult = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) { isGranted ->
-            if (isGranted) {
-                startCamera()
-            }
+            if (isGranted) { startCamera() }
         }
 
     private val cameraResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            /*val bitmap = result.data?.extras?.get("data") as Bitmap
-            playerImageUri = saveBitmapToFile(bitmap)
-            val bitmapCleared = CameraUtils(activity).handleSamplingAndRotationBitmap(playerImageUri!!)
-            CameraUtils(activity).getBitmapRotationCleared(playerImageUri!!, bitmap)
-            if (bitmapCleared != null) {
-                saveBitmapToFile(bitmapCleared)
-            }*/
             val uriReceived = result.data?.extras?.get(CameraActivity.PICTURE_FILENAME) as String?
-            playerEditionViewModel.player.image = uriReceived
-            _binding.player = playerEditionViewModel.player
-            _binding.notifyChange()
-            //Glide.with(_binding.playerImage.context).load(Uri.parse(uriReceived)).centerInside().circleCrop().into(_binding.playerImage)
+            setPlayerPictureUri(uriReceived)
         }
     }
 
-    private fun saveBitmapToFile(imageBitmap : Bitmap) : Uri {
-        return CameraUtils(activity).saveImage(activity as Context, imageBitmap, CameraUtils.getPlayerImageName(playerEditionViewModel.player))
+    private fun setPlayerPictureUri(uriReceived: String?) {
+        playerEditionViewModel.player.image = uriReceived
+        _binding.player = playerEditionViewModel.player
+        _binding.notifyChange()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,10 +64,25 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
         _binding.executePendingBindings()
 
         _binding.optionCamera.setOnClickListener {
-            val permissionGranted = requestCameraPermission()
-            if (permissionGranted) {
-                startCamera()
+            val pictureMenu = PopupMenu(requireContext(), _binding.optionCamera)
+            pictureMenu.menuInflater.inflate(R.menu.option_picture, pictureMenu.menu)
+            pictureMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.camera -> {
+                        val permissionGranted = requestCameraPermission()
+                        if (permissionGranted) {
+                            startCamera()
+                        }
+                    }
+                    R.id.gallery -> {
+                        val intent = Intent(Intent.ACTION_PICK)
+                        intent.type = "image/*"
+                        galleryResult.launch(intent)
+                    }
+                }
+                true
             }
+            pictureMenu.show()
         }
 
         _binding.editionValidate.setOnClickListener {
@@ -96,8 +104,6 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
 
     private fun startCamera() {
         val tempImage = CameraUtils.getPlayerImageName(args.player)
-        //val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        //cameraResult.launch(cameraIntent)
         val intent = Intent(requireContext(), CameraActivity::class.java)
         val bundle = CameraActivityArgs(tempImage).toBundle()
         intent.putExtras(bundle)

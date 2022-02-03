@@ -14,6 +14,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 class CameraUtils(private val activity: Activity?) {
@@ -131,7 +133,9 @@ class CameraUtils(private val activity: Activity?) {
         const val MAX_WIDTH = 1024
 
         fun getPlayerImageName(player :Player) :String {
-            return "player_"+player.id.toString()+".jpeg"
+            val dateTimeString = SimpleDateFormat("yyyyMMdd-HHmmss",
+                Locale.getDefault()).format(Date())
+            return "player"+player.id.toString()+"_$dateTimeString.jpeg"
         }
     }
 

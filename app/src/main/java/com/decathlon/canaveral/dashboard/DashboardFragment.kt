@@ -71,9 +71,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
 
         // Data launch
-        dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
+        dashboardViewModel.playerLiveData.observe(viewLifecycleOwner) {
             playerAdapter.setData(it)
-        })
+        }
         dashboardViewModel.getPlayers()
     }
 
