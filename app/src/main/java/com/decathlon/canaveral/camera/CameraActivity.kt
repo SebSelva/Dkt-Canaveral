@@ -5,9 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.OrientationEventListener
 import android.view.Surface
-import android.widget.Toast
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.OutputFileOptions
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
@@ -59,31 +61,10 @@ class CameraActivity : BaseActivity() {
             val cameraProvider = cameraProviderFuture.get()
             bindPreview(cameraProvider)
         }, ContextCompat.getMainExecutor(this))
-        /*cameraHelper = CameraHelper(
-            this,
-            this,
-            _binding.previewView,
-            onResult = {
-                if (it != null) {
-                    val cameraUtils = CameraUtils(this)
-                    val uri = cameraUtils.saveImage(this, it, args.filename)
-                    cameraUtils.handleSamplingAndRotationBitmap(uri)
-                    val intent = Intent()
-                    intent.putExtra(PICTURE_FILENAME, uri.toString())
-                    setResult(RESULT_OK, intent)
-                }
-                cameraHelper.stop()
-                finish()
-            }
-        )
-        cameraHelper.start()*/
 
         takePicture.setOnClickListener {
             captureImage {
                 if (it != null) {
-                    /*val cameraUtils = CameraUtils(this)
-                    val uri = cameraUtils.saveImage(this, it, args.filename)
-                    cameraUtils.handleSamplingAndRotationBitmap(uri)*/
                     val intent = Intent()
                     intent.putExtra(PICTURE_FILENAME, it)
                     setResult(RESULT_OK, intent)
@@ -91,13 +72,7 @@ class CameraActivity : BaseActivity() {
                 }
                 else Timber.e("Captured image is null")
             }
-            //cameraHelper.captureImage()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        //cameraExecutor.shutdown()
     }
 
     private fun bindPreview(cameraProvider : ProcessCameraProvider) {
@@ -114,78 +89,7 @@ class CameraActivity : BaseActivity() {
             .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
             .build()
 
-        val camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageCapture)
-        observeCameraState(camera.cameraInfo)
-    }
-
-    private fun observeCameraState(cameraInfo: CameraInfo) {
-        cameraInfo.cameraState.observe(this as LifecycleOwner) { cameraState ->
-            run {
-                val msg = when (cameraState.type) {
-                    CameraState.Type.PENDING_OPEN -> {
-                        // Ask the user to close other camera apps
-                        "CameraState: Pending Open"
-                    }
-                    CameraState.Type.OPENING -> {
-                        // Show the Camera UI
-                        "CameraState: Opening"
-                    }
-                    CameraState.Type.OPEN -> {
-                        // Setup Camera resources and begin processing
-                        "CameraState: Open"
-                    }
-                    CameraState.Type.CLOSING -> {
-                        // Close camera UI
-                        "CameraState: Closing"
-                    }
-                    CameraState.Type.CLOSED -> {
-                        // Free camera resources
-                        "CameraState: Closed"
-                    }
-                }
-                msg.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
-            }
-
-            cameraState.error?.let { error ->
-                val msg = when (error.code) {
-                    // Open errors
-                    CameraState.ERROR_STREAM_CONFIG -> {
-                        // Make sure to setup the use cases properly
-                        "Stream config error"
-                    }
-                    // Opening errors
-                    CameraState.ERROR_CAMERA_IN_USE -> {
-                        // Close the camera or ask user to close another camera app that's using the
-                        // camera
-                        "Camera in use"
-                    }
-                    CameraState.ERROR_MAX_CAMERAS_IN_USE -> {
-                        // Close another open camera in the app, or ask the user to close another
-                        // camera app that's using the camera
-                        "Max cameras in use"
-                    }
-                    CameraState.ERROR_OTHER_RECOVERABLE_ERROR -> {
-                        "Other recoverable error"
-                    }
-                    // Closing errors
-                    CameraState.ERROR_CAMERA_DISABLED -> {
-                        // Ask the user to enable the device's cameras
-                        "Camera disabled"
-                    }
-                    CameraState.ERROR_CAMERA_FATAL_ERROR -> {
-                        // Ask the user to reboot the device to restore camera function
-                        "Fatal error"
-                    }
-                    // Closed errors
-                    CameraState.ERROR_DO_NOT_DISTURB_MODE_ENABLED -> {
-                        // Ask the user to disable the "Do Not Disturb" mode, then reopen the camera
-                        "Do not disturb mode enabled"
-                    }
-                    else -> { null }
-                }
-                msg?.let { Toast.makeText(this, it, Toast.LENGTH_SHORT).show() }
-            }
-        }
+        cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview, imageCapture)
     }
 
 
@@ -199,22 +103,7 @@ class CameraActivity : BaseActivity() {
                 Timber.e(exc)
                 onResult(null)
             }
-        });
-        /*imageCapture.takePicture(cameraExecutor, object : ImageCapture.OnImageCapturedCallback() {
-            @SuppressLint("UnsafeOptInUsageError")
-            override fun onCaptureSuccess(image: ImageProxy) {
-                val buffer = image.planes.first().buffer
-                val bytes = ByteArray(buffer.capacity())
-                buffer.get(bytes)
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, null)
-                image.close()
-                onResult.invoke(bitmap)
-            }
-
-            override fun onError(exception: ImageCaptureException) {
-                onResult.invoke(null)
-            }
-        })*/
+        })
     }
 
     companion object {
