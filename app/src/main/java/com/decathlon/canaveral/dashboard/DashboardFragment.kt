@@ -1,6 +1,7 @@
 package com.decathlon.canaveral.dashboard
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.AutoCompleteTextView
@@ -53,7 +54,8 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
                     R.id.action_dashboard_to_player_edition,
                     PlayerEditionFragmentArgs(it).toBundle())
             })
-        _binding.playersRecyclerView.layoutManager = GridLayoutManager(requireContext(), 4, GridLayoutManager.VERTICAL, false)
+        val spanCount = if (Configuration.ORIENTATION_LANDSCAPE == resources.configuration.orientation) 8 else 4
+        _binding.playersRecyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
         _binding.playersRecyclerView.adapter = playerAdapter
 
         // Start button
@@ -71,9 +73,9 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
         }
 
         // Data launch
-        dashboardViewModel.playerLiveData.observe(viewLifecycleOwner, {
+        dashboardViewModel.playerLiveData.observe(viewLifecycleOwner) {
             playerAdapter.setData(it)
-        })
+        }
         dashboardViewModel.getPlayers()
     }
 

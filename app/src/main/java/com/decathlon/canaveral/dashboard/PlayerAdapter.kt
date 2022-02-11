@@ -123,7 +123,7 @@ class PlayerAdapter(val maxPlayers :Int,
             binding.player = item
             Timber.d("bind item id:%d", item.id)
             // remove button
-            if (position == 0) {
+            if (bindingAdapterPosition == 0) {
                 binding.optionBin.visibility = View.GONE
             }
 
