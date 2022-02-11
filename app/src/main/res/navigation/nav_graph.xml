@@ -22,7 +22,7 @@
 
     <dialog
         android:id="@+id/PlayerEditionDialog"
-        android:name="com.decathlon.canaveral.dashboard.player.PlayerEditionFragment"
+        android:name="com.decathlon.canaveral.player.PlayerEditionFragment"
         android:label="@string/player_edition_title"
         tools:layout="@layout/dialog_player_edition">
 
@@ -30,7 +30,23 @@
             android:name="player"
             app:argType="com.decathlon.canaveral.common.model.Player"/>
 
+        <action
+            android:id="@+id/action_player_edition_to_camera"
+            app:destination="@id/CameraFragment" />
+
     </dialog>
+
+    <activity
+        android:id="@+id/CameraFragment"
+        android:name="com.decathlon.canaveral.camera.CameraActivity"
+        android:label="Camera"
+        tools:layout="@layout/activity_camera">
+
+        <argument
+            android:name="filename"
+            app:argType="string"
+            app:nullable="false"/>
+    </activity>
 
     <fragment
         android:id="@+id/SettingsFragment"

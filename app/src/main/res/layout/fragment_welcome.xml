@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_xxlarge"
-        android:layout_marginBottom="@dimen/margin_xxlarge"
+        android:layout_marginBottom="@dimen/margin_xlarge"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="34dp">
 
@@ -46,7 +46,7 @@
             android:id="@+id/welcome_login"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_small"
             android:background="@color/blue_dkt_400"
             android:text="@string/welcome_login"
             android:textAllCaps="false"
@@ -59,6 +59,7 @@
             android:id="@+id/welcome_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/margin_medium"
             android:text="@string/welcome_guest"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -38,16 +38,32 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/player_image_default"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="3dp"
+                android:src="@drawable/ic_profile_image_grey"
+                app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+                app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/player_image_round"
+                app:layout_constraintTop_toTopOf="@id/player_image_round"
+                app:layout_constraintVertical_bias="0.0"
+                app:isVisible="@{player.image == null}"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/player_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="@dimen/margin_small"
-                android:src="@drawable/ic_profile_image_default_big2"
-                app:layout_constraintTop_toTopOf="@id/player_image_round"
+                android:padding="3dp"
                 app:layout_constraintBottom_toBottomOf="@id/player_image_round"
-                app:layout_constraintStart_toStartOf="@id/player_image_round"
                 app:layout_constraintEnd_toEndOf="@id/player_image_round"
-                app:showImageRounded="@{@drawable/ic_profile_image_default_big2}"/>
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/player_image_round"
+                app:layout_constraintTop_toTopOf="@id/player_image_round"
+                app:layout_constraintVertical_bias="0.0"
+                app:showImageRounded="@{player.image}"
+                app:isVisible="@{player.image != null}"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/option_bin"

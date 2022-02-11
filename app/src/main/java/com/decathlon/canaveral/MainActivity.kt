@@ -20,7 +20,5 @@ class MainActivity : BaseActivity() {
         NavigationUI.setupWithNavController(navView, navHostFragment.navController)
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getLayoutId(): Int = R.layout.activity_main
 }

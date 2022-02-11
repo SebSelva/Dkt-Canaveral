@@ -30,7 +30,7 @@ abstract class BaseDialogFragment<B : ViewDataBinding> : DialogFragment() {
     ): View? {
         initDialog()
 
-        _binding = DataBindingUtil.inflate(layoutInflater, layoutId, container, false)!!
+        _binding = DataBindingUtil.inflate(layoutInflater, layoutId, container, false)
         return _binding.root
     }
 

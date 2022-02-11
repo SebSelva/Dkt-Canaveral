@@ -109,14 +109,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         _binding.keyboardDkt.adapter = keyboardAdapter
 
         // ViewModel observers
-        game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner, {
+        game01ViewModel.currentPlayerLiveData.observe(viewLifecycleOwner) {
             onUpdateCurrentPlayer(it, game01ViewModel.nbRounds, game01ViewModel.startingPoints)
-        })
+        }
         game01ViewModel.getCurrentPlayer()
 
-        game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner, {
+        game01ViewModel.playersPointsLivedata.observe(viewLifecycleOwner) {
             onUpdatePlayersPoints(it, game01ViewModel.startingPoints, game01ViewModel.nbRounds)
-        })
+        }
         game01ViewModel.getPlayersPoints()
     }
 
@@ -233,6 +233,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
             playersWaitingAdapter.setData(otherPlayers, game01ViewModel.playersPoints)
             _binding.playersWaiting.smoothScrollToPosition(0)
         }
+        _binding.invalidateAll()
     }
 
     private fun goToPlayersStatsScreen(startingPoints: Int) {

@@ -10,6 +10,7 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseDialogFragment
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.databinding.DialogPlayerEditionBinding
+import com.decathlon.canaveral.player.PlayerEditionFragmentArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {

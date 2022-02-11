@@ -27,14 +27,7 @@ class PlayerAdapter(val maxPlayers :Int,
     private var listData = ArrayList<BaseItem>()
 
     private fun addPlayer1() {
-
-        val player1 = Player(
-            1, "Player 1", "null", "Null",
-            null
-        )
-        addClickListener.invoke(player1)
-        val newListData : List<Player> = listOf(player1)
-        listData.addAll(newListData)
+        addClickListener.invoke(Player())
     }
 
     fun setData(players: List<Player>) {
@@ -104,11 +97,7 @@ class PlayerAdapter(val maxPlayers :Int,
         override fun bind(item: Button) {
             binding.btnAddPlayer.setOnClickListener {
                 if (listData.size <= maxPlayers) {
-                    val player = Player(
-                        0, "Player " + listData.size,
-                        "null", "Null", null
-                    )
-                    addClickListener.invoke(player)
+                    addClickListener.invoke(Player())
                 }
                 binding.executePendingBindings()
             }
@@ -121,6 +110,7 @@ class PlayerAdapter(val maxPlayers :Int,
 
         override fun bind(item: Player) {
             binding.player = item
+
             Timber.d("bind item id:%d", item.id)
             // remove button
             if (bindingAdapterPosition == 0) {
@@ -131,7 +121,7 @@ class PlayerAdapter(val maxPlayers :Int,
                 editClickListener.invoke(item)
             }
             binding.optionBin.setOnClickListener {
-                notifyItemRemoved(adapterPosition)
+                notifyItemRemoved(bindingAdapterPosition)
                 Timber.d("remove item id:%d", item.id)
                 listData.remove(item)
                 delClickListener.invoke(item)
@@ -143,6 +133,11 @@ class PlayerAdapter(val maxPlayers :Int,
             }
             binding.executePendingBindings()
         }
+
+        /*private fun getPlayerNickname(player: Player) :String =
+            player.nickname.ifEmpty {
+                binding.root.context.resources.getString(R.string.player_number, player.id)
+            }*/
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Player>() {
