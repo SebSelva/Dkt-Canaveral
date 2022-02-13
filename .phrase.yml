@@ -1,71 +1,32 @@
----
 phrase:
-  access_token: "c7420acbd43cb5f268502067c88351ba3f693b15e5095b8d4e82b58c72a6120c"
-  file_format: "xml"
-  project_id: "222ca23c0ac3018c4d6cace68835be57"
+  access_token: c7420acbd43cb5f268502067c88351ba3f693b15e5095b8d4e82b58c72a6120c
+  file_format: xml
+  project_id: 222ca23c0ac3018c4d6cace68835be57
   pull:
     targets:
-    - file: "./app/src/main/res/values-en/strings.xml"
-      params:
-        locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-    - file: "./app/src/main/res/values-de/strings.xml"
-      params:
-        locale_id: "ada55a7fdc912c6b09a657a635c834e4"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-es/strings.xml"
-      params:
-        locale_id: "38ec1853ea0785a03c1f31747c1730b3"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-fr/strings.xml"
-      params:
-        locale_id: "c450257fa13619024b6aa4b4c6fe969c"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-it/strings.xml"
-      params:
-        locale_id: "1faa319fe88a07a5fa99e498de1e6d97"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-ja/strings.xml"
-      params:
-        locale_id: "50b89edef45259db9070ad3fb07d2ed0"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-ko/strings.xml"
-      params:
-        locale_id: "8f3c3a8d4a2322216394dd77b0f436a0"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-pt/strings.xml"
-      params:
-        locale_id: "f06332e0eb6a68eda5fa61c078e914bf"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-ru/strings.xml"
-      params:
-        locale_id: "ec6465108cf4cdee50ff6cd4a70bde21"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-zh/strings.xml"
-      params:
-        locale_id: "5dfa1fe3d70bc6027bf14091e2585a4b"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-zh-rCN/strings.xml"
-      params:
-        locale_id: "2aa65aae6d85a8b7396aa7beb2e837a4"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
-    - file: "./app/src/main/res/values-zh-rTW/strings.xml"
-      params:
-        locale_id: "7022f96722ceee181bbb4b0c44346d3d"
-        fallback_locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        include_empty_translations: true
+    - file: ./app/src/main/res/values-de/strings.xml
+      params: {locale_id: ada55a7fdc912c6b09a657a635c834e4, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-en/strings.xml
+      params: {locale_id: 5ae44cf1c95f6915d17e85cbaf690e14}
+    - file: ./app/src/main/res/values-es/strings.xml
+      params: {locale_id: 38ec1853ea0785a03c1f31747c1730b3, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-fr/strings.xml
+      params: {locale_id: c450257fa13619024b6aa4b4c6fe969c, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-it/strings.xml
+      params: {locale_id: 1faa319fe88a07a5fa99e498de1e6d97, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-ja/strings.xml
+      params: {locale_id: 50b89edef45259db9070ad3fb07d2ed0, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-ko/strings.xml
+      params: {locale_id: 8f3c3a8d4a2322216394dd77b0f436a0, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-pt/strings.xml
+      params: {locale_id: f06332e0eb6a68eda5fa61c078e914bf, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-ru/strings.xml
+      params: {locale_id: ec6465108cf4cdee50ff6cd4a70bde21, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-zh-rCN/strings.xml
+      params: {locale_id: 2aa65aae6d85a8b7396aa7beb2e837a4, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
+    - file: ./app/src/main/res/values-zh-rTW/strings.xml
+      params: {locale_id: 7022f96722ceee181bbb4b0c44346d3d, fallback_locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, include_empty_translations: true}
   push:
     sources:
-    - file: "./app/src/main/res/values/strings.xml"
-      params:
-        locale_id: "5ae44cf1c95f6915d17e85cbaf690e14"
-        update_translations: true
+    - file: ./app/src/main/res/values/strings.xml
+      params: {locale_id: 5ae44cf1c95f6915d17e85cbaf690e14, update_translations: true}
