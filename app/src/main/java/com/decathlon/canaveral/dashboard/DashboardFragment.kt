@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.AutoCompleteTextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.decathlon.canaveral.R
@@ -77,6 +78,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
             playerAdapter.setData(it)
         }
         dashboardViewModel.getPlayers()
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            userConsentAction()
+        }
     }
 
     private fun getGameBundle(gameType: String): Bundle? {

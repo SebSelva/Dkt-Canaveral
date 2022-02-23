@@ -8,16 +8,18 @@ import com.decathlon.canaveral.common.interactors.player.GetPlayers
 import com.decathlon.canaveral.common.interactors.player.UpdatePlayer
 import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
-import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
 import com.decathlon.canaveral.game.x01.Game01ViewModel
 import com.decathlon.canaveral.intro.IntroViewModel
+import com.decathlon.canaveral.intro.UserConsentManager
+import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.core.Constants
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import com.decathlon.core.user.data.STDRepository
 import com.decathlon.core.user.data.UserRepository
 import com.decathlon.core.user.data.source.RoomUserDataSource
+import com.decathlon.core.user.data.source.datastore.AccountPreference
 import com.decathlon.core.user.data.source.network.STDServices
 import com.decathlon.decathlonlogin.DktLoginManager
 import org.koin.android.ext.koin.androidContext
@@ -35,6 +37,13 @@ class CanaveralApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        initKoin()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
+
+    private fun initKoin() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@CanaveralApp)
@@ -53,11 +62,13 @@ class CanaveralApp : Application() {
 
     private val sdkManagersModule = module {
         single { DktLoginManager.getInstance(androidContext()) }
+        single { UserConsentManager(this@CanaveralApp) }
     }
 
     private val repositoriesModule = module {
-        single { PlayerRepository(RoomPlayerDataSource(context = this@CanaveralApp)) }
-        single { UserRepository(RoomUserDataSource(context = this@CanaveralApp), get(), get()) }
+        single { AccountPreference(androidContext()) }
+        single { PlayerRepository(RoomPlayerDataSource(this@CanaveralApp)) }
+        single { UserRepository(RoomUserDataSource(this@CanaveralApp), get(), get(), get()) }
         factory { STDRepository(get()) }
     }
 
@@ -79,7 +90,7 @@ class CanaveralApp : Application() {
         viewModel { PlayerEditionViewModel(get()) }
         viewModel { Game01ViewModel(get()) }
         viewModel { CountUpViewModel(get()) }
-        viewModel { IntroViewModel(get()) }
+        viewModel { IntroViewModel(get(), get()) }
     }
 
     private val interactorsModule = module {
@@ -96,7 +107,9 @@ class CanaveralApp : Application() {
                 CompleteUserInfo(get()),
                 GetUsers(get()),
                 AddUser(get()),
-                UpdateUser(get())
+                UpdateUser(get()),
+                UserConsent(get()),
+
             )
         }
     }

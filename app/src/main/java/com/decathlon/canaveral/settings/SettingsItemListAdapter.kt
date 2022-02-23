@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
-import com.decathlon.canaveral.common.utils.ContextUtils
+import com.decathlon.canaveral.common.utils.getLanguageNameFromCode
 import com.decathlon.canaveral.databinding.ListTextviewSettingsItemBinding
 
 class SettingsItemListAdapter(val onItemClickListener : (Int) -> Unit): RecyclerView.Adapter<BaseViewHolder<String>>() {
@@ -44,7 +44,7 @@ class SettingsItemListAdapter(val onItemClickListener : (Int) -> Unit): Recycler
         override fun bind(item: String) {
             val langCodesAvailable = binding.root.context.resources.getStringArray(
                 R.array.languages_code_available)
-            val lang = ContextUtils.getLanguageNameFromCode(binding.root.context, item)
+            val lang = getLanguageNameFromCode(binding.root.context, item)
             if (langCodesAvailable.contains(item)) {
                 binding.itemText.text = lang
                 binding.itemText.setOnClickListener {

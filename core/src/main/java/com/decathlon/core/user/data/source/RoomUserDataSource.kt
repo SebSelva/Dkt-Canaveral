@@ -21,9 +21,7 @@ class RoomUserDataSource(context: Context) : UserDataSource {
 
     override suspend fun removeUser(user: User): Unit =
         getEntityById(user.uid).let {
-            if (it != null) {
-                userDao.deleteUser(it)
-            }
+            it?.let { userDao.deleteUser(it) }
         }
 
     override suspend fun getEntityById(id: Long): UserEntity? =

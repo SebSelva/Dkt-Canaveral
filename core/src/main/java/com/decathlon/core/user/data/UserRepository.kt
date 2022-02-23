@@ -4,6 +4,7 @@ import android.content.Context
 import com.decathlon.core.Constants
 import com.decathlon.core.user.common.AuthResource
 import com.decathlon.core.user.data.source.UserDataSource
+import com.decathlon.core.user.data.source.datastore.AccountPreference
 import com.decathlon.core.user.data.source.network.STDServices
 import com.decathlon.core.user.model.User
 import com.decathlon.decathlonlogin.Configuration
@@ -14,6 +15,7 @@ import com.decathlon.decathlonlogin.exception.DktLoginException
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import kotlin.coroutines.resume
@@ -22,7 +24,8 @@ import kotlin.coroutines.suspendCoroutine
 class UserRepository(
     private val dataSource: UserDataSource,
     private val dktLoginManager: DktLoginManager,
-    private val stdServices: STDServices
+    private val stdServices: STDServices,
+    private val accountPreference: AccountPreference
     )
 {
 
@@ -42,8 +45,16 @@ class UserRepository(
         dataSource.getMainUser()
     }
 
-    suspend fun updateUser(user: User) =  withContext(Dispatchers.IO) {
+    suspend fun updateUser(user: User) = withContext(Dispatchers.IO) {
         dataSource.updateUser(user)
+    }
+
+    suspend fun validFirstConsent() = withContext(Dispatchers.IO) {
+        accountPreference.validConsent()
+    }
+
+    suspend fun isConsentSet(): Boolean = withContext(Dispatchers.IO) {
+        accountPreference.isConsentSet().first()
     }
 
     fun initLogin() {

@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.utils.ContextUtils
+import com.decathlon.canaveral.common.utils.getLanguageNameFromCode
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
 import java.util.*
 
@@ -26,7 +26,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
         val languagesAdapter = SettingsItemListAdapter {
             langCode = languageCodes[it]
-            _binding.settingsLanguage.text = ContextUtils.getLanguageNameFromCode(view.context, langCode)
+            _binding.settingsLanguage.text = getLanguageNameFromCode(view.context, langCode)
             toggleItemList(_binding.languageRecyclerview, false)
             localeUtils.setCurrentLocale(view.context, Locale(langCode))
             refreshCurrentFragment()
@@ -36,7 +36,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
         languagesAdapter.setData(languageCodes.asList(), langCode)
         toggleItemList(_binding.languageRecyclerview, true) // Hide list at startup
 
-        _binding.settingsLanguage.text = ContextUtils.getLanguageNameFromCode(view.context, langCode)
+        _binding.settingsLanguage.text = getLanguageNameFromCode(view.context, langCode)
         _binding.settingsLanguage.setOnClickListener {
             // Open recycler view
             val langIndex = languageCodes.indexOf(langCode)

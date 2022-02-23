@@ -1,17 +1,28 @@
 package com.decathlon.canaveral.intro
 
 import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.core.user.model.User
 import kotlinx.coroutines.launch
 
-class IntroViewModel(private val interactors: Interactors) :BaseViewModel<IntroViewModel.LoginUiState>() {
+class IntroViewModel(
+    private val interactors: Interactors,
+    private val userConsentManager: UserConsentManager
+    ) :BaseViewModel<IntroViewModel.LoginUiState>() {
 
     init {
         viewModelScope.launch {
             interactors.initLogin.initLogin()
+        }
+    }
+
+    suspend fun showFirstTimeConsent(activity: FragmentActivity) {
+        if (!interactors.userConsent.isSet()) {
+            userConsentManager.initConsentDialog(activity)
+            interactors.userConsent.validFirst()
         }
     }
 

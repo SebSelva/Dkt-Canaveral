@@ -23,7 +23,7 @@ class LocaleUtils(val context: Context, private val preferences: CanaveralPrefer
     }
 
     fun setCurrentLocale(context: Context, locale: Locale) {
-        ContextUtils.updateLocale(context, locale)
+        updateLocale(context, locale)
         context.resources.updateConfiguration(context.resources.configuration, context.resources.displayMetrics)
         preferences.saveLocale(locale)
     }
