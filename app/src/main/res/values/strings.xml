@@ -11,6 +11,7 @@
     <string name="image_description">image</string>
     <string name="add">add</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
     <string name="validate">Validate</string>
     <string name="player">Player</string>
     <string name="player_number">Player %d</string>
@@ -103,6 +104,8 @@
 
     // Settings
     <string name="profile_title">Profile</string>
+    <string name="my_profile_title">My profile</string>
+    <string name="profile_nickname">alias %s</string>
     <string name="settings_title">General Settings</string>
     <string name="settings_languages">Languages</string>
 
@@ -126,6 +129,7 @@
     <string name="player_edition_nickname">Pseudo</string>
     <string name="user_login">Log in</string>
     <string name="user_logout">Log out</string>
+    <string name="user_hi">Hi,\n%s!</string>
     <string name="take_picture">Take photo</string>
     <string name="select_picture">Choose from Gallery</string>
 

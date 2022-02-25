@@ -94,7 +94,7 @@ class CameraActivity : BaseActivity() {
 
 
     private fun captureImage(onResult: (result: String?) -> Unit) {
-        val outputFileOptions = OutputFileOptions.Builder(CameraUtils(this).getImageFile(args.filename)).build()
+        val outputFileOptions = OutputFileOptions.Builder(CameraUtils.getImageFile(this, args.filename)).build()
         imageCapture.takePicture(outputFileOptions, ContextCompat.getMainExecutor(this), object: ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 onResult(outputFileResults.savedUri?.toString())

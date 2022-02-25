@@ -69,6 +69,7 @@
     <string name="language_zhTW">繁体中文</string>
     <string name="loading_game_loading">正在加载……</string>
     <string name="loading_game_tip_bot">"你知道吗？\如果你一个人，可以为您分配一个机器人！ "</string>
+    <string name="my_profile_title">My profile</string>
     <string name="player">Player</string>
     <string name="player_edition_nickname">Pseudo</string>
     <string name="player_edition_title">Player Edition</string>
@@ -77,7 +78,9 @@
     <string name="player_remain_point">-</string>
     <string name="player_round">R‪%d‬/‪%d‬</string>
     <string name="player_round_unlimited">R %d</string>
+    <string name="profile_nickname">alias %s</string>
     <string name="profile_title">Profile</string>
+    <string name="save">Save</string>
     <string name="select_picture">Choose from Gallery</string>
     <string name="settings_languages">语言</string>
     <string name="settings_title">总设置</string>
@@ -87,6 +90,7 @@
     <string name="title_round_score">回合得分</string>
     <string name="title_settings">设置</string>
     <string name="title_stats">统计数据</string>
+    <string name="user_hi">Hi,\n%s!</string>
     <string name="user_login">Log in</string>
     <string name="user_logout">Log out</string>
     <string name="validate">Validate</string>

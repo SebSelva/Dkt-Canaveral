@@ -84,7 +84,10 @@ class LoginViewModel(
     fun requestLogout() {
         viewModelScope.launch {
             interactors.userLogout.invoke(
-                { loginState(LoginUiState.LogoutSuccess) },
+                {
+                    interactors.userActions.removeMainUser()
+                    loginState(LoginUiState.LogoutSuccess)
+                },
                 { loginState(LoginUiState.LogoutFailed) }
             )
         }

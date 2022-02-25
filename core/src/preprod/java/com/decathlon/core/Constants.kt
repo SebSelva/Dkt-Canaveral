@@ -11,7 +11,7 @@ class Constants{
         const val AUTH_CLIENT_ID = "93a46726-718f-48d4-9ff1-23811b1d0626"
         const val AUTH_REDIRECT_SCHEME = "homedartsclub"
         const val AUTH_REDIRECT_HOST_LOGIN = "oauth"
-        const val AUTH_REDIRECT_HOST_LOGOUT = "logout"
+        const val AUTH_REDIRECT_HOST_LOGOUT = "logout/"
 
         const val RGPD_KEY = "0c3a4d8d-c6dc-4e61-83d3-1d4c4b99cc2e"
         const val STD_KEY = "f5e29200-ddf6-40d5-a35c-4a37626b8969"

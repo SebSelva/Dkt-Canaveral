@@ -14,6 +14,7 @@ import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.intro.UserConsentManager
 import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.settings.SettingsViewModel
+import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
@@ -93,6 +94,7 @@ class CanaveralApp : Application() {
         viewModel { CountUpViewModel(get()) }
         viewModel { LoginViewModel(get(), get()) }
         viewModel { SettingsViewModel(get()) }
+        viewModel { UserEditionViewModel(get()) }
     }
 
     private val interactorsModule = module {

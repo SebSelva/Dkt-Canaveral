@@ -7,8 +7,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.utils.isInternetAvailable
-import com.decathlon.canaveral.common.utils.showSnackBar
 import com.decathlon.canaveral.databinding.FragmentWelcomeBinding
 import org.koin.androidx.navigation.koinNavGraphViewModel
 import timber.log.Timber
@@ -25,11 +23,9 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
         _binding.welcomeLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                if (isInternetAvailable(requireContext())) {
+                if (getNetworkStatus()) {
                     loginViewModel.showFirstTimeConsent(requireActivity())
                     loginViewModel.requestLogIn()
-                } else {
-                    showSnackBar(getString(R.string.common_internet_error))
                 }
             }
         }
