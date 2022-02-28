@@ -16,4 +16,5 @@ data class User (
 ): Parcelable {
     constructor(entity: UserEntity) : this(entity.uid, entity.nickname, entity.firstname,
         entity.lastname, entity.image, entity.accountId, entity.isMainUser)
+    constructor(isMainUser: Boolean): this(0, "", "", "", null, null, isMainUser)
 }

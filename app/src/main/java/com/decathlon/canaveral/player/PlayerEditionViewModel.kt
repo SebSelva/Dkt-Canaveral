@@ -16,8 +16,5 @@ class PlayerEditionViewModel(private val interactors: Interactors) : BaseViewMod
     }
 
     sealed class PlayerEditionState {
-        object nicknameCompleted: PlayerEditionState()
-        object pictureUpdated: PlayerEditionState()
-
     }
 }

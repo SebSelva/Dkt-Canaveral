@@ -7,7 +7,6 @@ class UserLoginState(private val userRepository: UserRepository) {
 
     suspend fun isLogIn(): Boolean = userRepository.isLogIn() && userRepository.isUserRegistered()
     fun needRefreshToken(): Boolean = userRepository.needsTokenRefresh()
-    suspend fun getUser(): User? = userRepository.getMainUser()
     suspend fun getSTDAccountId(accessToken :String) = userRepository.getSTDId(accessToken)
     fun getAccessToken() = userRepository.getAccessToken()
 }

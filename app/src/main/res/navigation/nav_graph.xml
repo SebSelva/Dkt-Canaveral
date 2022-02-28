@@ -36,6 +36,19 @@
 
     </dialog>
 
+
+    <fragment
+        android:id="@+id/UserEditionFragment"
+        android:name="com.decathlon.canaveral.user.UserEditionFragment"
+        android:label="@string/profile_title"
+        tools:layout="@layout/fragment_user_edition">
+
+        <action
+            android:id="@+id/action_user_edition_to_camera"
+            app:destination="@id/CameraFragment" />
+
+    </fragment>
+
     <activity
         android:id="@+id/CameraFragment"
         android:name="com.decathlon.canaveral.camera.CameraActivity"
@@ -52,7 +65,12 @@
         android:id="@+id/SettingsFragment"
         android:name="com.decathlon.canaveral.settings.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings"/>
+        tools:layout="@layout/fragment_settings">
+
+        <action
+            android:id="@+id/action_settings_to_user_edition"
+            app:destination="@id/UserEditionFragment" />
+    </fragment>
 
     <activity
         android:id="@+id/GameActivity"

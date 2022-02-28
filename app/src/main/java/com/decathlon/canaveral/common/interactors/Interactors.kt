@@ -13,11 +13,10 @@ data class Interactors(
     val updatePlayer: UpdatePlayer,
     val initLogin: InitLogin,
     val userLogin: UserLogin,
+    val userLogout: UserLogout,
     val userLoginState: UserLoginState,
     val getUserInfo: GetUserInfo,
     val completeUserInfo: CompleteUserInfo,
-    val getUsers: GetUsers,
-    val addUser: AddUser,
-    val updateUser: UpdateUser,
+    val userActions: UserActions,
     val userConsent: UserConsent
 )

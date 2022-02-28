@@ -44,7 +44,7 @@ fun getLanguageNameFromCode(context: Context, code: String): String {
     return languages[languageCodes.indexOf(code)]
 }
 
-fun isInternetAvailable(context: Context): Boolean {
+fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
     return capabilities?.let {

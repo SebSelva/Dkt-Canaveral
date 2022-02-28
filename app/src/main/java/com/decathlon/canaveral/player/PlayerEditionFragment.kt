@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.navigation.fragment.findNavController
@@ -64,25 +63,14 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
         _binding.executePendingBindings()
 
         _binding.optionCamera.setOnClickListener {
-            val pictureMenu = PopupMenu(requireContext(), _binding.optionCamera)
-            pictureMenu.menuInflater.inflate(R.menu.option_picture, pictureMenu.menu)
-            pictureMenu.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.camera -> {
-                        val permissionGranted = requestCameraPermission()
-                        if (permissionGranted) {
-                            startCamera()
-                        }
-                    }
-                    R.id.gallery -> {
-                        val intent = Intent(Intent.ACTION_PICK)
-                        intent.type = "image/*"
-                        galleryResult.launch(intent)
-                    }
-                }
-                true
-            }
-            pictureMenu.show()
+
+            CameraUtils.getPictureMenu(_binding.optionCamera,
+                { if (requestCameraPermission()) startCamera() },
+                {
+                    val intent = Intent(Intent.ACTION_PICK)
+                    intent.type = "image/*"
+                    galleryResult.launch(intent)
+                }).show()
         }
 
         _binding.editionValidate.setOnClickListener {
@@ -103,7 +91,7 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
     }
 
     private fun startCamera() {
-        val tempImage = CameraUtils.getPlayerImageName(args.player)
+        val tempImage = CameraUtils.getImageName(args.player.id)
         val intent = Intent(requireContext(), CameraActivity::class.java)
         val bundle = CameraActivityArgs(tempImage).toBundle()
         intent.putExtras(bundle)

@@ -34,8 +34,7 @@
     <dimen name="keyboard_item_land_vertical_spacing">@dimen/margin_small</dimen>
     <dimen name="keyboard_item_land_horizontal_spacing">@dimen/margin_xxlarge</dimen>
 
-    <dimen name="settings_title_margin_top">21dp</dimen>
-    <dimen name="settings_title_margin_bottom">@dimen/margin_large</dimen>
+    <dimen name="settings_title_margin_top">@dimen/margin_large</dimen>
     <dimen name="settings_title_margin_start">18dp</dimen>
 
 </resources>

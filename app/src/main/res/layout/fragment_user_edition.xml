@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="com.decathlon.core.user.model.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edition_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/blue_dkt_400">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_medium"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_game_details_left"
+                android:tint="@color/white"
+                android:rotation="180"
+                app:layout_constraintTop_toTopOf="@id/edition_title"
+                app:layout_constraintBottom_toBottomOf="@id/edition_title"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/edition_title"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:text="@string/my_profile_title"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/edition_title_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/profile_background"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edition_layout"/>
+
+            <com.decathlon.canaveral.common.view.KlavikaBITextView
+                android:id="@+id/hi_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xxlarge"
+                android:layout_marginStart="@dimen/margin_xlarge"
+                android:textSize="23sp"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/edition_layout"
+                app:layout_constraintTop_toTopOf="@id/edition_layout"
+                app:isVisible="@{user != null}"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/edition_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/margin_xlarge"
+                android:paddingBottom="15dp"
+                android:paddingStart="60dp"
+                android:paddingEnd="60dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/player_image_round"
+                    android:layout_width="148dp"
+                    android:layout_height="148dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/profile_circle_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/player_image_default"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_profile_image_grey"
+                    app:layout_constraintTop_toTopOf="@id/player_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+                    app:layout_constraintStart_toStartOf="@id/player_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:isVisible="@{user.image == null}"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/player_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="2dp"
+                    android:padding="5dp"
+                    app:layout_constraintTop_toTopOf="@id/player_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+                    app:layout_constraintStart_toStartOf="@id/player_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:showImageRounded="@{user.image}"
+                    app:isVisible="@{user.image != null}"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/option_camera"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_marginBottom="-4dp"
+                    android:layout_marginEnd="-8dp"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/player_image_round"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/player_edition_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginStart="@dimen/margin_medium"
+                    android:orientation="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/player_image_round">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/input_player_name_label"
+                        style="@style/Dkt.TextStyle.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spinner_label_marginTop"
+                        android:layout_marginBottom="@dimen/spinner_label_marginBottom"
+                        android:text="@string/player_edition_nickname" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/input_player_name"
+                        style="@style/Dkt.TextStyle.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/spinner_height"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:text="@{user.nickname}"
+                        android:hint="Guest"
+                        android:inputType="textVisiblePassword"
+                        android:maxLines="1"
+                        android:maxLength="12"
+                        android:background="@drawable/background_spinner"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/input_player_name_label" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/user_action_buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/player_edition_layout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/action_login"
+                        style="@style/Dkt.TextStyle.BigButton"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/margin_large"
+                        android:paddingBottom="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:text="@string/user_login"
+                        android:textAllCaps="false"
+                        app:isVisible="@{user == null}"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/action_save"
+                        style="@style/Dkt.TextStyle.BigButton"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/margin_large"
+                        android:paddingBottom="@dimen/margin_large"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginEnd="@dimen/margin_small"
+                        android:text="@string/save"
+                        android:textAllCaps="false"
+                        app:isVisible="@{user != null}"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/action_logout"
+                        style="@style/Dkt.TextStyle.Red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:padding="@dimen/margin_medium"
+                        android:textSize="16sp"
+                        android:text="@string/user_logout"
+                        app:isVisible="@{user != null}" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -7,15 +7,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
-import com.decathlon.canaveral.common.utils.isInternetAvailable
-import com.decathlon.canaveral.common.utils.showSnackBar
 import com.decathlon.canaveral.databinding.FragmentWelcomeBinding
 import org.koin.androidx.navigation.koinNavGraphViewModel
 import timber.log.Timber
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override var layoutId = R.layout.fragment_welcome
-    private val introViewModel by koinNavGraphViewModel<IntroViewModel>(R.id.nav_intro)
+    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_intro)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,30 +23,28 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
         }
         _binding.welcomeLogin.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                if (isInternetAvailable(requireContext())) {
-                    introViewModel.showFirstTimeConsent(requireActivity())
-                    introViewModel.requestLogIn()
-                } else {
-                    showSnackBar(getString(R.string.common_internet_error))
+                if (getNetworkStatus()) {
+                    loginViewModel.showFirstTimeConsent(requireActivity())
+                    loginViewModel.requestLogIn()
                 }
             }
         }
 
-        introViewModel.uiState().observe(viewLifecycleOwner) { logInUiState ->
+        loginViewModel.uiState().observe(viewLifecycleOwner) { logInUiState ->
             when (logInUiState) {
-                is IntroViewModel.LoginUiState.LoginFailed -> {
-                    Timber.w("Authentication login error")
+                is LoginViewModel.LoginUiState.LoginFailed -> {
+                    Timber.w("Authentication login failed")
                 }
-                is IntroViewModel.LoginUiState.LoginInProgress -> {
+                is LoginViewModel.LoginUiState.LoginInProgress -> {
                     Timber.d("Authentication login in progress")
                     //Toast.makeText(requireContext(), "User login in progress", Toast.LENGTH_LONG).show()
                 }
-                is IntroViewModel.LoginUiState.UserInfoSuccess -> {
+                is LoginViewModel.LoginUiState.UserInfoSuccess -> {
                     Timber.d("Login & UserInfo success")
                     findNavController().navigate(
                         R.id.action_welcome_to_login_success)
                 }
-                is IntroViewModel.LoginUiState.UserInfoFailed -> {
+                is LoginViewModel.LoginUiState.UserInfoFailed -> {
                     Timber.d("UserInfo failed")
                     Toast.makeText(requireContext(), "Get user info failed", Toast.LENGTH_LONG).show()
                 }
@@ -58,11 +54,11 @@ class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
 
     override fun onStart() {
         super.onStart()
-        introViewModel.initLoginContext(requireContext())
+        loginViewModel.initLoginContext(requireContext())
     }
 
     override fun onStop() {
         super.onStop()
-        introViewModel.releaseLoginContext()
+        loginViewModel.releaseLoginContext()
     }
 }

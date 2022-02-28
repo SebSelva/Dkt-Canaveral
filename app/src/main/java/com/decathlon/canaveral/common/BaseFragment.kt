@@ -16,10 +16,9 @@ import androidx.fragment.app.Fragment
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
-import com.decathlon.canaveral.common.utils.CanaveralPreferences
-import com.decathlon.canaveral.common.utils.FirebaseManager
-import com.decathlon.canaveral.common.utils.LocaleUtils
+import com.decathlon.canaveral.common.utils.*
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.dialog.GameTransitionInfoFragmentArgs
 import com.decathlon.canaveral.intro.UserConsentManager
@@ -102,6 +101,14 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment() {
     protected suspend fun userConsentAction() {
         consentManager.initDidomi()
         consentManager.didomiControl(requireActivity())
+    }
+
+    fun getNetworkStatus(): Boolean {
+        return if (!isNetworkAvailable(requireContext())) {
+            showSnackBar(getString(R.string.common_internet_error))
+            false
+        }
+        else true
     }
 
     /**

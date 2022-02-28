@@ -37,6 +37,10 @@ class UserRepository(
         dataSource.removeUser(user)
     }
 
+    suspend fun removeMainUser() = withContext(Dispatchers.IO) {
+        dataSource.getMainUser()?.let { dataSource.removeUser(it) }
+    }
+
     suspend fun getUsers() = withContext(Dispatchers.IO) {
         dataSource.getUsers()
     }
@@ -163,7 +167,6 @@ class UserRepository(
 
     private fun isCompleted(identity: Identity): Boolean =
         !identity.firstname.isNullOrEmpty() && !identity.lastname.isNullOrEmpty()
-            && identity.birthdate != null && identity.gender == Identity.Gender.UNSPECIFIED
 
     fun isLogIn() = dktLoginManager.getState().isAuthorized
 
