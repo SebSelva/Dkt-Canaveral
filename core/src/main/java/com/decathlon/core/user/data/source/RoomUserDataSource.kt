@@ -13,7 +13,9 @@ class RoomUserDataSource(context: Context) : UserDataSource {
     override fun getUsers() =
         userDao.getUsers().map { it.map { userEntity -> User(userEntity) } }
 
-    override fun getMainUser() = userDao.getMainUser()?.let { User(it) }
+    override fun getMainUser() = userDao.getMainUser().let {
+        if (it != null) User(it) else null
+    }
 
     override suspend fun insertUser(user: User) {
         userDao.insert(UserEntity(user))

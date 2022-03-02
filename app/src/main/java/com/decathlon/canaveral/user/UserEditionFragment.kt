@@ -18,7 +18,7 @@ import com.decathlon.canaveral.common.utils.CameraUtils
 import com.decathlon.canaveral.databinding.FragmentUserEditionBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.core.user.model.User
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -26,7 +26,8 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
     override var layoutId = R.layout.fragment_user_edition
 
     private val userEditionViewModel by viewModel<UserEditionViewModel>()
-    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_graph)
+    private val loginViewModel by sharedViewModel<LoginViewModel>()
+
     private var mainUser: User? = null
 
     private val galleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -93,7 +94,6 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
         }
 
         _binding.actionSave.setOnClickListener {
-            if (mainUser == null) mainUser = User(true)
             mainUser!!.nickname = _binding.inputPlayerName.text.toString()
             userEditionViewModel.updateUser(mainUser!!)
             findNavController().popBackStack()
@@ -126,8 +126,7 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
     }
 
     private fun startCamera() {
-        if (mainUser == null) mainUser = User(true)
-        val tempImage = CameraUtils.getImageName(mainUser!!.uid)
+        val tempImage = CameraUtils.getImageName(mainUser?.uid?:0)
         val intent = Intent(requireContext(), CameraActivity::class.java)
         val bundle = CameraActivityArgs(tempImage).toBundle()
         intent.putExtras(bundle)
@@ -141,9 +140,7 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
 
     private fun setProfile() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            mainUser = if (loginViewModel.isLogin() && loginViewModel.getMainUser() != null) {
-                loginViewModel.getMainUser()
-            } else null
+            mainUser = if (loginViewModel.isLogin()) loginViewModel.getMainUser() else null
             _binding.user = mainUser
             _binding.executePendingBindings()
         }

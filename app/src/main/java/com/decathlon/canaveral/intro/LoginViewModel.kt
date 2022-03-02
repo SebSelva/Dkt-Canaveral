@@ -2,6 +2,8 @@ package com.decathlon.canaveral.intro
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
@@ -12,12 +14,6 @@ class LoginViewModel(
     private val interactors: Interactors,
     private val userConsentManager: UserConsentManager
     ) :BaseViewModel<LoginViewModel.LoginUiState>() {
-
-    init {
-        viewModelScope.launch {
-            interactors.initLogin.initLogin()
-        }
-    }
 
     suspend fun showFirstTimeConsent(activity: FragmentActivity) {
         if (!interactors.userConsent.isSet()) {
@@ -30,7 +26,7 @@ class LoginViewModel(
 
     fun releaseLoginContext() = interactors.initLogin.releaseAuthorizationContext()
 
-    suspend fun isLogin() = interactors.userLoginState.isLogIn()
+    fun isLogin() = interactors.userLoginState.isLogIn()
 
     suspend fun requestLogIn() {
         loginState(LoginUiState.LoginInProgress)
@@ -52,6 +48,10 @@ class LoginViewModel(
 
     suspend fun getMainUser(): User? {
         return interactors.userActions.getMainUser()
+    }
+
+    suspend fun getUsers(): LiveData<List<User>> {
+        return interactors.userActions.getUsers().asLiveData()
     }
 
     private suspend fun getUserInfo() {

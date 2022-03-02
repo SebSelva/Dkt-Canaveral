@@ -8,12 +8,12 @@ import androidx.navigation.fragment.findNavController
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.databinding.FragmentWelcomeBinding
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class WelcomeFragment : BaseFragment<FragmentWelcomeBinding>() {
     override var layoutId = R.layout.fragment_welcome
-    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_intro)
+    private val loginViewModel by sharedViewModel<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

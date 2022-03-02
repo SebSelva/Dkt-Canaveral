@@ -51,7 +51,7 @@
             android:padding="3dp"
             android:tint="@color/winner_stat_text"
             android:src="@drawable/ic_profile_image_grey"
-            app:tint="@color/white"
+            app:tint="@color/blue_dkt_400"
             app:layout_constraintTop_toTopOf="@id/player_image_round"
             app:layout_constraintBottom_toBottomOf="@id/player_image_round"
             app:layout_constraintStart_toStartOf="@id/player_image_round"

@@ -61,7 +61,7 @@ class UserRepository(
         accountPreference.isConsentSet().first()
     }
 
-    fun initLogin() {
+    init {
         dktLoginManager.init(
             Configuration(
                 Constants.getDktEnv(),

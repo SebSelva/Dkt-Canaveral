@@ -11,28 +11,30 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
+import com.decathlon.canaveral.common.utils.getAppVersion
 import com.decathlon.canaveral.common.utils.getLanguageNameFromCode
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.util.*
 
 class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
     override var layoutId: Int = R.layout.fragment_settings
-    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_graph)
+    private val loginViewModel by sharedViewModel<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initProfile()
         initLanguages(view)
+
+        _binding.hdcVersion.text = getAppVersion(requireContext())
     }
 
     private fun initProfile() {
         // PROFILE
-        setProfile()
         _binding.profileConnectAction.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 if (getNetworkStatus()) loginViewModel.requestLogIn()
@@ -73,10 +75,10 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
                 }
                 is LoginViewModel.LoginUiState.LogoutFailed -> {
                     Timber.d("Logout failed")
-                    setProfile()
                 }
             }
         }
+        setProfile()
     }
 
     private fun initLanguages(view: View) {
@@ -111,12 +113,15 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
     private fun setProfile() {
         lifecycleScope.launchWhenStarted {
-            if (loginViewModel.isLogin() && loginViewModel.getMainUser() != null) {
-                _binding.user = loginViewModel.getMainUser()
-                _binding.profileName.text = loginViewModel.getMainUser()!!.firstname
-                if (loginViewModel.getMainUser()!!.nickname.isNotEmpty()) {
-                    _binding.profileNickname.text = resources.getString(R.string.profile_nickname, loginViewModel.getMainUser()!!.nickname)
+            if (loginViewModel.isLogin()) {
+                loginViewModel.getMainUser()?.let { user ->
+                    _binding.user = user
+                    _binding.profileName.text = user.firstname
+                    if (user.nickname.isNotEmpty()) {
+                        _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
+                    }
                 }
+
             } else {
                 _binding.user = null
                 _binding.profileName.text = "Guest"
