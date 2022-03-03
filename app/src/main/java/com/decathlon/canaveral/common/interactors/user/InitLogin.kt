@@ -5,8 +5,6 @@ import com.decathlon.core.user.data.UserRepository
 
 class InitLogin(private val userRepository: UserRepository) {
 
-    fun initLogin() = userRepository.initLogin()
     fun getAuthorizationContext(context: Context) = userRepository.getAuthorizationContext(context)
     fun releaseAuthorizationContext() = userRepository.releaseAuthorizationContext()
-
 }

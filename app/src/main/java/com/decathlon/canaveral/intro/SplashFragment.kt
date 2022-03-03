@@ -4,22 +4,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
+import com.decathlon.canaveral.common.utils.getAppVersion
 import com.decathlon.canaveral.databinding.FragmentSplashScreenBinding
 import kotlinx.coroutines.delay
-import org.koin.androidx.navigation.koinNavGraphViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SplashFragment : BaseFragment<FragmentSplashScreenBinding>() {
 
     override var layoutId = R.layout.fragment_splash_screen
-    private val loginViewModel by koinNavGraphViewModel<LoginViewModel>(R.id.nav_intro)
+    private val loginViewModel by sharedViewModel<LoginViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding.hdcVersion.text = resources.getString(R.string.app_version, BuildConfig.VERSION_NAME)
+        _binding.hdcVersion.text = getAppVersion(requireContext())
 
         lifecycleScope.launchWhenResumed {
             delay(1000)

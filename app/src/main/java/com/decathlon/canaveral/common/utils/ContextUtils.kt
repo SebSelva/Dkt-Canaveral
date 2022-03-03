@@ -6,8 +6,15 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.LocaleList
+import com.decathlon.canaveral.BuildConfig
 import com.decathlon.canaveral.R
 import java.util.*
+
+fun getAppVersion(context: Context): String {
+    var version = context.resources.getString(R.string.app_version, BuildConfig.VERSION_NAME)
+    if (BuildConfig.DEBUG) version += " (" + BuildConfig.VERSION_CODE +")"
+    return version
+}
 
 fun updateLocale(context: Context, localeToSwitchTo: Locale): Context {
     Locale.setDefault(localeToSwitchTo)

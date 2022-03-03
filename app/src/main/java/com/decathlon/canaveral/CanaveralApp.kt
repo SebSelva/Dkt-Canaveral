@@ -63,14 +63,18 @@ class CanaveralApp : Application() {
     }
 
     private val sdkManagersModule = module {
-        single { DktLoginManager.getInstance(androidContext()) }
+        single { DktLoginManager.getInstance(this@CanaveralApp) }
         single { UserConsentManager(this@CanaveralApp) }
     }
 
     private val repositoriesModule = module {
+        // Databases
         single { AccountPreference(androidContext()) }
-        single { PlayerRepository(RoomPlayerDataSource(this@CanaveralApp)) }
-        single { UserRepository(RoomUserDataSource(this@CanaveralApp), get(), get(), get()) }
+        single { RoomPlayerDataSource(this@CanaveralApp) }
+        single { RoomUserDataSource(this@CanaveralApp) }
+        // Repositories
+        single { PlayerRepository(get() as RoomPlayerDataSource) }
+        single { UserRepository(get() as RoomUserDataSource, get(), get(), get()) }
         factory { STDRepository(get()) }
     }
 
