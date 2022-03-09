@@ -96,7 +96,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/margin_small"
                 android:layout_weight="1">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -118,7 +117,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/player_round"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="301" />
 
                 <androidx.recyclerview.widget.RecyclerView

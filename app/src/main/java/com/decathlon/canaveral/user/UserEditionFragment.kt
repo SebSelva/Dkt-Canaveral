@@ -60,10 +60,8 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
 
         loginViewModel.uiState().observe(viewLifecycleOwner) { logInUiState ->
             when (logInUiState) {
-                is LoginViewModel.LoginUiState.UserInfoSuccess,
-                LoginViewModel.LoginUiState.LogoutSuccess -> {
-                    setProfile()
-                }
+                is LoginViewModel.LoginUiState.UserInfoSuccess -> setProfile()
+                is LoginViewModel.LoginUiState.LogoutSuccess -> findNavController().popBackStack()
                 else -> Timber.e("Error on login/logout")
             }
         }

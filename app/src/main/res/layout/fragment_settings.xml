@@ -46,7 +46,9 @@
                 android:src="@drawable/profile_circle_blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:isVisible="@{user != null}"
+                tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profile_image_default"
@@ -58,7 +60,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/profile_image_round"
                 app:layout_constraintStart_toStartOf="@id/profile_image_round"
                 app:layout_constraintEnd_toEndOf="@id/profile_image_round"
-                app:isVisible="@{user.image == null}"/>
+                app:isVisible="@{user.image == null}"
+                tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/profile_image"
@@ -70,7 +73,8 @@
                 app:layout_constraintStart_toStartOf="@id/profile_image_round"
                 app:layout_constraintEnd_toEndOf="@id/profile_image_round"
                 app:showImageRounded="@{user.image}"
-                app:isVisible="@{user.image != null}"/>
+                app:isVisible="@{user.image != null}"
+                tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Dkt.TextStyle.Settings.Item"
@@ -81,7 +85,9 @@
                 android:layout_marginStart="@dimen/margin_xlarge"
                 android:layout_marginTop="@dimen/margin_medium"
                 app:layout_constraintTop_toTopOf="@+id/profile_image_round"
-                app:layout_constraintStart_toEndOf="@id/profile_image_round"/>
+                app:layout_constraintStart_toEndOf="@id/profile_image_round"
+                app:isVisible="@{user != null}"
+                tools:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/Dkt.TextStyle.Settings.Item.Italic"
@@ -93,34 +99,41 @@
                 app:layout_constraintTop_toTopOf="@+id/profile_name"
                 app:layout_constraintBottom_toBottomOf="@id/profile_name"
                 app:layout_constraintStart_toEndOf="@id/profile_name"
-                app:isVisible="@{user.nickname != null}"/>
+                app:isVisible="@{user.nickname != null}"
+                tools:visibility="gone"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_connect_action"
+                style="@style/Dkt.TextStyle.Settings.Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                android:layout_marginBottom="@dimen/margin_xlarge"
                 android:text="@string/user_login"
-                android:textColor="@color/blue_dkt_400"
-                android:drawableEnd="@drawable/ic_log_in"
-                android:drawablePadding="@dimen/margin_small"
-                app:layout_constraintStart_toStartOf="@id/profile_name"
-                app:layout_constraintTop_toBottomOf="@id/profile_name"
-                app:isVisible="@{user == null}"
-                tools:visibility="gone"/>
+                android:drawableStart="@drawable/ic_log_in"
+                android:drawablePadding="@dimen/margin_large"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:isVisible="@{user == null}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/profile_disconnect_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/user_logout"
                 android:textColor="@color/red_dkt_400"
+                android:textSize="13sp"
                 android:drawableEnd="@drawable/ic_log_out"
                 android:drawablePadding="@dimen/margin_small"
                 app:layout_constraintStart_toStartOf="@id/profile_name"
                 app:layout_constraintTop_toBottomOf="@id/profile_name"
-                app:isVisible="@{user != null}" />
+                app:isVisible="@{user != null}"
+                tools:visibility="gone" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 style="@style/Dkt.TextStyle.Settings.Value"
@@ -132,7 +145,8 @@
                 android:rotation="270"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{user != null}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
