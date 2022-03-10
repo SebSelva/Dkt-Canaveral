@@ -27,7 +27,7 @@ data class UserEntity (
     var image: String?,
 
     @ColumnInfo(name = "accountId")
-    var accountId: Int?,
+    var accountId: String?,
 
     @ColumnInfo(name = "isMainUser")
     var isMainUser: Boolean

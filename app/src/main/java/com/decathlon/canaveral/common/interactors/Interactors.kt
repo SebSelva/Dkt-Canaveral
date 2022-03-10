@@ -4,6 +4,7 @@ import com.decathlon.canaveral.common.interactors.player.AddPlayer
 import com.decathlon.canaveral.common.interactors.player.DeletePlayer
 import com.decathlon.canaveral.common.interactors.player.GetPlayers
 import com.decathlon.canaveral.common.interactors.player.UpdatePlayer
+import com.decathlon.canaveral.common.interactors.stats.StdActions
 import com.decathlon.canaveral.common.interactors.user.*
 
 data class Interactors(
@@ -18,5 +19,6 @@ data class Interactors(
     val getUserInfo: GetUserInfo,
     val completeUserInfo: CompleteUserInfo,
     val userActions: UserActions,
-    val userConsent: UserConsent
+    val userConsent: UserConsent,
+    val stdActions: StdActions
 )

@@ -14,7 +14,8 @@ class Constants{
         const val AUTH_REDIRECT_HOST_LOGOUT = "logout/"
 
         const val RGPD_KEY = "0c3a4d8d-c6dc-4e61-83d3-1d4c4b99cc2e"
-        const val STD_KEY = "f5e29200-ddf6-40d5-a35c-4a37626b8969"
+
+        const val STD_KEY = "ceeeca02-3b6d-4ebb-b88b-2a4273078da4"
         const val STD_BASE_URL = "https://api-global.preprod.decathlon.net/sportstrackingdata/"
     }
 }

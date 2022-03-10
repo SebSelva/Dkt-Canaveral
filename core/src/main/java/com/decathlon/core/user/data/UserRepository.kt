@@ -2,10 +2,10 @@ package com.decathlon.core.user.data
 
 import android.content.Context
 import com.decathlon.core.Constants
+import com.decathlon.core.gamestats.data.source.network.STDServices
 import com.decathlon.core.user.common.AuthResource
 import com.decathlon.core.user.data.source.UserDataSource
 import com.decathlon.core.user.data.source.datastore.AccountPreference
-import com.decathlon.core.user.data.source.network.STDServices
 import com.decathlon.core.user.model.User
 import com.decathlon.decathlonlogin.Configuration
 import com.decathlon.decathlonlogin.DktLoginManager

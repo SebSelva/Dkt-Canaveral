@@ -6,6 +6,7 @@ import com.decathlon.canaveral.common.interactors.player.AddPlayer
 import com.decathlon.canaveral.common.interactors.player.DeletePlayer
 import com.decathlon.canaveral.common.interactors.player.GetPlayers
 import com.decathlon.canaveral.common.interactors.player.UpdatePlayer
+import com.decathlon.canaveral.common.interactors.stats.StdActions
 import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
@@ -16,13 +17,13 @@ import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.settings.SettingsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
+import com.decathlon.core.gamestats.data.STDRepository
+import com.decathlon.core.gamestats.data.source.network.STDServices
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
-import com.decathlon.core.user.data.STDRepository
 import com.decathlon.core.user.data.UserRepository
 import com.decathlon.core.user.data.source.RoomUserDataSource
 import com.decathlon.core.user.data.source.datastore.AccountPreference
-import com.decathlon.core.user.data.source.network.STDServices
 import com.decathlon.decathlonlogin.DktLoginManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -75,7 +76,7 @@ class CanaveralApp : Application() {
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
         single { UserRepository(get() as RoomUserDataSource, get(), get(), get()) }
-        factory { STDRepository(get()) }
+        factory { STDRepository(Constants.STD_KEY, get()) }
     }
 
     private val networkApiModule = module {
@@ -116,6 +117,7 @@ class CanaveralApp : Application() {
                 CompleteUserInfo(get()),
                 UserActions(get()),
                 UserConsent(get()),
+                StdActions(get()),
             )
         }
     }

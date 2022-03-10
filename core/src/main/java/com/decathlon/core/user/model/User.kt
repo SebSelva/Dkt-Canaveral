@@ -11,7 +11,7 @@ data class User (
     var firstname: String,
     var lastname: String,
     var image: String?,
-    var accountId: Int?,
+    var accountId: String?,
     var isMainUser: Boolean
 ): Parcelable {
     constructor(entity: UserEntity) : this(entity.uid, entity.nickname, entity.firstname,
