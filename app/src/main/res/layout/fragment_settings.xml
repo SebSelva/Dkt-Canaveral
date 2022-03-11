@@ -55,7 +55,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:padding="5dp"
-                android:src="@drawable/ic_profile_image_default"
+                android:src="@drawable/ic_profile_image_grey"
                 app:layout_constraintTop_toTopOf="@id/profile_image_round"
                 app:layout_constraintBottom_toBottomOf="@id/profile_image_round"
                 app:layout_constraintStart_toStartOf="@id/profile_image_round"

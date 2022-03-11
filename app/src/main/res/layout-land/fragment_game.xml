@@ -42,18 +42,32 @@
                     android:src="@drawable/profile_circle_white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/player_image_default"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_profile_image_grey"
+                    android:tint="@color/white"
+                    app:layout_constraintTop_toTopOf="@id/player_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/player_image_round"
+                    app:layout_constraintStart_toStartOf="@id/player_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:isVisible="@{currentPlayer.image == null}"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/player_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_profile_image_grey"
-                    app:tint="@color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="3dp"
                     app:layout_constraintBottom_toBottomOf="@id/player_image_round"
-                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
                     app:layout_constraintStart_toStartOf="@id/player_image_round"
-                    app:layout_constraintTop_toTopOf="@id/player_image_round" />
+                    app:layout_constraintEnd_toEndOf="@id/player_image_round"
+                    app:layout_constraintTop_toTopOf="@id/player_image_round"
+                    app:showImageRounded="@{currentPlayer.image}"
+                    app:isVisible="@{currentPlayer.image != null}"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/player_name"
