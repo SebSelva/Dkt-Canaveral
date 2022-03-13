@@ -54,10 +54,6 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
         initButtons()
         setProfile()
 
-        if (mainUser?.firstname?.isNotBlank() == true) {
-            _binding.hiUsername.text = resources.getString(R.string.user_hi, mainUser!!.firstname.uppercase())
-        }
-
         loginViewModel.uiState().observe(viewLifecycleOwner) { logInUiState ->
             when (logInUiState) {
                 is LoginViewModel.LoginUiState.UserInfoSuccess -> setProfile()
@@ -140,6 +136,9 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             mainUser = if (loginViewModel.isLogin()) loginViewModel.getMainUser() else null
             _binding.user = mainUser
+            if (mainUser?.firstname?.isNotBlank() == true) {
+                _binding.hiUsername.text = resources.getString(R.string.user_hi, mainUser!!.firstname.uppercase())
+            }
             _binding.executePendingBindings()
         }
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -78,7 +79,8 @@
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="@id/edition_layout"
                 app:layout_constraintTop_toTopOf="@id/edition_layout"
-                app:isVisible="@{user != null}"/>
+                app:isVisible="@{user != null}"
+                tools:text="Hi, Alex !"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/edition_layout"
