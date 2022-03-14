@@ -75,12 +75,6 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
             ).show()
         }
 
-        _binding.actionLogin.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                if (getNetworkStatus()) loginViewModel.requestLogIn()
-            }
-        }
-
         _binding.actionLogout.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 if (getNetworkStatus()) loginViewModel.requestLogout()

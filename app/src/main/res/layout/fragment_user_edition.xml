@@ -189,18 +189,6 @@
                     app:layout_constraintRight_toRightOf="parent">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/action_login"
-                        style="@style/Dkt.TextStyle.BigButton"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/margin_large"
-                        android:paddingBottom="@dimen/margin_large"
-                        android:layout_marginStart="@dimen/margin_small"
-                        android:layout_marginEnd="@dimen/margin_small"
-                        android:text="@string/user_login"
-                        android:textAllCaps="false"
-                        app:isVisible="@{user == null}"/>
-
-                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/action_save"
                         style="@style/Dkt.TextStyle.BigButton"
                         android:layout_height="wrap_content"
@@ -208,7 +196,7 @@
                         android:paddingBottom="@dimen/margin_large"
                         android:layout_marginStart="@dimen/margin_small"
                         android:layout_marginEnd="@dimen/margin_small"
-                        android:text="@string/save"
+                        android:text="@string/validate"
                         android:textAllCaps="false"
                         app:isVisible="@{user != null}"/>
 
