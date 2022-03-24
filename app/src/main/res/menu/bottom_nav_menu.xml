@@ -11,8 +11,7 @@
         android:id="@+id/UserStatsFragment"
         android:icon="@drawable/ic_stats"
         android:iconTint="@color/ic_nav_tint"
-        android:title="@string/title_stats"
-        android:enabled="false"/>
+        android:title="@string/title_stats"/>
 
     <item
         android:id="@+id/SettingsFragment"

@@ -140,6 +140,8 @@ dependencies {
 
     implementation 'io.didomi.sdk:android:1.55.0'
 
+    implementation "app.futured.donut:donut:2.2.1"
+
     //testImplementation 'junit:junit:4.13.2'
     //testImplementation 'org.amshove.kluent:kluent-android:1.68'
     //testImplementation 'org.amshove.kluent:kluent:1.68'

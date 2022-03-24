@@ -15,10 +15,11 @@ import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.intro.UserConsentManager
 import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.settings.SettingsViewModel
+import com.decathlon.canaveral.stats.StatsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
 import com.decathlon.core.gamestats.data.STDRepository
-import com.decathlon.core.gamestats.data.source.network.STDServices
+import com.decathlon.core.gamestats.data.source.room.RoomStatsDataSource
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
 import com.decathlon.core.user.data.UserRepository
@@ -31,8 +32,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
 class CanaveralApp : Application() {
@@ -73,23 +72,15 @@ class CanaveralApp : Application() {
         single { AccountPreference(androidContext()) }
         single { RoomPlayerDataSource(this@CanaveralApp) }
         single { RoomUserDataSource(this@CanaveralApp) }
+        single { RoomStatsDataSource(this@CanaveralApp) }
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
-        single { UserRepository(get() as RoomUserDataSource, get(), get(), get()) }
-        factory { STDRepository(Constants.STD_KEY, get()) }
+        single { UserRepository(get() as RoomUserDataSource, get(), get()) }
+        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource) }
     }
 
     private val networkApiModule = module {
-        single {
-            Retrofit.Builder()
-                .baseUrl(Constants.STD_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-        }
 
-        single {
-            get<Retrofit>().create(STDServices::class.java)
-        }
     }
 
     private val viewModelsModule = module {
@@ -100,6 +91,7 @@ class CanaveralApp : Application() {
         viewModel { LoginViewModel(get(), get()) }
         viewModel { SettingsViewModel(get()) }
         viewModel { UserEditionViewModel(get()) }
+        viewModel { StatsViewModel(get()) }
     }
 
     private val interactorsModule = module {

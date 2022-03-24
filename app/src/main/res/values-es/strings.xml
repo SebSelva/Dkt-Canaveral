@@ -73,6 +73,7 @@
     <string name="player">Player</string>
     <string name="player_edition_nickname">Pseudo</string>
     <string name="player_edition_title">Player Edition</string>
+    <string name="player_mpr">MPR: %.2f</string>
     <string name="player_number">Player %d</string>
     <string name="player_ppd">PPD: %.2f</string>
     <string name="player_remain_point">-</string>
@@ -84,6 +85,16 @@
     <string name="select_picture">Choose from Gallery</string>
     <string name="settings_languages">Languages</string>
     <string name="settings_title">General Settings</string>
+    <string name="stats_darts_thrown">darts\nthrown</string>
+    <string name="stats_defeats">Defeats</string>
+    <string name="stats_draws">Draws</string>
+    <string name="stats_last_update">Last update: %s</string>
+    <string name="stats_loading">Updating datas in progress…\n Please wait</string>
+    <string name="stats_played_games">played\ngames</string>
+    <string name="stats_user_logout">Register your Decathlon account to get access to your stats.</string>
+    <string name="stats_user_mpr">MPR :</string>
+    <string name="stats_user_ppd">PPD :</string>
+    <string name="stats_victories">Victories</string>
     <string name="take_picture">Take photo</string>
     <string name="title_dashboard">Play</string>
     <string name="title_game">Game</string>

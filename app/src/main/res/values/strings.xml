@@ -80,6 +80,7 @@
     <string name="player_round" translatable="false">R %d/%d</string>
     <string name="player_round_unlimited" translatable="false">R %d</string>
     <string name="player_ppd" translatable="false">PPD: %.2f</string>
+    <string name="player_mpr" translatable="false">MPR: %.2f</string>
     <string name="game_round_bust">BUST</string>
 
     // Game Options
@@ -132,5 +133,17 @@
     <string name="user_hi">Hi,\n%s!</string>
     <string name="take_picture">Take photo</string>
     <string name="select_picture">Choose from Gallery</string>
+
+    // Stats
+    <string name="stats_user_logout">Register your Decathlon account to get access to your stats.</string>
+    <string name="stats_user_ppd" translatable="false">PPD :</string>
+    <string name="stats_user_mpr" translatable="false">MPR :</string>
+    <string name="stats_loading">Updating datas in progress…\n Please wait</string>
+    <string name="stats_victories">Victories</string>
+    <string name="stats_draws">Draws</string>
+    <string name="stats_defeats">Defeats</string>
+    <string name="stats_darts_thrown">darts\nthrown</string>
+    <string name="stats_played_games">played\ngames</string>
+    <string name="stats_last_update">Last update: %s</string>
 
 </resources>
