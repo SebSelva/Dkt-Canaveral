@@ -15,6 +15,7 @@ import com.decathlon.canaveral.common.utils.getAppVersion
 import com.decathlon.canaveral.common.utils.getLanguageNameFromCode
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
+import com.decathlon.canaveral.stats.StatsViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.util.*
@@ -23,6 +24,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
     override var layoutId: Int = R.layout.fragment_settings
     private val loginViewModel by sharedViewModel<LoginViewModel>()
+    private val statsViewModel by sharedViewModel<StatsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -120,6 +122,7 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
                     if (user.nickname.isNotEmpty()) {
                         _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
                     }
+                    statsViewModel.getStats()
                 }
 
             } else {

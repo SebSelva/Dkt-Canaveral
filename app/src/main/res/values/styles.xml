@@ -257,5 +257,65 @@
         <item name="android:textSize">36sp</item>
     </style>
 
+    <style name="Dkt.TextStyle.Stats.Logout" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/grey_text</item>
+        <item name="android:textSize">19sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Login" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.UserInfo" parent="Dkt">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.MainInfo" parent="Dkt">
+        <item name="android:textColor">@color/grey_text_clickable</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Win.Number" parent="Dkt">
+        <item name="android:textColor">@color/grey_dkt_600</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Win.Text" parent="Dkt">
+        <item name="android:textColor">@color/grey_dkt_600</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Bottom.Number" parent="Dkt">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">italic|bold</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Bottom.Text" parent="Dkt">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Date" parent="Dkt">
+        <item name="android:textColor">@color/grey_text</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.UserInfo.Italic" parent="Dkt.TextStyle.Stats.UserInfo">
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.UserInfo.Bold" parent="Dkt.TextStyle.Stats.UserInfo">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.UserInfo.Blue" parent="Dkt.TextStyle.Stats.UserInfo">
+        <item name="android:textColor">@color/blue_dkt_400</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     // TEXT STYLES - END
 </resources>

@@ -5,26 +5,23 @@ import com.decathlon.core.Constants
 import com.decathlon.core.user.common.AuthResource
 import com.decathlon.core.user.data.source.UserDataSource
 import com.decathlon.core.user.data.source.datastore.AccountPreference
-import com.decathlon.core.user.data.source.network.STDServices
 import com.decathlon.core.user.model.User
 import com.decathlon.decathlonlogin.Configuration
 import com.decathlon.decathlonlogin.DktLoginManager
 import com.decathlon.decathlonlogin.DktLoginState
 import com.decathlon.decathlonlogin.api.member.model.Identity
 import com.decathlon.decathlonlogin.exception.DktLoginException
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class UserRepository(
     private val dataSource: UserDataSource,
     private val dktLoginManager: DktLoginManager,
-    private val stdServices: STDServices,
     private val accountPreference: AccountPreference
     )
 {
@@ -92,19 +89,6 @@ class UserRepository(
         }
     }
 
-    suspend fun getSTDId(accessToken: String?): String {
-        try {
-            val accountInfo = stdServices.getAccountInfo(
-                Constants.STD_KEY,
-                "Bearer $accessToken"
-            )
-            return accountInfo.id
-        } catch (e: Exception) {
-            Timber.e("STD get user id error: $e")
-        }
-        return ""
-    }
-
     suspend fun logOutUser(): AuthResource<DktLoginState> = suspendCoroutine { continuation ->
         dktLoginManager.logout { authState: DktLoginState, error: DktLoginException? ->
             if (error == null) {
@@ -159,9 +143,16 @@ class UserRepository(
             }
         }
 
-    fun refreshToken() = dktLoginManager.refresh()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
+    suspend fun refreshToken(): AuthResource<Boolean> =
+        suspendCoroutine { continuation ->
+            dktLoginManager.refresh().subscribe { onSuccess, onError ->
+                if (onError == null) {
+                    onSuccess.isAuthorized.let { continuation.resume(AuthResource.success(it)) }
+                } else {
+                    continuation.resumeWithException(onError)
+                }
+            }.dispose()
+        }
 
     suspend fun isUserRegistered() = getMainUser() != null
 
@@ -184,5 +175,4 @@ class UserRepository(
             else -> false
         }
     }
-
 }

@@ -14,6 +14,8 @@ open class BaseViewModel<T> : ViewModel(), CoroutineScope {
     fun uiState(): LiveData<T> = uiState
     protected val uiState: MutableLiveData<T> = MutableLiveData()
 
+    fun setUiState(uiModelState: T) { uiState.value = uiModelState!! }
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + SupervisorJob()
 

@@ -62,6 +62,12 @@
     </activity>
 
     <fragment
+        android:id="@+id/UserStatsFragment"
+        android:name="com.decathlon.canaveral.stats.UserStatsFragment"
+        android:label="@string/title_stats"
+        tools:layout="@layout/fragment_user_stats"/>
+
+    <fragment
         android:id="@+id/SettingsFragment"
         android:name="com.decathlon.canaveral.settings.SettingsFragment"
         android:label="@string/title_settings"

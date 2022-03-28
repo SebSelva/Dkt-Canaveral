@@ -6,6 +6,6 @@ class UserLoginState(private val userRepository: UserRepository) {
 
     fun isLogIn(): Boolean = userRepository.isLogIn()
     fun needRefreshToken(): Boolean = userRepository.needsTokenRefresh()
-    suspend fun getSTDAccountId(accessToken :String) = userRepository.getSTDId(accessToken)
+    suspend fun refreshToken() = userRepository.refreshToken()
     fun getAccessToken() = userRepository.getAccessToken()
 }

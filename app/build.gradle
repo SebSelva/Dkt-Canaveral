@@ -96,16 +96,17 @@ dependencies {
     implementation project(":core")
 
     //    Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
 
     //    Moshi
-    implementation 'com.squareup.moshi:moshi-kotlin:1.12.0'
-    implementation 'com.squareup.moshi:moshi-adapters:1.12.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
     //    Okhttp
-    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+
     //    Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
@@ -135,9 +136,11 @@ dependencies {
     implementation "androidx.camera:camera-core:$camerax_version"
     implementation "androidx.camera:camera-camera2:$camerax_version"
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
-    implementation "androidx.camera:camera-view:1.1.0-beta01"
+    implementation "androidx.camera:camera-view:$camerax_version"
 
     implementation 'io.didomi.sdk:android:1.55.0'
+
+    implementation "app.futured.donut:donut:2.2.1"
 
     //testImplementation 'junit:junit:4.13.2'
     //testImplementation 'org.amshove.kluent:kluent-android:1.68'

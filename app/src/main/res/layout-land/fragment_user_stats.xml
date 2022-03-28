@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="user"
+            type="com.decathlon.core.user.model.User" />
+        <variable
+            name="stats"
+            type="com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/grey_light">
+
+        <com.decathlon.canaveral.common.view.KlavikaBITextView
+            android:id="@+id/stats_title_layout"
+            style="@style/Dkt.TextStyle.Settings.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_stats"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/stats_layout"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/stats_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:paddingTop="@dimen/margin_large"
+            android:paddingBottom="@dimen/margin_medium"
+            android:paddingStart="@dimen/margin_xlarge"
+            android:paddingEnd="@dimen/margin_xlarge"
+            app:layout_constraintTop_toBottomOf="@id/stats_title_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/user_logout_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{user == null}"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="Dkt.TextStyle.Stats.Logout"
+                    android:id="@+id/user_logout_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_user_logout"
+                    android:textAlignment="center"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/user_login_action"
+                    style="@style/Dkt.TextStyle.Stats.Login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:drawableStart="@drawable/ic_log_in"
+                    android:drawablePadding="@dimen/margin_large"
+                    android:text="@string/user_login" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/user_item_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:isVisible="@{user != null}">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/profile_image_round"
+                    android:layout_width="67dp"
+                    android:layout_height="67dp"
+                    android:src="@drawable/profile_circle_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/profile_image_default"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_profile_image_grey"
+                    app:layout_constraintTop_toTopOf="@id/profile_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image_round"
+                    app:layout_constraintStart_toStartOf="@id/profile_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/profile_image_round"
+                    app:isVisible="@{user.image == null}" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="3dp"
+                    app:layout_constraintTop_toTopOf="@id/profile_image_round"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image_round"
+                    app:layout_constraintStart_toStartOf="@id/profile_image_round"
+                    app:layout_constraintEnd_toEndOf="@id/profile_image_round"
+                    app:showImageRounded="@{user.image}"
+                    app:isVisible="@{user.image != null}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo"
+                    android:id="@+id/profile_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_xlarge"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintTop_toTopOf="@+id/profile_image_round"
+                    app:layout_constraintStart_toEndOf="@id/profile_image_round"
+                    app:isVisible="@{user != null}"
+                    tools:text="Tom"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Italic"
+                    android:id="@+id/profile_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    app:layout_constraintTop_toTopOf="@+id/profile_name"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_name"
+                    app:layout_constraintStart_toEndOf="@id/profile_name"
+                    app:isVisible="@{user.nickname != null}"
+                    tools:text="alias Tommy"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Blue"
+                    android:id="@+id/user_ppd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_xlarge"
+                    android:text="@string/stats_user_ppd"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_name"
+                    app:layout_constraintStart_toEndOf="@id/profile_image_round"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Bold"
+                    android:id="@+id/user_ppd_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:paddingStart="6dp"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_name"
+                    app:layout_constraintStart_toEndOf="@id/user_ppd"
+                    tools:text="0.00"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Blue"
+                    android:id="@+id/user_mpr"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/margin_xlarge"
+                    android:text="@string/stats_user_mpr"
+                    app:layout_constraintTop_toBottomOf="@+id/user_ppd"
+                    app:layout_constraintStart_toEndOf="@id/profile_image_round"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Bold"
+                    android:id="@+id/user_mpr_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="3dp"
+                    android:layout_marginStart="@dimen/margin_small"
+                    app:layout_constraintTop_toBottomOf="@+id/user_ppd"
+                    app:layout_constraintStart_toEndOf="@id/user_mpr"
+                    tools:text="0.00"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/user_separator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_large"
+                android:background="@color/separator_line"
+                app:layout_constraintStart_toEndOf="@id/user_item_layout"
+                app:isVisible="@{user != null}"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/stats_loading_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="80dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/user_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{user != null &amp;&amp; stats == null}"
+                tools:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="Dkt.TextStyle.Stats.Logout"
+                    android:id="@+id/loading_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/stats_loading"
+                    android:textAlignment="center"/>
+
+                <ProgressBar
+                    android:id="@+id/loading_image"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:indeterminateDrawable="@drawable/loading_anim" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Dkt.TextStyle.Stats.Date"
+                android:id="@+id/stat_update_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/user_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{user != null &amp;&amp; stats == null}"
+                tools:text="Last update: 22.12.2021, 10:07"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/user_main_stats_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                app:layout_constraintTop_toBottomOf="@id/stat_update_date"
+                app:layout_constraintStart_toStartOf="@id/user_separator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:isVisible="@{user != null &amp;&amp; stats != null}">
+
+                <app.futured.donut.DonutProgressView
+                    android:id="@+id/user_game_stat_pie_chart"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
+                    app:donut_bgLineColor="@color/stats_donut_bg"
+                    app:donut_cap="100"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/victories_color_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginStart="@dimen/margin_xxlarge"
+                    android:src="@drawable/disk_shape"
+                    android:tint="@color/blue_dkt_400"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/user_game_stat_pie_chart"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Bold"
+                    android:id="@+id/victories_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/victories_color_dot"
+                    app:layout_constraintTop_toTopOf="@id/victories_color_dot"
+                    app:layout_constraintBottom_toBottomOf="@id/victories_color_dot"
+                    tools:text="72%"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.MainInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/stats_victories"
+                    app:layout_constraintTop_toBottomOf="@id/victories_percent"
+                    app:layout_constraintStart_toStartOf="@id/victories_percent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/draws_color_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:src="@drawable/disk_shape"
+                    android:tint="@color/blue_dkt_100"
+                    app:layout_constraintTop_toBottomOf="@id/victories_color_dot"
+                    app:layout_constraintStart_toStartOf="@id/victories_color_dot"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Bold"
+                    android:id="@+id/draws_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/draws_color_dot"
+                    app:layout_constraintTop_toTopOf="@id/draws_color_dot"
+                    app:layout_constraintBottom_toBottomOf="@id/draws_color_dot"
+                    tools:text="11%"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.MainInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/stats_draws"
+                    app:layout_constraintTop_toBottomOf="@id/draws_percent"
+                    app:layout_constraintStart_toStartOf="@id/draws_percent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/defeats_color_dot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="48dp"
+                    android:src="@drawable/disk_shape"
+                    android:tint="@color/blue_dkt_200"
+                    app:layout_constraintTop_toBottomOf="@id/draws_color_dot"
+                    app:layout_constraintStart_toStartOf="@id/victories_color_dot"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.UserInfo.Bold"
+                    android:id="@+id/defeats_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_large"
+                    app:layout_constraintStart_toEndOf="@id/defeats_color_dot"
+                    app:layout_constraintTop_toTopOf="@id/defeats_color_dot"
+                    app:layout_constraintBottom_toBottomOf="@id/defeats_color_dot"
+                    tools:text="17%"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/Dkt.TextStyle.Stats.MainInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:text="@string/stats_defeats"
+                    app:layout_constraintTop_toBottomOf="@id/defeats_percent"
+                    app:layout_constraintStart_toStartOf="@id/defeats_percent"/>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="@id/user_game_stat_pie_chart"
+                    app:layout_constraintBottom_toBottomOf="@id/user_game_stat_pie_chart"
+                    app:layout_constraintStart_toStartOf="@id/user_game_stat_pie_chart"
+                    app:layout_constraintEnd_toEndOf="@id/user_game_stat_pie_chart">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/victories_cup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_win_cup"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Win.Number"
+                        android:id="@+id/victories_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="107"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Win.Text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/stats_victories"
+                        android:textAllCaps="false"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/darts_thrown_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_xlarge"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/user_game_stat_pie_chart"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Bottom.Number"
+                        android:id="@+id/darts_thrown_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:minWidth="40dp"
+                        tools:text="207"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Bottom.Text"
+                        android:id="@+id/darts_thrown_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:text="@string/stats_darts_thrown" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_xlarge"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@id/darts_thrown_layout"
+                    app:layout_constraintTop_toTopOf="@id/darts_thrown_layout"
+                    app:layout_constraintBottom_toBottomOf="@id/darts_thrown_layout">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/played_games_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_xlarge"
+                        android:src="@drawable/ic_stat_games"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Bottom.Number"
+                        android:id="@+id/played_games_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_large"
+                        android:gravity="end"
+                        android:minWidth="40dp"
+                        tools:text="35"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/Dkt.TextStyle.Stats.Bottom.Text"
+                        android:id="@+id/played_games_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:lines="2"
+                        android:text="@string/stats_played_games" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

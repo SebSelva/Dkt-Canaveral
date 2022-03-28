@@ -5,12 +5,9 @@ import com.decathlon.core.user.common.Status
 import com.decathlon.core.user.data.UserRepository
 import com.decathlon.decathlonlogin.DktLoginState
 
-class UserLogin(
-    @PublishedApi
-    internal val userRepository: UserRepository
-    ) {
+class UserLogin(private val userRepository: UserRepository) {
 
-    suspend inline operator fun invoke(
+    suspend operator fun invoke(
         onSuccess: () -> Unit,
         onError: (String) -> Unit
     ) {
