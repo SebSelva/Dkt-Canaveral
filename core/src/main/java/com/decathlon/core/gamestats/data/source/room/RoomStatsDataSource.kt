@@ -17,10 +17,4 @@ class RoomStatsDataSource(context: Context): StatDataSource {
     override suspend fun remove(item: DartsStatEntity) {
         statsDao.delete(item)
     }
-
-    /*override suspend fun removeAll() {
-        statsDao.getStats().collect {
-            statsDao.delete(it)
-        }
-    }*/
 }

@@ -14,7 +14,6 @@ import com.decathlon.canaveral.game.x01.Game01ViewModel
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.intro.UserConsentManager
 import com.decathlon.canaveral.player.PlayerEditionViewModel
-import com.decathlon.canaveral.settings.SettingsViewModel
 import com.decathlon.canaveral.stats.StatsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
@@ -89,7 +88,6 @@ class CanaveralApp : Application() {
         viewModel { Game01ViewModel(get()) }
         viewModel { CountUpViewModel(get()) }
         viewModel { LoginViewModel(get(), get()) }
-        viewModel { SettingsViewModel(get()) }
         viewModel { UserEditionViewModel(get()) }
         viewModel { StatsViewModel(get()) }
     }

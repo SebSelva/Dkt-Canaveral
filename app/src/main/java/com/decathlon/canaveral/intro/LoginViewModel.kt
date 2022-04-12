@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.core.user.model.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
@@ -46,7 +48,7 @@ class LoginViewModel(
         }
     }
 
-    suspend fun getMainUser(): User? {
+    suspend fun getMainUser(): Flow<User?> {
         return interactors.userActions.getMainUser()
     }
 
@@ -85,7 +87,8 @@ class LoginViewModel(
         viewModelScope.launch {
             interactors.userLogout.invoke(
                 {
-                    interactors.userActions.removeMainUser()
+                    interactors.userActions.getMainUser().first()
+                        ?.let { interactors.userActions.removeUser(it) }
                     loginState(LoginUiState.LogoutSuccess)
                 },
                 { loginState(LoginUiState.LogoutFailed) }

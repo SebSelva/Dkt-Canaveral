@@ -317,5 +317,56 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="Dkt.TextStyle.Stats.Games.Title" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.GameInfo.Title" parent="Dkt">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.GameInfo.Item" parent="Dkt">
+        <item name="android:textColor">@color/grey_dkt_500</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.GameInfo.Item.Title" parent="Dkt.TextStyle.Stats.GameInfo.Item">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.GameInfo.Item.Value" parent="Dkt.TextStyle.Stats.GameInfo.Item">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Name" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Score" parent="Dkt.TextStyle">
+        <item name="android:textSize">35sp</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Score.Black" parent="Dkt.TextStyle.Stats.Trick.Score">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Score.White" parent="Dkt.TextStyle.Stats.Trick.Score">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Field.Title" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/grey_dark</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Field.Value" parent="Dkt.TextStyle">
+        <item name="android:textColor">@color/grey_dkt_500</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
     // TEXT STYLES - END
 </resources>

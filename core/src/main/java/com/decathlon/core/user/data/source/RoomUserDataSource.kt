@@ -4,6 +4,9 @@ import android.content.Context
 import com.decathlon.core.user.data.entity.UserEntity
 import com.decathlon.core.user.data.source.room.UserDatabase
 import com.decathlon.core.user.model.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class RoomUserDataSource(context: Context) : UserDataSource {
@@ -13,8 +16,8 @@ class RoomUserDataSource(context: Context) : UserDataSource {
     override fun getUsers() =
         userDao.getUsers().map { it.map { userEntity -> User(userEntity) } }
 
-    override fun getMainUser() = userDao.getMainUser().let {
-        if (it != null) User(it) else null
+    override fun getMainUser(): Flow<User?> = flow {
+        emit(userDao.getMainUser().first()?.let { entity -> User(entity) })
     }
 
     override suspend fun insertUser(user: User) {

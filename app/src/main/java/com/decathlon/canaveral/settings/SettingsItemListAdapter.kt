@@ -52,8 +52,7 @@ class SettingsItemListAdapter(val onItemClickListener : (Int) -> Unit): Recycler
                     onItemClickListener.invoke(position)
                     notifyDataSetChanged()
                 }
-            }
-            else {
+            } else {
                 binding.itemText.text = binding.root.context.resources.getString(
                     R.string.language_coming_soon, lang)
                 binding.itemText.setOnClickListener(null)

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level_circle"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/ic_stat_level_2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Score.Black"
+            android:id="@+id/trick_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/trick_level_circle"
+            app:layout_constraintBottom_toBottomOf="@id/trick_level_circle"
+            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
+            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
+            tools:text="17"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Name"
+            android:id="@+id/trick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:minLines="2"
+            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
+            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
+            app:layout_constraintTop_toBottomOf="@id/trick_level_circle"
+            tools:text="Baby ton"/>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/trick_progress_indicator"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/margin_small"
+            app:trackCornerRadius="2dp"
+            app:trackColor="@color/argent_dkt_50"
+            app:indicatorColor="@color/argent_dkt_200"
+            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
+            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
+            app:layout_constraintTop_toBottomOf="@id/trick_name"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

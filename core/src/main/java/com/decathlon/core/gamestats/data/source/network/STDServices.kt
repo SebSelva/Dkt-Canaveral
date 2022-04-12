@@ -1,13 +1,8 @@
 package com.decathlon.core.gamestats.data.source.network
 
-import com.decathlon.core.gamestats.data.source.network.model.AccountInfo
-import com.decathlon.core.gamestats.data.source.network.model.StdActivity
-import com.decathlon.core.gamestats.data.source.network.model.StdSumups
+import com.decathlon.core.gamestats.data.source.network.model.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface STDServices {
 
@@ -22,10 +17,17 @@ interface STDServices {
         @Header(ACCESS_TOKEN_PREFIX) bearer: String
     ): AccountInfo
 
-    @GET("current_user_measures")
-    suspend fun getUserMeasures(
-        @Header(ACCESS_TOKEN_PREFIX) bearer: String
-    ): Response<StdSumups>
+    @GET("v2/user_measures")
+    suspend fun getUserMeasure(
+        @Header(ACCESS_TOKEN_PREFIX) bearer: String,
+        @Query("datatype") datatype: Int
+    ): Response<StdUserMeasures>
+
+    @POST("v2/user_measures")
+    suspend fun postUserMeasure(
+        @Header(ACCESS_TOKEN_PREFIX) bearer: String,
+        @Body userMeasure: StdUserMeasure
+    ): Response<StdUserMeasure>
 
     @GET("v2/user_records?sport=$DARTS_SPORT_ID")
     suspend fun getUserRecords(

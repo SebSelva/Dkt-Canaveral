@@ -146,4 +146,74 @@
     <string name="stats_played_games">played\ngames</string>
     <string name="stats_last_update">Last update: %s</string>
 
+    <string name="stats_game_title">Stats by Games</string>
+    <string name="stats_game_played_games">Played Games</string>
+    <string name="stats_game_ppd">PPD</string>
+    <string name="stats_game_mpr">MPR</string>
+    <string name="stats_game_highest_score">Highest Score</string>
+    <string name="stats_game_winning_percentage">Win Rate</string>
+
+    <string name="stats_tricks_title">Tricks &amp; Figures</string>
+    <string name="stats_trick_baby_ton" translatable="false">Baby Ton</string>
+    <string name="stats_trick_bag_o_nuts" translatable="false">Bag O\'Nuts</string>
+    <string name="stats_trick_bulls_eye" translatable="false">Bullseye</string>
+    <string name="stats_trick_bust" translatable="false">Bust</string>
+    <string name="stats_trick_hattrick" translatable="false">Hattrick</string>
+    <string name="stats_trick_high_ton" translatable="false">High Ton</string>
+    <string name="stats_trick_low_ton" translatable="false">Low Ton</string>
+    <string name="stats_trick_three_in_a_bed" translatable="false">3 In A Bed</string>
+    <string name="stats_trick_ton" translatable="false">Ton</string>
+    <string name="stats_trick_ton_80" translatable="false">Ton 80</string>
+    <string name="stats_trick_white_horse" translatable="false">White Horse</string>
+    <string name="stats_trick_round_score_60_and_more" translatable="false">60+</string>
+    <string name="stats_trick_round_score_100_and_more" translatable="false">100+</string>
+    <string name="stats_trick_round_score_140_and_more" translatable="false">140+</string>
+    <string name="stats_trick_round_score_180" translatable="false">180</string>
+    <string name="stats_trick_field_15" translatable="false">15</string>
+    <string name="stats_trick_field_16" translatable="false">16</string>
+    <string name="stats_trick_field_17" translatable="false">17</string>
+    <string name="stats_trick_field_18" translatable="false">18</string>
+    <string name="stats_trick_field_19" translatable="false">19</string>
+    <string name="stats_trick_field_20" translatable="false">20</string>
+    <string name="stats_trick_field_bull" translatable="false">Bull</string>
+    <string name="stats_trick_avg_score_dart1" translatable="false">AVG Score\nDart 1</string>
+    <string name="stats_trick_avg_score_dart2" translatable="false">AVG Score\nDart 2</string>
+    <string name="stats_trick_avg_score_dart3" translatable="false">AVG Score\nDart 3</string>
+    <string name="stats_trick_avg_score_round" translatable="false">AVG Score\nRound</string>
+    <string name="stats_trick_checkout_rate" translatable="false">Checkout\nRate</string>
+    <string name="stats_trick_highest_checkout" translatable="false">Highest\nCheckout</string>
+    <string name="stats_trick_highest_score_round" translatable="false">High. Round</string>
+    <string name="stats_trick_highest_8rounds" translatable="false">Highest\nScore 8R</string>
+    <string name="stats_trick_highest_12rounds" translatable="false">Highest\nScore 12R</string>
+    <string name="stats_trick_highest_16rounds" translatable="false">Highest\nScore 16R</string>
+
+    <string name="stats_fields_title">Fields Stats</string>
+    <string name="stats_field_rate_miss">Miss Rate</string>
+    <string name="stats_field_rate_1">1 Rate</string>
+    <string name="stats_field_rate_2">2 Rate</string>
+    <string name="stats_field_rate_3">3 Rate</string>
+    <string name="stats_field_rate_4">4 Rate</string>
+    <string name="stats_field_rate_5">5 Rate</string>
+    <string name="stats_field_rate_6">6 Rate</string>
+    <string name="stats_field_rate_7">7 Rate</string>
+    <string name="stats_field_rate_8">8 Rate</string>
+    <string name="stats_field_rate_9">9 Rate</string>
+    <string name="stats_field_rate_10">10 Rate</string>
+    <string name="stats_field_rate_11">11 Rate</string>
+    <string name="stats_field_rate_12">12 Rate</string>
+    <string name="stats_field_rate_13">13 Rate</string>
+    <string name="stats_field_rate_14">14 Rate</string>
+    <string name="stats_field_rate_15">15 Rate</string>
+    <string name="stats_field_rate_16">16 Rate</string>
+    <string name="stats_field_rate_17">17 Rate</string>
+    <string name="stats_field_rate_18">18 Rate</string>
+    <string name="stats_field_rate_19">19 Rate</string>
+    <string name="stats_field_rate_20">20 Rate</string>
+    <string name="stats_field_rate_bull">Bull Rate</string>
+    <string name="stats_field_rate_double">Double Rate</string>
+    <string name="stats_field_rate_triple">Triple Rate</string>
+    <string name="stats_field_rate_19_20">20/19 Rate</string>
+    <string name="stats_field_rate_t19_t20">60/57 Rate</string>
+    <string name="stats_field_rate_t20">60 Hit Rate</string>
+
 </resources>
