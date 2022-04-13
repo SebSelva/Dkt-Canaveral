@@ -1,5 +1,6 @@
 package com.decathlon.canaveral.stats.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ class GameStatsAdapter : RecyclerView.Adapter<BaseViewHolder<GameStats>>()  {
 
     private val gameStatsItems = ArrayList<GameStats>()
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(items: List<GameStats>) {
         gameStatsItems.clear()
         gameStatsItems.addAll(items)

@@ -7,12 +7,14 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.futured.donut.DonutSection
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
+import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentUserStatsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.stats.adapter.FieldsStatsAdapter
@@ -239,8 +241,8 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         val highTon = StatItem(R.string.stats_trick_high_ton, stat.highTownTrick)
         val lowTon = StatItem(R.string.stats_trick_low_ton, stat.lowTownTrick)
         val threeInaBed = StatItem(R.string.stats_trick_three_in_a_bed, stat.threeInABedTrick)
-        val ton = StatItem(R.string.stats_trick_low_ton, stat.tonTrick)
-        val ton80 = StatItem(R.string.stats_trick_low_ton, stat.ton80Trick)
+        val ton = StatItem(R.string.stats_trick_ton, stat.tonTrick)
+        val ton80 = StatItem(R.string.stats_trick_ton_80, stat.ton80Trick)
         val whiteHorse = StatItem(R.string.stats_trick_white_horse, stat.whiteHorseTrick)
         val roundMore60 = StatItem(R.string.stats_trick_round_score_60_and_more, stat.roundMore60Trick)
         val roundMore100 = StatItem(R.string.stats_trick_round_score_100_and_more, stat.roundMore100Trick)
@@ -271,11 +273,17 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
             highScore8Rounds, highScore12Rounds, highScore16Rounds, avgRoundScore)
 
         val spanCount = if (Configuration.ORIENTATION_LANDSCAPE == resources.configuration.orientation) 6 else 3
-        val tricksAdapter = TricksStatsAdapter(requireContext())
+        val tricksAdapter = TricksStatsAdapter(requireContext()) { statItem ->
+            findNavController().navigate(
+                R.id.action_user_stats_to_trick_info,
+                TrickInfoDialogArgs(statItem.title, DartsUtils.getIntValue(statItem.value)).toBundle()
+            )
+        }
         _binding.gameTricksRecyclerView.layoutManager = GridLayoutManager(
             requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
         _binding.gameTricksRecyclerView.adapter = tricksAdapter
         tricksAdapter.setData(trickList)
+        tricksAdapter.notifyDataSetChanged()
     }
 
     private fun setFieldsStats(stat: DartsStatEntity) {

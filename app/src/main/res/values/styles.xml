@@ -344,6 +344,26 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="Dkt.TextStyle.Stats.Trick.Description" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Level.Step" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">8sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Level.Next" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Value" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="Dkt.TextStyle.Stats.Trick.Step" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="Dkt.TextStyle.Stats.Trick.Score" parent="Dkt.TextStyle">
         <item name="android:textSize">35sp</item>
         <item name="android:textStyle">bold|italic</item>

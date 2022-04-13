@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="player"
+            type="com.decathlon.canaveral.common.model.Player" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_xlarge"
+        android:paddingBottom="@dimen/margin_large"
+        android:paddingStart="22dp"
+        android:paddingEnd="@dimen/margin_large">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/trick_info_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_close"
+            android:background="@null"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Black"
+            android:id="@+id/trick_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_medium"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/stats_trick_baby_ton"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Description"
+            android:id="@+id/trick_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_xlarge"
+            android:paddingEnd="@dimen/margin_xxlarge"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trick_info_close"
+            tools:text="@string/stats_trick_baby_ton_info"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level_circle"
+            android:layout_width="118dp"
+            android:layout_height="118dp"
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@drawable/ic_stat_level_0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trick_description" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Value"
+            android:id="@+id/trick_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_xlarge"
+            app:layout_constraintTop_toTopOf="@id/trick_level_circle"
+            app:layout_constraintBottom_toBottomOf="@id/trick_level_circle"
+            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
+            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
+            tools:text="17"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Step"
+            android:id="@+id/trick_next_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/trick_value"
+            app:layout_constraintStart_toStartOf="@id/trick_value"
+            app:layout_constraintEnd_toEndOf="@id/trick_value"
+            tools:text="/ 20"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xlarge"
+            android:src="@drawable/ic_stat_help_level_1"
+            app:layout_constraintTop_toBottomOf="@id/trick_level_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/trick_level2"/>
+        
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Level.Step"
+            android:id="@+id/trick_level1_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/trick_level1"
+            app:layout_constraintStart_toStartOf="@id/trick_level1"
+            app:layout_constraintEnd_toEndOf="@id/trick_level1"
+            tools:text="20"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stat_help_level_2"
+            app:layout_constraintTop_toTopOf="@id/trick_level1"
+            app:layout_constraintBottom_toBottomOf="@id/trick_level1"
+            app:layout_constraintStart_toEndOf="@id/trick_level1"
+            app:layout_constraintEnd_toStartOf="@id/trick_level3"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Level.Step"
+            android:id="@+id/trick_level2_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/trick_level2"
+            app:layout_constraintStart_toStartOf="@id/trick_level2"
+            app:layout_constraintEnd_toEndOf="@id/trick_level2"
+            tools:text="40"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stat_help_level_3"
+            app:layout_constraintTop_toTopOf="@id/trick_level1"
+            app:layout_constraintBottom_toBottomOf="@id/trick_level1"
+            app:layout_constraintStart_toEndOf="@id/trick_level2"
+            app:layout_constraintEnd_toStartOf="@id/trick_level4"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Level.Step"
+            android:id="@+id/trick_level3_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/trick_level3"
+            app:layout_constraintStart_toStartOf="@id/trick_level3"
+            app:layout_constraintEnd_toEndOf="@id/trick_level3"
+            tools:text="80"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/trick_level4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stat_help_level_4"
+            app:layout_constraintTop_toTopOf="@id/trick_level1"
+            app:layout_constraintBottom_toBottomOf="@id/trick_level1"
+            app:layout_constraintStart_toEndOf="@id/trick_level3"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Level.Step"
+            android:id="@+id/trick_level4_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/trick_level4"
+            app:layout_constraintStart_toStartOf="@id/trick_level4"
+            app:layout_constraintEnd_toEndOf="@id/trick_level4"
+            tools:text="180+"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Dkt.TextStyle.Stats.Trick.Level.Next"
+            android:id="@+id/trick_level_next_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:minLines="2"
+            app:layout_constraintTop_toBottomOf="@id/trick_level1_value"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

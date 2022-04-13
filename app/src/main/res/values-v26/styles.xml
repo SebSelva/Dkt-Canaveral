@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Dkt.TextStyle.Stats.Trick.Description" parent="Dkt.TextStyle.Black">
+        <item name="android:textSize">15sp</item>
+        <item name="android:justificationMode">inter_word</item>
+    </style>
+</resources>

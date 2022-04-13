@@ -65,7 +65,29 @@
         android:id="@+id/UserStatsFragment"
         android:name="com.decathlon.canaveral.stats.UserStatsFragment"
         android:label="@string/title_stats"
-        tools:layout="@layout/fragment_user_stats"/>
+        tools:layout="@layout/fragment_user_stats">
+
+        <action
+            android:id="@+id/action_user_stats_to_trick_info"
+            app:destination="@id/TrickInfoDialog"/>
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/TrickInfoDialog"
+        android:name="com.decathlon.canaveral.stats.TrickInfoDialog"
+        android:label="Trick Info"
+        tools:layout="@layout/dialog_trick_info">
+
+        <argument
+            android:name="statTitle"
+            android:defaultValue="0"
+            app:argType="integer"/>
+        <argument
+            android:name="statValue"
+            android:defaultValue="0"
+            app:argType="integer"/>
+    </dialog>
 
     <fragment
         android:id="@+id/SettingsFragment"
