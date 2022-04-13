@@ -199,7 +199,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         val game01Ppd =
             StatItem(R.string.stats_game_ppd, stat.ppdTotalScored.toFloat() / stat.dartsThrown)
         val game01WinRate =
-            StatItem(R.string.stats_game_winning_percentage, 0F / stat.gamesWon)
+            StatItem(R.string.stats_game_winning_percentage, if (stat.game01 > 0) stat.game01Won / stat.game01 else 0)
 
         return GameStats(R.string.game_type_01_game,
             listOf(game01PlayedGames, game01Ppd, game01WinRate)
@@ -210,10 +210,8 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         val countupGamesPlayed = StatItem(R.string.stats_game_played_games, stat.gameCountup)
         val countupHighestScore =
             StatItem(R.string.stats_game_highest_score, stat.highScoreOn8Rounds.toFloat())
-        val countupWinRate = StatItem(
-            R.string.stats_game_winning_percentage,
-            0F / stat.gamesWon
-        )
+        val countupWinRate =
+            StatItem(R.string.stats_game_winning_percentage, if (stat.gameCountup > 0) stat.gameCountupWon / stat.gameCountup else 0)
 
         return GameStats(R.string.game_type_count_up,
             listOf(countupGamesPlayed, countupHighestScore, countupWinRate)
@@ -224,7 +222,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         val cricketGamesPlayed = StatItem(R.string.stats_game_played_games, stat.gameCricket)
         val cricketMpr = StatItem(R.string.stats_game_mpr, stat.mpr.toFloat())
         val cricketWinRate = StatItem(
-            R.string.stats_game_winning_percentage, 0F / stat.gamesWon
+            R.string.stats_game_winning_percentage, if (stat.gameCricket > 0) stat.gameCricketWon / stat.gameCricket else 0
         )
 
         return GameStats(R.string.game_type_cricket,

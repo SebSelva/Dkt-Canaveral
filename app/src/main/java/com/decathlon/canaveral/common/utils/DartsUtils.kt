@@ -258,6 +258,7 @@ class DartsUtils {
                 R.string.stats_trick_round_score_100_and_more -> R.string.stats_trick_round_score_100_and_more_info
                 R.string.stats_trick_round_score_140_and_more -> R.string.stats_trick_round_score_140_and_more_info
                 R.string.stats_trick_round_score_180 -> R.string.stats_trick_round_score_180_info
+
                 R.string.stats_trick_field_15 -> R.string.stats_trick_field_15_info
                 R.string.stats_trick_field_16 -> R.string.stats_trick_field_16_info
                 R.string.stats_trick_field_17 -> R.string.stats_trick_field_17_info
@@ -265,6 +266,7 @@ class DartsUtils {
                 R.string.stats_trick_field_19 -> R.string.stats_trick_field_19_info
                 R.string.stats_trick_field_20 -> R.string.stats_trick_field_20_info
                 R.string.stats_trick_field_bull -> R.string.stats_trick_field_bull_info
+
                 R.string.stats_trick_highest_score_round -> R.string.stats_trick_highest_score_round_info
                 R.string.stats_trick_avg_score_dart1 -> R.string.stats_trick_avg_score_dart1_info
                 R.string.stats_trick_avg_score_dart2 -> R.string.stats_trick_avg_score_dart2_info
@@ -275,6 +277,7 @@ class DartsUtils {
                 R.string.stats_trick_highest_12rounds -> R.string.stats_trick_highest_12rounds_info
                 R.string.stats_trick_highest_16rounds -> R.string.stats_trick_highest_16rounds_info
                 R.string.stats_trick_avg_score_round -> R.string.stats_trick_avg_score_round_info
+
                 else -> R.string.stats_tricks_title
             }
         }

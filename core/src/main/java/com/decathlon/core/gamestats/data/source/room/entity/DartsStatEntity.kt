@@ -50,6 +50,25 @@ data class DartsStatEntity (
     var gameBalltrap: Long,
     var gameSuperbull: Long,
 
+    // GAME WIN BY TYPE
+    var game01Won: Long,
+    var gameCricketWon: Long,
+    var gameCountupWon: Long,
+    var gameBullhunterWon: Long,
+    var gameMatchWon: Long,
+    var gameHalftWon: Long,
+    var gameTargetWon: Long,
+    var gameShanghaiWon: Long,
+    var gameAroundtheclockWon: Long,
+    var gameOverWon: Long,
+    var gameRandomcheckoutWon: Long,
+    var gameLandmineWon: Long,
+    var gameBaseballWon: Long,
+    var game3inlineWon: Long,
+    var gameSoccerpkWon: Long,
+    var gameBalltrapWon: Long,
+    var gameSuperbullWon: Long,
+
     // GAME PARAMS
     var gameId: Long,
     var playersNumber: Long,
@@ -151,8 +170,8 @@ data class DartsStatEntity (
 
     constructor() : this(0,0,0,0,0,0F,0,0F,0,0,0F,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,
-        0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
@@ -173,10 +192,33 @@ data class DartsStatEntity (
             in 226..242 -> setGameTypeStat(id, value as Long)
             in 243..248 -> setGameInfoStat(id, value as Long)
             in 249..253, 326 -> setPlayerInfoStat(id, value as Long)
-            in 254..283 -> setTricksStat(id, value as Long)
+            in 254..283, 347, 348 -> setTricksStat(id, value as Long)
             in 284..310 -> setAreaPercentStat(id, value as Float)
             in 327..352 -> setAreaCountStat(id, value as Long)
+            in 349..365 -> setGameWonByType(id, value as Long)
             else -> Timber.w("ID $id not managed")
+        }
+    }
+
+    private fun setGameWonByType(index: Int, value: Long) {
+        when (index) {
+            349 -> game01Won = value
+            350 -> gameCricketWon = value
+            351 -> gameCountupWon = value
+            352 -> gameBullhunterWon = value
+            353 -> gameMatchWon = value
+            354 -> gameHalftWon = value
+            355 -> gameTargetWon = value
+            356 -> gameShanghaiWon = value
+            357 -> gameAroundtheclockWon = value
+            358 -> gameOverWon = value
+            359 -> gameRandomcheckoutWon = value
+            360 -> gameLandmineWon = value
+            361 -> gameBaseballWon = value
+            362 -> game3inlineWon = value
+            363 -> gameSoccerpkWon = value
+            364 -> gameBalltrapWon = value
+            365 -> gameSuperbullWon = value
         }
     }
 
@@ -275,6 +317,8 @@ data class DartsStatEntity (
             281 -> checkoutPercent = value
             282 -> checkoutRecordH = value
             283 -> highScoreOn8Rounds = value
+            347 -> highScoreOn12Rounds = value
+            348 -> highScoreOn16Rounds = value
         }
     }
 
