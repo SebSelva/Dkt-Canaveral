@@ -3,8 +3,8 @@ package com.decathlon.canaveral.dashboard
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseViewHolder
 import com.decathlon.canaveral.common.model.BaseItem
 import com.decathlon.canaveral.common.model.Button
@@ -16,8 +16,9 @@ import timber.log.Timber
 class PlayerAdapter(val maxPlayers :Int,
                     val addClickListener : (Player) -> Unit,
                     val delClickListener: (Player) -> Unit,
-                    val editClickListener : (Player) -> Unit
-) : ListAdapter<Player, BaseViewHolder<*>>(DiffCallback()) {
+                    val editClickListener : (Player) -> Unit,
+                    val updatePlayerListener: (Player) -> Unit
+) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     companion object {
         private const val TYPE_PLAYER = 0
@@ -104,12 +105,17 @@ class PlayerAdapter(val maxPlayers :Int,
         }
     }
 
-
     inner class PlayerViewHolder(private var binding: ItemListPlayerBinding) :
         BaseViewHolder<Player>(binding.root) {
 
         override fun bind(item: Player) {
             binding.player = item
+
+            val tempName = binding.root.context.resources.getString(R.string.player_number, bindingAdapterPosition+1)
+            if (!item.tempname.equals(tempName)) {
+                item.tempname = tempName
+                updatePlayerListener.invoke(item)
+            }
 
             Timber.d("bind item id:%d", item.id)
             // remove button
@@ -133,21 +139,5 @@ class PlayerAdapter(val maxPlayers :Int,
             }
             binding.executePendingBindings()
         }
-
-        /*private fun getPlayerNickname(player: Player) :String =
-            player.nickname.ifEmpty {
-                binding.root.context.resources.getString(R.string.player_number, player.id)
-            }*/
     }
-
-    class DiffCallback : DiffUtil.ItemCallback<Player>() {
-        override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
-            return oldItem == newItem
-        }
-    }
-
 }

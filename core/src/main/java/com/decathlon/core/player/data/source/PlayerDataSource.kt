@@ -8,7 +8,7 @@ interface PlayerDataSource {
 
     fun getPlayers(): Flow<List<Player>>
 
-    suspend fun insertPlayer(player: Player)
+    suspend fun insertPlayer(player: Player): Long
 
     suspend fun removePlayer(player: Player)
 

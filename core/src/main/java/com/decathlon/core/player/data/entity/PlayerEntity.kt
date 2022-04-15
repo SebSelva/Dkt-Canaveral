@@ -23,9 +23,14 @@ data class PlayerEntity(
     @ColumnInfo(name = "lastname")
     var lastname: String,
 
+    @ColumnInfo(name = "tempname")
+    var tempname: String?,
+
     @ColumnInfo(name = "image")
     var image: String?
 
 ) : Parcelable {
-    constructor(player: Player) :this(player.id, player.nickname, player.firstname, player.lastname, player.image)
+    constructor(player: Player) :this(player.id, player.nickname,
+        player.firstname, player.lastname,
+        player.tempname, player.image)
 }

@@ -100,7 +100,7 @@
                     android:id="@+id/player_name"
                     android:layout_height="match_parent"
                     android:layout_width="wrap_content"
-                    android:text="@{player.nickname}"
+                    android:text="@{player.getName()}"
                     android:textSize="13sp"
                     android:gravity="center_vertical"
                     android:maxLines="1"

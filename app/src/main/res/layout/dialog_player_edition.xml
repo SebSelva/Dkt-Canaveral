@@ -108,6 +108,7 @@
                 android:layout_height="@dimen/spinner_height"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:hint="@{player.tempname}"
                 android:text="@{player.nickname}"
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"

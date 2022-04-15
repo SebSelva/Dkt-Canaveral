@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_xlarge"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{currentPlayer.nickname}"
+                    android:text="@{currentPlayer.getName()}"
                     app:layout_constraintLeft_toRightOf="@id/player_image_round"
                     app:layout_constraintTop_toTopOf="@id/player_image_round"
                     tools:text="Player X" />

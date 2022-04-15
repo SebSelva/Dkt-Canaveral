@@ -10,10 +10,12 @@ data class Player (
         var nickname: String,
         var firstname: String,
         var lastname: String,
+        var tempname: String?,
         var image: String?
 
 ) : Parcelable {
         constructor(playerEntity: PlayerEntity) : this(
                 playerEntity.uid, playerEntity.nickname,
-                playerEntity.firstname, playerEntity.lastname, playerEntity.image)
+                playerEntity.firstname, playerEntity.lastname,
+                playerEntity.tempname, playerEntity.image)
 }
