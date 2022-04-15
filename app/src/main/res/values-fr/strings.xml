@@ -149,7 +149,7 @@
     <string name="stats_trick_checkout_rate">Checkout\nRate</string>
     <string name="stats_trick_checkout_rate_info">This is your percentage of successfull <b>checkout</b>. This trick is only concerning  01Games.</string>
     <string name="stats_trick_checkout_rate_title">Checkout Rate</string>
-    <string name="stats_trick_count_next_step">To unlock the next medal, you have to realize\n<b>more than %d</b> %s</string>
+    <string name="stats_trick_count_next_step">To unlock the next medal, you have to realize\n <b>more than %d</b> %s</string>
     <string name="stats_trick_field_15">15</string>
     <string name="stats_trick_field_15_info">Number of time you <b>hit the 15</b>.</string>
     <string name="stats_trick_field_16">16</string>

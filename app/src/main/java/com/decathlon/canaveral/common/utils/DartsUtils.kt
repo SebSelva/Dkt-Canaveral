@@ -241,45 +241,42 @@ class DartsUtils {
             }
         }
 
-        fun getStatDescription(trickTitle: Int): Int {
-            return when (trickTitle) {
-                R.string.stats_trick_baby_ton -> R.string.stats_trick_baby_ton_info
-                R.string.stats_trick_bag_o_nuts -> R.string.stats_trick_bag_o_nuts_info
-                R.string.stats_trick_bulls_eye -> R.string.stats_trick_bulls_eye_info
-                R.string.stats_trick_bust -> R.string.stats_trick_bust_info
-                R.string.stats_trick_hattrick -> R.string.stats_trick_hattrick_info
-                R.string.stats_trick_high_ton -> R.string.stats_trick_high_ton_info
-                R.string.stats_trick_low_ton -> R.string.stats_trick_low_ton_info
-                R.string.stats_trick_three_in_a_bed -> R.string.stats_trick_three_in_a_bed_info
-                R.string.stats_trick_ton -> R.string.stats_trick_ton_info
-                R.string.stats_trick_ton_80 -> R.string.stats_trick_ton_80_info
-                R.string.stats_trick_white_horse -> R.string.stats_trick_white_horse_info
-                R.string.stats_trick_round_score_60_and_more -> R.string.stats_trick_round_score_60_and_more_info
-                R.string.stats_trick_round_score_100_and_more -> R.string.stats_trick_round_score_100_and_more_info
-                R.string.stats_trick_round_score_140_and_more -> R.string.stats_trick_round_score_140_and_more_info
-                R.string.stats_trick_round_score_180 -> R.string.stats_trick_round_score_180_info
+        fun getStatDescription(trickTitle: Int): Int? {
+            val descriptionMap = mapOf(R.string.stats_trick_baby_ton to R.string.stats_trick_baby_ton_info,
+            R.string.stats_trick_bag_o_nuts to R.string.stats_trick_bag_o_nuts_info,
+            R.string.stats_trick_bulls_eye to R.string.stats_trick_bulls_eye_info,
+            R.string.stats_trick_bust to R.string.stats_trick_bust_info,
+            R.string.stats_trick_hattrick to R.string.stats_trick_hattrick_info,
+            R.string.stats_trick_high_ton to R.string.stats_trick_high_ton_info,
+            R.string.stats_trick_low_ton to R.string.stats_trick_low_ton_info,
+            R.string.stats_trick_three_in_a_bed to R.string.stats_trick_three_in_a_bed_info,
+            R.string.stats_trick_ton to R.string.stats_trick_ton_info,
+            R.string.stats_trick_ton_80 to R.string.stats_trick_ton_80_info,
+            R.string.stats_trick_white_horse to R.string.stats_trick_white_horse_info,
+            R.string.stats_trick_round_score_60_and_more to R.string.stats_trick_round_score_60_and_more_info,
+            R.string.stats_trick_round_score_100_and_more to R.string.stats_trick_round_score_100_and_more_info,
+            R.string.stats_trick_round_score_140_and_more to R.string.stats_trick_round_score_140_and_more_info,
+            R.string.stats_trick_round_score_180 to R.string.stats_trick_round_score_180_info,
 
-                R.string.stats_trick_field_15 -> R.string.stats_trick_field_15_info
-                R.string.stats_trick_field_16 -> R.string.stats_trick_field_16_info
-                R.string.stats_trick_field_17 -> R.string.stats_trick_field_17_info
-                R.string.stats_trick_field_18 -> R.string.stats_trick_field_18_info
-                R.string.stats_trick_field_19 -> R.string.stats_trick_field_19_info
-                R.string.stats_trick_field_20 -> R.string.stats_trick_field_20_info
-                R.string.stats_trick_field_bull -> R.string.stats_trick_field_bull_info
+            R.string.stats_trick_field_15 to R.string.stats_trick_field_15_info,
+            R.string.stats_trick_field_16 to R.string.stats_trick_field_16_info,
+            R.string.stats_trick_field_17 to R.string.stats_trick_field_17_info,
+            R.string.stats_trick_field_18 to R.string.stats_trick_field_18_info,
+            R.string.stats_trick_field_19 to R.string.stats_trick_field_19_info,
+            R.string.stats_trick_field_20 to R.string.stats_trick_field_20_info,
+            R.string.stats_trick_field_bull to R.string.stats_trick_field_bull_info,
 
-                R.string.stats_trick_highest_score_round -> R.string.stats_trick_highest_score_round_info
-                R.string.stats_trick_avg_score_dart1 -> R.string.stats_trick_avg_score_dart1_info
-                R.string.stats_trick_avg_score_dart2 -> R.string.stats_trick_avg_score_dart2_info
-                R.string.stats_trick_avg_score_dart3 -> R.string.stats_trick_avg_score_dart3_info
-                R.string.stats_trick_checkout_rate -> R.string.stats_trick_checkout_rate_info
-                R.string.stats_trick_highest_checkout -> R.string.stats_trick_highest_checkout_info
-                R.string.stats_trick_highest_8rounds -> R.string.stats_trick_highest_8rounds_info
-                R.string.stats_trick_highest_12rounds -> R.string.stats_trick_highest_12rounds_info
-                R.string.stats_trick_highest_16rounds -> R.string.stats_trick_highest_16rounds_info
-                R.string.stats_trick_avg_score_round -> R.string.stats_trick_avg_score_round_info
-
-                else -> R.string.stats_tricks_title
-            }
+            R.string.stats_trick_highest_score_round to R.string.stats_trick_highest_score_round_info,
+            R.string.stats_trick_avg_score_dart1 to R.string.stats_trick_avg_score_dart1_info,
+            R.string.stats_trick_avg_score_dart2 to R.string.stats_trick_avg_score_dart2_info,
+            R.string.stats_trick_avg_score_dart3 to R.string.stats_trick_avg_score_dart3_info,
+            R.string.stats_trick_checkout_rate to R.string.stats_trick_checkout_rate_info,
+            R.string.stats_trick_highest_checkout to R.string.stats_trick_highest_checkout_info,
+            R.string.stats_trick_highest_8rounds to R.string.stats_trick_highest_8rounds_info,
+            R.string.stats_trick_highest_12rounds to R.string.stats_trick_highest_12rounds_info,
+            R.string.stats_trick_highest_16rounds to R.string.stats_trick_highest_16rounds_info,
+            R.string.stats_trick_avg_score_round to R.string.stats_trick_avg_score_round_info)
+            return descriptionMap[trickTitle]
         }
     }
 }

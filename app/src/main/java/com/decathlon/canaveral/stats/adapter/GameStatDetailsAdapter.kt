@@ -41,7 +41,7 @@ class GameStatDetailsAdapter: RecyclerView.Adapter<BaseViewHolder<StatItem>>() {
     inner class GameStatDetailItem(private var binding: ItemListGameDetailsStatsBinding): BaseViewHolder<StatItem>(binding.root)  {
         override fun bind(item: StatItem) {
             binding.gameStatsDetailTitle.text = binding.root.context.resources.getString(item.title)
-            binding.gameStatsDetailValue.text = item.value.toString()
+            binding.gameStatsDetailValue.text = if (item.value is Float) String.format("%.2f", item.value) else item.value.toString()
             if (bindingAdapterPosition % 2 == 0) binding.root.setBackgroundColor(
                 binding.root.context.resources.getColor(R.color.blue_dkt_50, binding.root.context.theme)
             )

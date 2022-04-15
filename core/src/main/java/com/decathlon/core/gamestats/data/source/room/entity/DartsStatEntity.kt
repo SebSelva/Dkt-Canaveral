@@ -185,40 +185,19 @@ data class DartsStatEntity (
     fun setDateTime() {
         dateTime = Calendar.getInstance().time.time
     }
-    
+
     fun setValueFromDatatype(dataType: String, value: Any) {
         when(val id = dataType.substringAfterLast("/").toInt()) {
             in 24..225, 319, 322, 323 -> setGeneralStat(id, value)
             in 226..242 -> setGameTypeStat(id, value as Long)
             in 243..248 -> setGameInfoStat(id, value as Long)
             in 249..253, 326 -> setPlayerInfoStat(id, value as Long)
-            in 254..283, 347, 348 -> setTricksStat(id, value as Long)
+            in 254..265 -> setTricksStat(id, value as Long)
+            in 266..283, 347, 348 -> setCountTricksStat(id, value as Long)
             in 284..310 -> setAreaPercentStat(id, value as Float)
-            in 327..352 -> setAreaCountStat(id, value as Long)
+            in 327..345 -> setAreaCountStat(id, value as Long)
             in 349..365 -> setGameWonByType(id, value as Long)
             else -> Timber.w("ID $id not managed")
-        }
-    }
-
-    private fun setGameWonByType(index: Int, value: Long) {
-        when (index) {
-            349 -> game01Won = value
-            350 -> gameCricketWon = value
-            351 -> gameCountupWon = value
-            352 -> gameBullhunterWon = value
-            353 -> gameMatchWon = value
-            354 -> gameHalftWon = value
-            355 -> gameTargetWon = value
-            356 -> gameShanghaiWon = value
-            357 -> gameAroundtheclockWon = value
-            358 -> gameOverWon = value
-            359 -> gameRandomcheckoutWon = value
-            360 -> gameLandmineWon = value
-            361 -> gameBaseballWon = value
-            362 -> game3inlineWon = value
-            363 -> gameSoccerpkWon = value
-            364 -> gameBalltrapWon = value
-            365 -> gameSuperbullWon = value
         }
     }
 
@@ -299,6 +278,11 @@ data class DartsStatEntity (
             263 -> tonTrick = value
             264 -> ton80Trick = value
             265 -> whiteHorseTrick = value
+        }
+    }
+
+    private fun setCountTricksStat(index: Int, value: Long) {
+        when (index) {
             266 -> roundMore60Trick = value
             267 -> roundMore100Trick = value
             268 -> roundMore140Trick = value
@@ -374,6 +358,28 @@ data class DartsStatEntity (
             343 -> tripleCount = value
             344 -> triple19Count = value
             345 -> triple20Count = value
+        }
+    }
+
+    private fun setGameWonByType(index: Int, value: Long) {
+        when (index) {
+            349 -> game01Won = value
+            351 -> gameCricketWon = value
+            350 -> gameCountupWon = value
+            352 -> gameBullhunterWon = value
+            353 -> gameMatchWon = value
+            354 -> gameHalftWon = value
+            355 -> gameTargetWon = value
+            356 -> gameShanghaiWon = value
+            357 -> gameAroundtheclockWon = value
+            358 -> gameOverWon = value
+            359 -> gameRandomcheckoutWon = value
+            360 -> gameLandmineWon = value
+            361 -> gameBaseballWon = value
+            362 -> game3inlineWon = value
+            363 -> gameSoccerpkWon = value
+            364 -> gameBalltrapWon = value
+            365 -> gameSuperbullWon = value
         }
     }
 }

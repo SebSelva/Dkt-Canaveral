@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large">
 
@@ -35,7 +36,6 @@
             android:id="@+id/trick_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
             android:minLines="2"
             app:layout_constraintStart_toStartOf="@id/trick_level_circle"
             app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
@@ -46,7 +46,6 @@
             android:id="@+id/trick_progress_indicator"
             android:layout_width="0dp"
             android:layout_height="4dp"
-            android:layout_marginTop="@dimen/margin_small"
             app:trackCornerRadius="2dp"
             app:trackColor="@color/bronze_dkt_50"
             app:indicatorColor="@color/bronze_dkt_200"

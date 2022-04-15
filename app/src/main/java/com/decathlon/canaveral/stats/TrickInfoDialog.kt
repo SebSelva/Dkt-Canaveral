@@ -1,6 +1,7 @@
 package com.decathlon.canaveral.stats
 
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
@@ -13,6 +14,11 @@ import com.decathlon.canaveral.databinding.DialogTrickInfoBinding
 class TrickInfoDialog: BaseDialogFragment<DialogTrickInfoBinding>() {
     override var layoutId = R.layout.dialog_trick_info
     private val args: TrickInfoDialogArgs by navArgs()
+
+    companion object {
+        private const val DISABLE_OPACITY = 0.25F
+        private const val ENABLE_OPACITY = 1F
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,7 +33,7 @@ class TrickInfoDialog: BaseDialogFragment<DialogTrickInfoBinding>() {
         }
 
         _binding.trickName.text = requireContext().resources.getString(getTrickTitle(args.statTitle))
-        _binding.trickDescription.text = requireContext().resources.getString(DartsUtils.getStatDescription(args.statTitle))
+        _binding.trickDescription.text = DartsUtils.getStatDescription(args.statTitle)?.let { Html.fromHtml(requireContext().resources.getString(it), Html.FROM_HTML_MODE_COMPACT) }
         _binding.trickValue.text = args.statValue.toString()
 
         val levelSteps = requireContext().resources.getIntArray(DartsUtils.getArrayLevel(args.statTitle))
@@ -39,6 +45,9 @@ class TrickInfoDialog: BaseDialogFragment<DialogTrickInfoBinding>() {
         for (i in levelSteps.indices) {
             if (args.statValue >= levelSteps[i]) lastIndex = i+1
         }
+        if (lastIndex == 4) {
+            _binding.trickValue.setTextColor(resources.getColor(R.color.white, requireContext().theme))
+        }
         val drawable = when (lastIndex) {
             1 -> R.drawable.ic_stat_level_1
             2 -> R.drawable.ic_stat_level_2
@@ -48,13 +57,13 @@ class TrickInfoDialog: BaseDialogFragment<DialogTrickInfoBinding>() {
         }
         Glide.with(_binding.trickLevelCircle.context).load(drawable).into(_binding.trickLevelCircle)
 
-        _binding.trickNextStep.text = "/ "+levelSteps[lastIndex]
-        _binding.trickLevel1.alpha = if (lastIndex < 1) 0.25F else 1F
-        _binding.trickLevel2.alpha = if (lastIndex < 2) 0.25F else 1F
-        _binding.trickLevel3.alpha = if (lastIndex < 3) 0.25F else 1F
-        _binding.trickLevel4.alpha = if (lastIndex < 4) 0.25F else 1F
+        if (lastIndex < levelSteps.size) _binding.trickNextStep.text = String.format("/ %d", levelSteps[lastIndex])
+        _binding.trickLevel1.alpha = if (lastIndex < 1) DISABLE_OPACITY else ENABLE_OPACITY
+        _binding.trickLevel2.alpha = if (lastIndex < 2) DISABLE_OPACITY else ENABLE_OPACITY
+        _binding.trickLevel3.alpha = if (lastIndex < 3) DISABLE_OPACITY else ENABLE_OPACITY
+        _binding.trickLevel4.alpha = if (lastIndex < 4) DISABLE_OPACITY else ENABLE_OPACITY
 
-        _binding.trickLevelNextDescription.text = getTrickNextLevelDescription(args.statTitle, lastIndex, levelSteps)
+        _binding.trickLevelNextDescription.text = Html.fromHtml(getTrickNextLevelDescription(args.statTitle, lastIndex, levelSteps), Html.FROM_HTML_MODE_COMPACT)
     }
 
     private fun getTrickNextLevelDescription(statTitle: Int, currentIndex: Int, levelSteps: IntArray): String? {
