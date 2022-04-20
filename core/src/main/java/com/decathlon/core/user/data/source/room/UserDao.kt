@@ -15,7 +15,7 @@ interface UserDao : BaseDao<UserEntity> {
     fun getUsers(): Flow<List<UserEntity>>
 
     @Query("SELECT * FROM user WHERE isMainUser == 1")
-    fun getMainUser(): UserEntity?
+    fun getMainUser(): Flow<UserEntity?>
 
     @Query("SELECT * FROM user WHERE uid LIKE :id")
     fun findUserById(id: Long): UserEntity?

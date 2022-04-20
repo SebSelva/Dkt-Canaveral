@@ -8,7 +8,7 @@ interface UserDataSource {
 
     fun getUsers(): Flow<List<User>>
 
-    fun getMainUser(): User?
+    fun getMainUser(): Flow<User?>
 
     suspend fun insertUser(user: User)
 

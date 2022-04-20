@@ -9,12 +9,24 @@
     <color name="dashboard_disabled_icon">#898989</color>
     <color name="dashboard_enabled_icon">#006CB1</color>
     <color name="blue_dkt_400">#007DBC</color>
+    <color name="blue_dkt_300">#3D9ACC</color>
     <color name="blue_dkt_200">#7EBEE0</color>
     <color name="blue_dkt_100">#BEDEEF</color>
+    <color name="blue_dkt_50">#E7F3F9</color>
     <color name="winner_stat_text">#036FB2</color>
     <color name="grey_dkt_600">#4E5D6B</color>
+    <color name="grey_dkt_500">#687787</color>
+    <color name="grey_dkt_200">#D9DDE1</color>
+    <color name="grey_dkt_100">#EFF1F3</color>
+    <color name="grey_dkt_50">#F7F8F9</color>
     <color name="grey_dark">#707070</color>
     <color name="grey_text_clickable">#687787</color>
+    <color name="bronze_dkt_200">#F0D5B8</color>
+    <color name="bronze_dkt_50">#80F0D5B8</color>
+    <color name="argent_dkt_200">#BCBCBC</color>
+    <color name="argent_dkt_50">@color/grey_dkt_100</color>
+    <color name="gold_dkt_200">#FAE079</color>
+    <color name="gold_dkt_50">#80FAE079</color>
 
     <color name="red_dkt_400">#E3262F</color>
     <color name="purple_200">#FFBB86FC</color>

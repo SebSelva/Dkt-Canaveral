@@ -15,7 +15,7 @@ import kotlinx.coroutines.delay
 class GameTransitionInfoFragment: BaseDialogFragment<FragmentTransitionInfoBinding>() {
 
     override var layoutId = R.layout.fragment_transition_info
-    val args: GameTransitionInfoFragmentArgs by navArgs()
+    private val args: GameTransitionInfoFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

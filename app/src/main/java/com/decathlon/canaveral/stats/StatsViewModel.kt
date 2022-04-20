@@ -31,9 +31,9 @@ class StatsViewModel(private val interactors: Interactors): BaseViewModel<StatsV
     }
 
     suspend fun getStats() {
-        setUiState(StatsViewState.StatsUpdate)
         viewModelScope.launch(errorHandler) {
             getAccessToken()?.let { token ->
+                setUiState(StatsViewState.StatsUpdate)
                 interactors.stdActions.getUserStats(token).collect {
                     statsLiveData.postValue(it)
                     setUiState(StatsViewState.StatsComplete)

@@ -18,6 +18,7 @@ import com.decathlon.canaveral.common.utils.CameraUtils
 import com.decathlon.canaveral.databinding.FragmentUserEditionBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.core.user.model.User
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -56,7 +57,7 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
 
         loginViewModel.uiState().observe(viewLifecycleOwner) { logInUiState ->
             when (logInUiState) {
-                is LoginViewModel.LoginUiState.UserInfoSuccess -> setProfile()
+                //is LoginViewModel.LoginUiState.UserInfoSuccess -> setProfile()
                 is LoginViewModel.LoginUiState.LogoutSuccess -> findNavController().popBackStack()
                 else -> Timber.e("Error on login/logout")
             }
@@ -128,12 +129,14 @@ class UserEditionFragment: BaseFragment<FragmentUserEditionBinding>() {
 
     private fun setProfile() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            mainUser = if (loginViewModel.isLogin()) loginViewModel.getMainUser() else null
-            _binding.user = mainUser
-            if (mainUser?.firstname?.isNotBlank() == true) {
-                _binding.hiUsername.text = resources.getString(R.string.user_hi, mainUser!!.firstname.uppercase())
+            loginViewModel.getMainUser().collect {
+                mainUser = it
+                _binding.user = mainUser
+                if (mainUser?.firstname?.isNotBlank() == true) {
+                    _binding.hiUsername.text = resources.getString(R.string.user_hi, mainUser!!.firstname.uppercase())
+                }
+                _binding.executePendingBindings()
             }
-            _binding.executePendingBindings()
         }
     }
 }

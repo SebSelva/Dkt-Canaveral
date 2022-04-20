@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <integer-array name="trick_levels">
+        <item>20</item>
+        <item>40</item>
+        <item>80</item>
+        <item>180</item>
+    </integer-array>
+
+    <integer-array name="high_round_levels">
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+    </integer-array>
+
+    <integer-array name="average_dart_levels">
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+    </integer-array>
+
+    <integer-array name="rate_levels">
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+        <item>80</item>
+        <item>100</item>
+    </integer-array>
+
+    <integer-array name="highest_checkout_levels">
+        <item>40</item>
+        <item>60</item>
+        <item>100</item>
+        <item>130</item>
+        <item>170</item>
+    </integer-array>
+
+    <integer-array name="highest_score_8rounds_levels">
+        <item>160</item>
+        <item>480</item>
+        <item>800</item>
+        <item>960</item>
+        <item>1440</item>
+    </integer-array>
+
+    <integer-array name="highest_score_12rounds_levels">
+        <item>240</item>
+        <item>720</item>
+        <item>1200</item>
+        <item>1440</item>
+        <item>2160</item>
+    </integer-array>
+
+    <integer-array name="highest_score_16rounds_levels">
+        <item>320</item>
+        <item>960</item>
+        <item>1600</item>
+        <item>1920</item>
+        <item>2880</item>
+    </integer-array>
+
+    <integer-array name="average_round_score_levels">
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+    </integer-array>
+
+</resources>

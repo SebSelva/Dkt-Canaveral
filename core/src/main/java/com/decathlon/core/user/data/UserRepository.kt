@@ -34,10 +34,6 @@ class UserRepository(
         dataSource.removeUser(user)
     }
 
-    suspend fun removeMainUser() = withContext(Dispatchers.IO) {
-        dataSource.getMainUser()?.let { dataSource.removeUser(it) }
-    }
-
     suspend fun getUsers() = withContext(Dispatchers.IO) {
         dataSource.getUsers()
     }

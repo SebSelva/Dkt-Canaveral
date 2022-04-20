@@ -16,6 +16,7 @@ import com.decathlon.canaveral.common.utils.getLanguageNameFromCode
 import com.decathlon.canaveral.databinding.FragmentSettingsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.stats.StatsViewModel
+import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 import java.util.*
@@ -115,19 +116,13 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding>() {
 
     private fun setProfile() {
         lifecycleScope.launchWhenStarted {
-            if (loginViewModel.isLogin()) {
-                loginViewModel.getMainUser()?.let { user ->
-                    _binding.user = user
-                    _binding.profileName.text = user.firstname
-                    if (user.nickname.isNotEmpty()) {
-                        _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
-                    }
-                    statsViewModel.getStats()
+            loginViewModel.getMainUser().collect { user ->
+                _binding.user = user
+                _binding.profileName.text = user?.firstname?: "Guest"
+                if (user?.nickname?.isNotEmpty() == true) {
+                    _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
                 }
-
-            } else {
-                _binding.user = null
-                _binding.profileName.text = "Guest"
+                statsViewModel.getStats()
             }
         }
     }

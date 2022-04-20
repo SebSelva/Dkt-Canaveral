@@ -8,14 +8,10 @@ data class StdDartsData(
     val gamesPlayed: Long,
     @SerializedName("218")
     val gamesWon: Long,
-    @SerializedName("219")
-    val gamesWinPercent: Long,
     @SerializedName("220")
     val legsPlayed: Long,
     @SerializedName("221")
     val legsWon: Long,
-    @SerializedName("222")
-    val legsWinPercent: Long,
     @SerializedName("323")
     val ppdTotalScored: Long,
     @SerializedName("322")
@@ -155,56 +151,42 @@ data class StdDartsData(
     val averageScoreRound: Long,
 
     // DART FIELDS STATS
-    @SerializedName("284")
+    @SerializedName("327")
     val dartMissCount: Long,
-    @SerializedName("285")
+    @SerializedName("328")
     val dart1Count: Long,
-    @SerializedName("286")
+    @SerializedName("329")
     val dart2Count: Long,
-    @SerializedName("287")
+    @SerializedName("330")
     val dart3Count: Long,
-    @SerializedName("288")
+    @SerializedName("331")
     val dart4Count: Long,
-    @SerializedName("289")
+    @SerializedName("332")
     val dart5Count: Long,
-    @SerializedName("290")
+    @SerializedName("333")
     val dart6Count: Long,
-    @SerializedName("291")
+    @SerializedName("334")
     val dart7Count: Long,
-    @SerializedName("292")
+    @SerializedName("335")
     val dart8Count: Long,
-    @SerializedName("293")
+    @SerializedName("336")
     val dart9Count: Long,
-    @SerializedName("294")
+    @SerializedName("337")
     val dart10Count: Long,
-    @SerializedName("295")
+    @SerializedName("338")
     val dart11Count: Long,
-    @SerializedName("296")
+    @SerializedName("339")
     val dart12Count: Long,
-    @SerializedName("297")
+    @SerializedName("340")
     val dart13Count: Long,
-    @SerializedName("298")
+    @SerializedName("341")
     val dart14Count: Long,
-    @SerializedName("299")
-    val dart15Count: Long,
-    @SerializedName("300")
-    val dart16Count: Long,
-    @SerializedName("301")
-    val dart17Count: Long,
-    @SerializedName("302")
-    val dart18Count: Long,
-    @SerializedName("303")
-    val dart19Count: Long,
-    @SerializedName("304")
-    val dart20Count: Long,
-    @SerializedName("305")
-    val dartBullCount: Long,
-    @SerializedName("306")
+    @SerializedName("342")
     val doubleCount: Long,
-    @SerializedName("307")
+    @SerializedName("343")
     val tripleCount: Long,
-    @SerializedName("309")
+    @SerializedName("344")
     val triple19Count: Long,
-    @SerializedName("310")
+    @SerializedName("345")
     val triple20Count: Long,
 )
