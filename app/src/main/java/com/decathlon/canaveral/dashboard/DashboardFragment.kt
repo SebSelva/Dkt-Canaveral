@@ -48,13 +48,15 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
         // Players
         val playerAdapter = PlayerAdapter(resources.getInteger(R.integer.player_max),
-            {dashboardViewModel.addPlayer(it)},
-            {dashboardViewModel.removePlayer(it)},
+            { dashboardViewModel.addPlayer(it) },
+            { dashboardViewModel.removePlayer(it) },
             {
                 Navigation.findNavController(view).navigate(
                     R.id.action_dashboard_to_player_edition,
                     PlayerEditionFragmentArgs(it).toBundle())
-            })
+            },
+            { dashboardViewModel.updatePlayer(it) }
+        )
         val spanCount = if (Configuration.ORIENTATION_LANDSCAPE == resources.configuration.orientation) 8 else 4
         _binding.playersRecyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
         _binding.playersRecyclerView.adapter = playerAdapter

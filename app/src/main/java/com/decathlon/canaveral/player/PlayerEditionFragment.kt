@@ -74,9 +74,7 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
         }
 
         _binding.editionValidate.setOnClickListener {
-            if (!_binding.inputPlayerName.text.isNullOrEmpty()) {
-                playerEditionViewModel.player.nickname = _binding.inputPlayerName.text.toString()
-            }
+            playerEditionViewModel.player.nickname = _binding.inputPlayerName.text.toString()
             playerEditionViewModel.updatePlayer()
             findNavController().popBackStack()
         }

@@ -69,23 +69,13 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         )
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
-        /*if (sortedPlayers.size > 1 && winPlayers.size == sortedPlayers.size) {
-            winningPlayersStatsAdapter.setData(
-                winPlayers.subList(0,2),
-                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            otherPlayersStatsAdapter.setData(
-                sortedPlayers.toList().subList(2, sortedPlayers.size),
-                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            )
-        } else {*/
-            winningPlayersStatsAdapter.setData(
-                winPlayers,
-                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            otherPlayersStatsAdapter.setData(
-                lostPlayers,
-                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            )
-        //}
+        winningPlayersStatsAdapter.setData(
+            winPlayers,
+            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+        otherPlayersStatsAdapter.setData(
+            lostPlayers,
+            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        )
 
         // Buttons
         _binding.buttonCheck.setOnClickListener { activity?.finish() }
@@ -116,20 +106,20 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         when (winPlayers.size) {
             1 -> resources.getString(
                 R.string.game_end_win_one,
-                winPlayersIterator.next().player.nickname
+                winPlayersIterator.next().player.getName()
             )
 
             2 -> resources.getString(
                 R.string.game_end_win_two,
-                winPlayersIterator.next().player.nickname,
-                winPlayersIterator.next().player.nickname
+                winPlayersIterator.next().player.getName(),
+                winPlayersIterator.next().player.getName()
             )
 
             3 -> resources.getString(
                 R.string.game_end_win_three,
-                winPlayersIterator.next().player.nickname,
-                winPlayersIterator.next().player.nickname,
-                winPlayersIterator.next().player.nickname
+                winPlayersIterator.next().player.getName(),
+                winPlayersIterator.next().player.getName(),
+                winPlayersIterator.next().player.getName()
             )
             else -> resources.getString(R.string.game_end_draw)
         }

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
             android:textSize="11sp"
-            android:text="@{player.nickname}"
+            android:text="@{player.getName()}"
             tools:text="Player X"/>
 
         <com.decathlon.canaveral.common.view.KlavikaBITextView
