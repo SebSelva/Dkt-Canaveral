@@ -1,6 +1,5 @@
 package com.decathlon.canaveral.stats.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,20 +14,11 @@ class TricksStatsAdapter(val context: Context,
                          val onTrickClickListener : (StatItem) -> Unit
 ) : ListAdapter<StatItem, BaseViewHolder<StatItem>>(DiffCallback()) {
 
-    private val tricksList = ArrayList<StatItem>()
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(items: List<StatItem>) {
-        tricksList.clear()
-        tricksList.addAll(items)
-        notifyDataSetChanged()
-    }
-
     override fun getItemViewType(position: Int): Int {
-        val levelSteps = context.resources.getIntArray(DartsUtils.getArrayLevel(tricksList[position].title))
+        val levelSteps = context.resources.getIntArray(DartsUtils.getArrayLevel(currentList[position].title))
         var lastIndex = 0
         for (i in levelSteps.indices) {
-            val value = DartsUtils.getIntValue(tricksList[position].value)
+            val value = DartsUtils.getIntValue(currentList[position].value)
             if (value >= levelSteps[i]) lastIndex = i+1
         }
         return lastIndex
@@ -56,24 +46,19 @@ class TricksStatsAdapter(val context: Context,
                 LayoutInflater.from(parent.context),
                 parent, false
             ))
-
         }
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<StatItem>, position: Int) {
-        holder.bind(tricksList[position])
-    }
-
-    override fun getItemCount(): Int {
-        return tricksList.size
+        holder.bind(currentList[position])
     }
 
     inner class TrickLevel0Item(private val binding: ItemListTrickLevel0Binding):
         BaseViewHolder<StatItem>(binding.root) {
         override fun bind(item: StatItem) {
-            binding.trickName.text = context.resources.getString(item.title)
+            binding.trickName.text = binding.root.context.resources.getString(item.title)
             binding.trickScore.text = item.value.toString()
-            val arrayLevel = context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
+            val arrayLevel = binding.root.context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
             val trackLength = arrayLevel[0]
             val trackPosition = DartsUtils.getIntValue(item.value)
             binding.trickProgressIndicator.progress = (trackPosition * 100 / trackLength)
@@ -85,9 +70,9 @@ class TricksStatsAdapter(val context: Context,
     inner class TrickLevel1Item(private val binding: ItemListTrickLevel1Binding):
         BaseViewHolder<StatItem>(binding.root) {
         override fun bind(item: StatItem) {
-            binding.trickName.text = context.resources.getString(item.title)
+            binding.trickName.text = binding.root.context.resources.getString(item.title)
             binding.trickScore.text = item.value.toString()
-            val arrayLevel = context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
+            val arrayLevel = binding.root.context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
             val trackLength = arrayLevel[1] - arrayLevel[0]
             val trackPosition = DartsUtils.getIntValue(item.value) - arrayLevel[0]
             binding.trickProgressIndicator.progress = (trackPosition * 100 / trackLength)
@@ -99,9 +84,9 @@ class TricksStatsAdapter(val context: Context,
     inner class TrickLevel2Item(private val binding: ItemListTrickLevel2Binding):
         BaseViewHolder<StatItem>(binding.root) {
         override fun bind(item: StatItem) {
-            binding.trickName.text = context.resources.getString(item.title)
+            binding.trickName.text = binding.root.context.resources.getString(item.title)
             binding.trickScore.text = item.value.toString()
-            val arrayLevel = context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
+            val arrayLevel = binding.root.context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
             val trackLength = arrayLevel[2] - arrayLevel[1]
             val trackPosition = DartsUtils.getIntValue(item.value) - arrayLevel[1]
             binding.trickProgressIndicator.progress = (trackPosition * 100 / trackLength)
@@ -113,9 +98,9 @@ class TricksStatsAdapter(val context: Context,
     inner class TrickLevel3Item(private val binding: ItemListTrickLevel3Binding):
         BaseViewHolder<StatItem>(binding.root) {
         override fun bind(item: StatItem) {
-            binding.trickName.text = context.resources.getString(item.title)
+            binding.trickName.text = binding.root.context.resources.getString(item.title)
             binding.trickScore.text = item.value.toString()
-            val arrayLevel = context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
+            val arrayLevel = binding.root.context.resources.getIntArray(DartsUtils.getArrayLevel(item.title))
             val trackLength = arrayLevel[3] - arrayLevel[2]
             val trackPosition = DartsUtils.getIntValue(item.value) - arrayLevel[2]
             binding.trickProgressIndicator.progress = (trackPosition * 100 / trackLength)
@@ -127,7 +112,7 @@ class TricksStatsAdapter(val context: Context,
     inner class TrickLevel4Item(private val binding: ItemListTrickLevel4Binding):
         BaseViewHolder<StatItem>(binding.root) {
         override fun bind(item: StatItem) {
-            binding.trickName.text = context.resources.getString(item.title)
+            binding.trickName.text = binding.root.context.resources.getString(item.title)
             binding.trickScore.text = item.value.toString()
             val trackLength = 1
             val trackPosition = 1

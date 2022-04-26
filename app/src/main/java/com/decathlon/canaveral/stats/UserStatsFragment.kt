@@ -15,6 +15,8 @@ import app.futured.donut.DonutSection
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.getIntPercentValue
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.getRate
 import com.decathlon.canaveral.databinding.FragmentUserStatsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.stats.adapter.FieldsStatsAdapter
@@ -27,7 +29,6 @@ import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
@@ -84,8 +85,6 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
                 if (user?.nickname?.isNotEmpty() == true) {
                     _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
                 }
-                _binding.userPpdValue.text = "-"
-                _binding.userMprValue.text = "-"
                 statsViewModel.getStats()
             }
         }
@@ -150,9 +149,6 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         }
         userStats = stat
     }
-
-    private fun getIntPercentValue(value: Float) =
-        String.format("%d %%", value.roundToInt())
 
     private fun setDonutData(victories: Float, draws: Float, defeats: Float) {
 
@@ -219,7 +215,8 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         )
     }
 
-    /*private fun getGameCricketStats(stat: DartsStatEntity): GameStats {
+    /* Cricket game not available yet
+    private fun getGameCricketStats(stat: DartsStatEntity): GameStats {
         val cricketGamesPlayed = StatItem(R.string.stats_game_played_games, stat.gameCricket)
         val cricketMpr = StatItem(R.string.stats_game_mpr, stat.mpr.toFloat())
         val cricketWinRate = StatItem(
@@ -230,9 +227,6 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
             listOf(cricketGamesPlayed, cricketMpr, cricketWinRate)
         )
     }*/
-
-    private fun getRate(statPart: Long, statTotal: Long) =
-        if (statTotal > 0) statPart * 100F / statTotal else 0F
 
     private fun setTricksStats(stat: DartsStatEntity) {
         val babyTon = StatItem(R.string.stats_trick_baby_ton, stat.babyTonTrick)
@@ -284,7 +278,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         _binding.gameTricksRecyclerView.layoutManager = GridLayoutManager(
             requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
         _binding.gameTricksRecyclerView.adapter = tricksAdapter
-        tricksAdapter.setData(trickList)
+        tricksAdapter.submitList(trickList)
     }
 
     private fun setFieldsStats(stat: DartsStatEntity) {

@@ -3,10 +3,12 @@ package com.decathlon.core.gamestats.data
 import com.decathlon.core.Constants
 import com.decathlon.core.gamestats.data.source.network.STDServices
 import com.decathlon.core.gamestats.data.source.network.model.StdActivity
+import com.decathlon.core.gamestats.data.source.network.model.StdSumups
 import com.decathlon.core.gamestats.data.source.room.StatDataSource
 import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -42,6 +44,8 @@ class STDRepository(
         stdServices = retrofit.create(STDServices::class.java)
     }
 
+    private suspend fun removeAllStats() = statsDataSource.removeAll()
+
     private suspend fun getAccountInfo(accessToken: String) =
         stdServices.getAccountInfo(bearerHeader(accessToken))
 
@@ -65,11 +69,13 @@ class STDRepository(
     }
 
     private suspend fun refreshUserRecords(accessToken: String) {
-        val response = stdServices.getUserRecords(bearerHeader(accessToken))
-        if (response.isSuccessful && response.body() != null) {
-            dartsStatEntity.setFromStatList(response.body()!!.stdStat)
+        flow<Result<StdSumups>> {
+            val response = stdServices.getUserRecords(bearerHeader(accessToken))
+            if (response.isSuccessful && response.body() != null) {
+                dartsStatEntity.setFromStatList(response.body()!!.stdStat)
+            }
+            refreshUserMeasures(accessToken, userMeasuresIndexes.iterator())
         }
-        refreshUserMeasures(accessToken, userMeasuresIndexes.iterator())
     }
 
     private suspend fun refreshUserMeasures(accessToken: String, iterator: Iterator<Int>) {
@@ -90,6 +96,7 @@ class STDRepository(
 
     suspend fun postUserActivity(accessToken: String, stdActivity: StdActivity) =
         getAccountInfo(accessToken).let {
+            stdActivity.user = it.id
             stdServices.postUserActivity(bearerHeader(accessToken), stdActivity)
         }
 }
