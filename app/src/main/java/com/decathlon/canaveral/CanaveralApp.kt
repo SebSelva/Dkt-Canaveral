@@ -2,10 +2,7 @@ package com.decathlon.canaveral
 
 import android.app.Application
 import com.decathlon.canaveral.common.interactors.Interactors
-import com.decathlon.canaveral.common.interactors.player.AddPlayer
-import com.decathlon.canaveral.common.interactors.player.DeletePlayer
-import com.decathlon.canaveral.common.interactors.player.GetPlayers
-import com.decathlon.canaveral.common.interactors.player.UpdatePlayer
+import com.decathlon.canaveral.common.interactors.player.PlayerActions
 import com.decathlon.canaveral.common.interactors.stats.StdActions
 import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
@@ -52,7 +49,6 @@ class CanaveralApp : Application() {
                 repositoriesModule,
                 sdkManagersModule,
                 viewModelsModule,
-                networkApiModule,
                 interactorsModule
             ))
         }
@@ -74,12 +70,8 @@ class CanaveralApp : Application() {
         single { RoomStatsDataSource(this@CanaveralApp) }
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
-        single { UserRepository(get() as RoomUserDataSource, get(), get()) }
+        single { UserRepository(get() as RoomUserDataSource, get(), get(), get() as RoomStatsDataSource) }
         single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource) }
-    }
-
-    private val networkApiModule = module {
-
     }
 
     private val viewModelsModule = module {
@@ -95,10 +87,7 @@ class CanaveralApp : Application() {
     private val interactorsModule = module {
         factory {
             Interactors(
-                GetPlayers(get()),
-                AddPlayer(get()),
-                DeletePlayer(get()),
-                UpdatePlayer(get()),
+                PlayerActions(get()),
                 InitLogin(get()),
                 UserLogin(get()),
                 UserLogout(get()),

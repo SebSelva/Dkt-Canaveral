@@ -88,7 +88,9 @@ class LoginViewModel(
             interactors.userLogout.invoke(
                 {
                     interactors.userActions.getMainUser().first()
-                        ?.let { interactors.userActions.removeUser(it) }
+                        ?.let {
+                            interactors.userActions.removeUser(it)
+                        }
                     loginState(LoginUiState.LogoutSuccess)
                 },
                 { loginState(LoginUiState.LogoutFailed) }

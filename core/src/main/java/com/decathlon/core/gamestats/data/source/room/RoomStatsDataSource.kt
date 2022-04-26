@@ -14,7 +14,7 @@ class RoomStatsDataSource(context: Context): StatDataSource {
         statsDao.insert(item)
     }
 
-    override suspend fun remove(item: DartsStatEntity) {
-        statsDao.delete(item)
+    override suspend fun removeAll() {
+        statsDao.removeAllStats()
     }
 }

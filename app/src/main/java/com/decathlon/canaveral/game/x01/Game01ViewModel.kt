@@ -1,8 +1,8 @@
 package com.decathlon.canaveral.game.x01
 
 import androidx.lifecycle.MutableLiveData
-import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
+import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.model.NullPoint
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
@@ -35,7 +35,7 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
     val playersPointsLivedata: MutableLiveData<Stack<PlayerPoint>> = MutableLiveData()
 
     private suspend fun getPlayers() {
-        players = interactors.getPlayers().first().map { player -> Player(player) }
+        players = interactors.playerActions.getPlayers().first().map { player -> Player(player) }
         getCurrentPlayer()
     }
 

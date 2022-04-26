@@ -133,6 +133,7 @@
     <string name="user_hi">Hi,\n%s!</string>
     <string name="take_picture">Take photo</string>
     <string name="select_picture">Choose from Gallery</string>
+    <string name="profile_associate_title">Associate my profile</string>
 
     // Stats
     <string name="stats_user_logout">Register your Decathlon account to get access to your stats.</string>

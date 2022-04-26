@@ -162,6 +162,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // Test if game is finished
         if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
+            // Generate STD ACTIVITY here to be sent
             goToPlayersStatsScreen(startingPoints)
         }
 

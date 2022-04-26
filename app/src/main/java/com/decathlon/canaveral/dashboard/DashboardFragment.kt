@@ -15,14 +15,14 @@ import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.databinding.FragmentDashboardBinding
 import com.decathlon.canaveral.game.GameActivityArgs
 import com.decathlon.canaveral.player.PlayerEditionFragmentArgs
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class DashboardFragment : BaseFragment<FragmentDashboardBinding>() {
 
-    private val dashboardViewModel by viewModel<DashboardViewModel>()
+    private val dashboardViewModel by sharedViewModel<DashboardViewModel>()
     override var layoutId = R.layout.fragment_dashboard
 
     @SuppressLint("ClickableViewAccessibility")
