@@ -16,7 +16,7 @@ class StatsViewModel(private val interactors: Interactors): BaseViewModel<StatsV
 
     private val errorHandler = CoroutineExceptionHandler { _, throwable ->
         Timber.d("Network error: $throwable - ${throwable.stackTrace.contentToString()}")
-        setUiState(StatsViewState.StatsNetworkError(Exception(throwable)))
+        setUiState(StatsViewState.StatsNetworkError(throwable.message.orEmpty()))
     }
 
     private suspend fun getAccessToken(): String? {
@@ -30,13 +30,25 @@ class StatsViewModel(private val interactors: Interactors): BaseViewModel<StatsV
         return null
     }
 
-    suspend fun getStats() {
-        viewModelScope.launch(errorHandler) {
+    fun getStats() {
+        viewModelScope.launch {
+            setUiState(StatsViewState.StatsUpdate)
+            interactors.stdActions.getUserStats().collect {
+                statsLiveData.postValue(it)
+                setUiState(StatsViewState.StatsComplete)
+            }
+        }
+    }
+
+    suspend fun updateStats() {
+        setUiState(StatsViewState.StatsUpdate)
+        viewModelScope.launch {
             getAccessToken()?.let { token ->
-                setUiState(StatsViewState.StatsUpdate)
-                interactors.stdActions.getUserStats(token).collect {
-                    statsLiveData.postValue(it)
-                    setUiState(StatsViewState.StatsComplete)
+                interactors.stdActions.updateStats(token).collect {
+                    setUiState(if (it.isSuccess)
+                        StatsViewState.StatsComplete
+                    else
+                        StatsViewState.StatsNetworkError(it.exceptionOrNull()!!.message!!))
                 }
             }
         }
@@ -50,6 +62,6 @@ class StatsViewModel(private val interactors: Interactors): BaseViewModel<StatsV
         object StatsUserLogout: StatsViewState()
         object StatsUpdate: StatsViewState()
         object StatsComplete: StatsViewState()
-        data class StatsNetworkError(val e: Exception): StatsViewState()
+        data class StatsNetworkError(val errorCode: String): StatsViewState()
     }
 }

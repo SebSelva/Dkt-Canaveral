@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -69,7 +70,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
                 LoginViewModel.LoginUiState.LogoutSuccess-> {
                     lifecycleScope.launchWhenResumed {
                         setProfile()
-                        statsViewModel.getStats()
+                        statsViewModel.updateStats()
                     }
                 }
             }
@@ -86,6 +87,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
                     _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
                 }
                 statsViewModel.getStats()
+                statsViewModel.updateStats()
             }
         }
     }
@@ -101,6 +103,17 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
 
         statsViewModel.statsLiveData.observe(viewLifecycleOwner) {
             setStatData(it)
+        }
+
+        statsViewModel.uiState().observe(viewLifecycleOwner) {
+            when (it) {
+                is StatsViewModel.StatsViewState.StatsNetworkError -> {
+                    Toast.makeText(requireContext(), getString(R.string.common_internet_error) +" " +it.errorCode, Toast.LENGTH_LONG).show()
+                }
+                is StatsViewModel.StatsViewState.StatsComplete -> {
+                    Toast.makeText(requireContext(), "Statistics updated", Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
         lifecycleScope.launchWhenResumed {
@@ -125,8 +138,10 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
             val dateTime = simpleDateFormat.format(Date(statValues.dateTime))
             _binding.statUpdateDate.text = resources.getString(R.string.stats_last_update, dateTime)
 
-            _binding.userPpdValue.text = String.format("%.2f", (statValues.ppdTotalScored.toFloat() / statValues.dartsThrown))
-            _binding.userMprValue.text = String.format("%.2f", (statValues.mpr.toFloat() / statValues.dartsThrown))
+            _binding.userPpdValue.text = String.format("%.2f",
+                if (statValues.ppdDartsThrown > 0) (statValues.ppdTotalScored.toFloat() / statValues.ppdDartsThrown) else 0F)
+            _binding.userMprValue.text = String.format("%.2f",
+                if (statValues.dartsThrown > 0) (statValues.mpr.toFloat() / statValues.dartsThrown) else 0F)
 
             setDonutData(victories, draws, defeats)
             _binding.victoriesPercent.text = getIntPercentValue(victories)
@@ -194,7 +209,10 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
     private fun getGame01Stats(stat: DartsStatEntity): GameStats {
         val game01PlayedGames = StatItem(R.string.stats_game_played_games, stat.game01)
         val game01Ppd =
-            StatItem(R.string.stats_game_ppd, stat.ppdTotalScored.toFloat() / stat.dartsThrown)
+            StatItem(R.string.stats_game_ppd,
+                if (stat.ppdDartsThrown > 0) stat.ppdTotalScored.toFloat() / stat.ppdDartsThrown
+                else 0F
+            )
         val game01WinRate =
             StatItem(R.string.stats_game_winning_percentage, getIntPercentValue(getRate(stat.game01Won, stat.game01)))
 

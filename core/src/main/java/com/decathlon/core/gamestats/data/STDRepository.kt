@@ -3,12 +3,10 @@ package com.decathlon.core.gamestats.data
 import com.decathlon.core.Constants
 import com.decathlon.core.gamestats.data.source.network.STDServices
 import com.decathlon.core.gamestats.data.source.network.model.StdActivity
-import com.decathlon.core.gamestats.data.source.network.model.StdSumups
 import com.decathlon.core.gamestats.data.source.room.StatDataSource
 import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -44,54 +42,77 @@ class STDRepository(
         stdServices = retrofit.create(STDServices::class.java)
     }
 
+    fun getAllStats(): Flow<DartsStatEntity> = statsDataSource.get()
+
     private suspend fun removeAllStats() = statsDataSource.removeAll()
 
     private suspend fun getAccountInfo(accessToken: String) =
         stdServices.getAccountInfo(bearerHeader(accessToken))
 
-    suspend fun getAllStats(accessToken: String): Flow<DartsStatEntity> {
-        //statsDataSource.removeAll()
-        val allStats = statsDataSource.get()
-        //dartsStatEntity = DartsStatEntity(allStats.first())
-        refreshUserRecords(accessToken)
-        return allStats
+    suspend fun updateAllStats(accessToken: String) = flow<Result<DartsStatEntity>> {
+        val userRecJob = flowOf(refreshUserRecords(accessToken))
+        val userLifeStats = flowOf(refreshUserLifeStats(accessToken))
+        flowOf(userRecJob, userLifeStats).flattenMerge().collect { result ->
+            if (result.isSuccessful && result.body() != null) {
+                dartsStatEntity.setFromStatList(result.body()!!.stdStat)
+            } else {
+                emit(Result.failure(Throwable(result.code().toString())))
+            }
+        }
+        refreshUserMeasures(accessToken).collect { result ->
+            result.fold({
+                saveStatsInDatabase()
+                emit(Result.success(dartsStatEntity))
+            }, {
+                emit(Result.failure(it))
+            })
+        }
     }
 
-    private suspend fun refreshUserLifeStats(accessToken: String) {
-        val response = stdServices.getUserLifeStats(bearerHeader(accessToken))
-        if (response.isSuccessful && response.body() != null) {
-            dartsStatEntity.setFromStatList(response.body()!!.stdStat)
-        }
+    private suspend fun saveStatsInDatabase() {
         withContext(Dispatchers.IO) {
             dartsStatEntity.setDateTime()
             statsDataSource.insert(dartsStatEntity)
         }
     }
 
-    private suspend fun refreshUserRecords(accessToken: String) {
-        flow<Result<StdSumups>> {
+    private suspend fun refreshUserLifeStats(accessToken: String) =
+        stdServices.getUserLifeStats(bearerHeader(accessToken))
+
+    /*private suspend fun refreshUserLifeStats(accessToken: String) {
+        val response = stdServices.getUserLifeStats(bearerHeader(accessToken))
+        if (response.isSuccessful && response.body() != null) {
+            dartsStatEntity.setFromStatList(response.body()!!.stdStat)
+        }
+
+    }*/
+
+    private suspend fun refreshUserRecords(accessToken: String) =
+        stdServices.getUserRecords(bearerHeader(accessToken))
+
+    /*private suspend fun refreshUserRecords(accessToken: String) =
+        flow {
             val response = stdServices.getUserRecords(bearerHeader(accessToken))
             if (response.isSuccessful && response.body() != null) {
-                dartsStatEntity.setFromStatList(response.body()!!.stdStat)
+                emit(Result.success(response.body()!!))
+            } else {
+                emit(Result.failure(Throwable(response.code().toString())))
             }
-            refreshUserMeasures(accessToken, userMeasuresIndexes.iterator())
-        }
-    }
+            //refreshUserMeasures(accessToken, userMeasuresIndexes.iterator())
+        }*/
 
-    private suspend fun refreshUserMeasures(accessToken: String, iterator: Iterator<Int>) {
-        if (iterator.hasNext()) {
-            val userMeasureDatatype = iterator.next()
+    private suspend fun refreshUserMeasures(accessToken: String) = flow {
+        for (userMeasureDatatype in userMeasuresIndexes) {
             val response = stdServices.getUserMeasure(bearerHeader(accessToken), userMeasureDatatype)
             if (response.isSuccessful) {
                 if (response.body() != null && response.body()!!.stdStat.isNotEmpty()) {
                     dartsStatEntity.setValueFromDatatype(response.body()!!.stdStat.first().datatype, response.body()!!.stdStat.first().value)
                 }
-                refreshUserMeasures(accessToken, iterator)
+            } else {
+                emit(Result.failure(Exception(response.code().toString())))
             }
-        } else {
-            refreshUserLifeStats(accessToken)
         }
-
+        emit(Result.success(dartsStatEntity))
     }
 
     suspend fun postUserActivity(accessToken: String, stdActivity: StdActivity) =

@@ -184,6 +184,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     }
                     game01ViewModel.isStackIncreasing -> {
                         delay(2000)
+                        // SHOW TRICK DONE
                         showTransitionInfo(R.id.action_01game_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(

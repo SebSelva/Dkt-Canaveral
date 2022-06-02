@@ -179,6 +179,7 @@ class GameCountUpFragment : Game01Fragment() {
                 when {
                     countUpViewModel.isStackIncreasing -> {
                         delay(2000)
+                        // SHOW TRICK DONE
                         showTransitionInfo(R.id.action_countup_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
