@@ -43,7 +43,7 @@ data class StdDartsData(
     @SerializedName("235")
     var gameOver: Long,
     @SerializedName("236")
-    var gamerandomCheckout: Long,
+    var gameRandomCheckout: Long,
     @SerializedName("237")
     var gameLandmine: Long,
     @SerializedName("238")
@@ -78,7 +78,7 @@ data class StdDartsData(
     @SerializedName("358")
     var gameOverWon: Long,
     @SerializedName("359")
-    var gamerandomCheckoutWon: Long,
+    var gameRandomCheckoutWon: Long,
     @SerializedName("360")
     var gameLandmineWon: Long,
     @SerializedName("361")
