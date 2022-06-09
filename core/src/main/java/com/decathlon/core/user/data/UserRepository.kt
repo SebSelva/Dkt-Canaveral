@@ -164,6 +164,16 @@ class UserRepository(
 
     fun getAccessToken() = dktLoginManager.getState().accessToken
 
+    suspend fun getAccessTokenRefreshed(): String? {
+        if (isLogIn()) {
+            if (needsTokenRefresh()) {
+                refreshToken()
+            }
+            return getAccessToken()
+        }
+        return null
+    }
+
     companion object {
         fun isLoginError(dktLoginException: DktLoginException?): Boolean = when (dktLoginException) {
             is DktLoginException.UnauthorizedClientException,

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.PlayerStats
+import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
 
@@ -21,16 +22,11 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
         super.onViewCreated(view, savedInstanceState)
 
         val sortedPlayers = args.playerList
-        when(resources.getStringArray(R.array.game_type_array)[args.gameTypeIndex]) {
-            resources.getString(R.string.game_type_01_game) -> sortedPlayers.sortBy { x01Player -> x01Player.currentScore }
-            resources.getString(R.string.game_type_count_up) -> sortedPlayers.sortByDescending { x01Player -> x01Player.currentScore }
-        }
-        val winPlayers = emptyList<PlayerStats>().toMutableList()
-        var bestScore: Int? = null
-        sortedPlayers.forEach {
-            if (bestScore == null) bestScore = it.currentScore
-            if (bestScore == it.currentScore) winPlayers.add(it)
-        }
+        val winPlayers = DartsUtils.getWinnersByGame(
+            resources.getIntArray(R.array.game_type_array).toList(),
+            args.gameTypeIndex,
+            ArrayList(sortedPlayers.toList())
+        )
 
         // Title
         _binding.endTitle.text = getStatsTitle(sortedPlayers, winPlayers)

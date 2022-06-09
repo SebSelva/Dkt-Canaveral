@@ -90,6 +90,7 @@ class LoginViewModel(
                     interactors.userActions.getMainUser().first()
                         ?.let {
                             interactors.userActions.removeUser(it)
+                            interactors.stdActions.deleteAllUserData()
                         }
                     loginState(LoginUiState.LogoutSuccess)
                 },

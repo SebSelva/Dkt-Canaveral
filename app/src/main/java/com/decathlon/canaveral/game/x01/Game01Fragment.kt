@@ -15,7 +15,6 @@ import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
@@ -31,11 +30,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
     private val args: Game01FragmentArgs by navArgs()
     private val game01ViewModel by viewModel<Game01ViewModel>()
+
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
+
+    private var startGame: Long = -1L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,8 +47,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         game01ViewModel.inValue = args.inIndex
         game01ViewModel.outValue = args.outIndex
         game01ViewModel.nbRounds = resources.getStringArray(R.array.game_x01_detail_round)[args.roundIndex].toIntOrNull()
-
         initViews(view)
+        startGame = System.currentTimeMillis()
     }
 
     private fun initViews(view: View) {
@@ -162,8 +164,16 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // Test if game is finished
         if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
-            // Generate STD ACTIVITY here to be sent
-            goToPlayersStatsScreen(startingPoints)
+            val winPlayers = DartsUtils.getWinnersByGame(
+                resources.getIntArray(R.array.game_x01_variant_array).toList(),
+                args.variantIndex,
+                ArrayList(game01ViewModel.getPlayerStatsList().toList())
+            )
+            game01ViewModel.onGameEnd(
+                System.currentTimeMillis() - startGame,
+                winPlayers
+            )
+            goToPlayersStatsScreen()
         }
 
         // Go to next player
@@ -173,6 +183,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                 stack
             )
         ) {
+            //TODO: SHOW TRICKS DONE Tricks on a round completed - Rules in DartUtils
+
             jobNextPlayer = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                 when {
                     game01ViewModel.isRoundBusted && game01ViewModel.isStackIncreasing-> {
@@ -184,7 +196,6 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     }
                     game01ViewModel.isStackIncreasing -> {
                         delay(2000)
-                        // SHOW TRICK DONE
                         showTransitionInfo(R.id.action_01game_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
@@ -201,7 +212,9 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     }
                 }
                 playerPointsAdapter.setData(emptyList(), false)
-                game01ViewModel.selectNextPlayer()
+                if (!DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
+                    game01ViewModel.selectNextPlayer()
+                }
             }
         } else if (!game01ViewModel.isStackIncreasing) {
             jobNextPlayer?.cancel()
@@ -238,21 +251,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         _binding.invalidateAll()
     }
 
-    private fun goToPlayersStatsScreen(startingPoints: Int) {
-        val x01PlayerList = emptyList<PlayerStats>().toMutableList()
-        game01ViewModel.players.forEach {
-            x01PlayerList.add(
-                PlayerStats(
-                    it,
-                    currentScore = startingPoints.minus(
-                        DartsUtils.getPlayerScore(args.isBull25, it, game01ViewModel.playersPoints, args.inIndex)),
-                    checkout = DartsUtils.getScoreFromPointList(
-                        DartsUtils.getPlayerRoundDarts(it, game01ViewModel.currentRound, game01ViewModel.playersPoints),
-                        args.isBull25
-                    ),
-                    ppd = DartsUtils.getPlayerPPD(it, game01ViewModel.playersPoints, args.isBull25)
-            ))
-        }
+    private fun goToPlayersStatsScreen() {
+        val x01PlayerList = game01ViewModel.getPlayerStatsList()
         lifecycleScope.launchWhenResumed {
             // Time to show transition then back to this screen
             // Before transition max = 2000

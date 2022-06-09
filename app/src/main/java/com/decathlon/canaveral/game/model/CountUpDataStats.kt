@@ -9,7 +9,7 @@ import java.util.*
 import kotlin.math.max
 
 class CountUpDataStats(
-    private val gameLength: Long,
+    private val duration: Long,
     players: List<Player>,
     private val winners: List<Player>,
     private val currentPlayer: Player,
@@ -24,7 +24,7 @@ class CountUpDataStats(
         val nbRounds = playerDarts.last().round
 
         // ROUND
-        for (round in 0..nbRounds) {
+        for (round in 1..nbRounds) {
             stdDataStats.babyTonTrick += if (DartsUtils.isBabyTon(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0
             stdDataStats.bagONutsTrick += if (DartsUtils.isBagONuts(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0
             for (point in DartsUtils.getPlayerRoundDarts(currentPlayer,round,stackPoints)) {
@@ -61,7 +61,7 @@ class CountUpDataStats(
             null,
             "/v2/sports/316",
             getDateTimeFormatted(),
-            gameLength,
+            duration,
             "/v2/connectors/806",
             stdDataStats
         )

@@ -23,13 +23,14 @@ class Game01DataStats(
         val nbRounds = DartsUtils.getPlayerDarts(currentPlayer, stackPoints).last().round
 
         // ROUND
-        for (round in 0..nbRounds) {
+        for (round in 1..nbRounds) {
             stdDataStats.babyTonTrick += if (DartsUtils.isBabyTon(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0
             stdDataStats.bagONutsTrick += if (DartsUtils.isBagONuts(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0
             for (point in DartsUtils.getPlayerRoundDarts(currentPlayer,round,stackPoints)) {
                 stdDataStats.bullEyesTrick += if (DartsUtils.isBulleye(point)) 1 else 0
             }
-            stdDataStats.bustTrick += if (DartsUtils.getPlayerPointRoundDarts(currentPlayer,round,stackPoints)?.last()?.isBusted == true) 1 else 0
+            val playerPointRoundDarts = DartsUtils.getPlayerPointRoundDarts(currentPlayer, round, stackPoints)
+            stdDataStats.bustTrick += if (!playerPointRoundDarts.isNullOrEmpty() && playerPointRoundDarts.last().isBusted) 1 else 0
             stdDataStats.hatTrick += if (DartsUtils.isHatTrick(currentPlayer, round, stackPoints)) 1 else 0
             stdDataStats.highTownTrick += if (DartsUtils.isHighTon(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0
             stdDataStats.lowTownTrick += if (DartsUtils.isLowTon(currentPlayer, round, stackPoints, isSimpleBull25)) 1 else 0

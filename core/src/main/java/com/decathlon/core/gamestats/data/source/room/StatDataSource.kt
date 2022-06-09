@@ -7,6 +7,8 @@ interface StatDataSource {
 
     fun get(): Flow<DartsStatEntity>
 
+    suspend fun getDartsStatEntity(): DartsStatEntity?
+
     suspend fun insert(item: DartsStatEntity)
 
     suspend fun removeAll()

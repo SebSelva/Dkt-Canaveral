@@ -383,3 +383,38 @@ data class DartsStatEntity (
         }
     }
 }
+
+fun DartsStatEntity.getDartCount(index: Int): Long {
+    return when (index) {
+        327 -> dartMissCount
+        328 -> dart1Count
+        329 -> dart2Count
+        330 -> dart3Count
+        331 -> dart4Count
+        332 -> dart5Count
+        333 -> dart6Count
+        334 -> dart7Count
+        335 -> dart8Count
+        336 -> dart9Count
+        337 -> dart10Count
+        338 -> dart11Count
+        339 -> dart12Count
+        340 -> dart13Count
+        341 -> dart14Count
+        270 -> dart15Count
+        271 -> dart16Count
+        272 -> dart17Count
+        273 -> dart18Count
+        274 -> dart19Count
+        275 -> dart20Count
+        262 -> dartBullCount
+        342 -> doubleCount
+        343 -> tripleCount
+        344 -> triple19Count
+        345 -> triple20Count
+        else -> {
+            Timber.w("DartCount $index doesn't exist")
+            -1L
+        }
+    }
+}

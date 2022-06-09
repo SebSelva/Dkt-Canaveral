@@ -11,6 +11,10 @@ class StdActions(private val stdRepository: STDRepository) {
     suspend fun updateStats(accessToken: String) =
         stdRepository.updateAllStats(accessToken)
 
-    suspend fun postUserActivity(accessToken: String, stdActivity: StdActivity) =
-        stdRepository.postUserActivity(accessToken, stdActivity)
+    suspend fun updateActivity(stdActivity: StdActivity) =
+        stdRepository.sendActivity(stdActivity)
+
+    suspend fun deleteAllUserData() {
+        stdRepository.removeAllStats()
+    }
 }

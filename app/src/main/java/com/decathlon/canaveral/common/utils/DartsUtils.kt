@@ -3,10 +3,7 @@ package com.decathlon.canaveral.common.utils
 import android.content.Context
 import androidx.core.text.isDigitsOnly
 import com.decathlon.canaveral.R
-import com.decathlon.canaveral.common.model.NullPoint
-import com.decathlon.canaveral.common.model.Player
-import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.Point
+import com.decathlon.canaveral.common.model.*
 import timber.log.Timber
 import java.util.*
 import kotlin.math.roundToInt
@@ -192,6 +189,20 @@ class DartsUtils {
 
             Timber.d("PLAYERS STATE :")
             return playersScoresMap.toList().sortedBy { (_,value) -> value}.toMap()
+        }
+
+        fun getWinnersByGame(gameList: List<Int>, gameTypeIndex: Int, playersStats: ArrayList<PlayerStats>): MutableList<PlayerStats> {
+            when(gameList[gameTypeIndex]) {
+                R.string.game_type_01_game -> playersStats.sortBy { x01Player -> x01Player.currentScore }
+                R.string.game_type_count_up -> playersStats.sortByDescending { x01Player -> x01Player.currentScore }
+            }
+            val winPlayers = emptyList<PlayerStats>().toMutableList()
+            var bestScore: Int? = null
+            playersStats.forEach {
+                if (bestScore == null) bestScore = it.currentScore
+                if (bestScore == it.currentScore) winPlayers.add(it)
+            }
+            return winPlayers
         }
 
         fun getCountUpPlayerScore(isBull25: Boolean, player: Player,

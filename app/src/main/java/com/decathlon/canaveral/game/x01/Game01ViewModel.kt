@@ -1,19 +1,22 @@
 package com.decathlon.canaveral.game.x01
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
-import com.decathlon.canaveral.common.model.NullPoint
-import com.decathlon.canaveral.common.model.Player
-import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.Point
+import com.decathlon.canaveral.common.model.*
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.game.common.GameActionsInterface
+import com.decathlon.canaveral.game.model.Game01DataStats
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.util.*
 
-open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel<Game01ViewModel.GameUiState>() {
+open class Game01ViewModel(private val interactors: Interactors) :
+    BaseViewModel<Game01ViewModel.GameUiState>(), GameActionsInterface {
 
     var players: List<Player> = emptyList()
     var variant = 0
@@ -132,6 +135,44 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
 
     fun getPlayersPoints() {
         playersPointsLivedata.postValue(playersPoints)
+    }
+
+    override fun onGameEnd(duration:Long, winPlayers: MutableList<PlayerStats>) {
+        val player = players.find { it.userId != null }
+        player?.let {
+            val dataStats = Game01DataStats(
+                duration,
+                players,
+                winPlayers.map { player },
+                it,
+                playersPoints,
+                isBull25
+            )
+            val activity = dataStats.getStdActivity()
+            Timber.d("VIEWMODEL - SEND ACTIVITY BEFORE SCOPE")
+            viewModelScope.launch(IO) {
+                interactors.stdActions.updateActivity(activity)
+            }
+        }
+    }
+
+    fun getPlayerStatsList(): MutableList<PlayerStats> {
+        val x01PlayerList = emptyList<PlayerStats>().toMutableList()
+        players.forEach {
+            x01PlayerList.add(
+                PlayerStats(
+                    it,
+                    currentScore = startingPoints.minus(
+                        DartsUtils.getPlayerScore(isBull25, it, playersPoints, inValue)),
+                    checkout = DartsUtils.getScoreFromPointList(
+                        DartsUtils.getPlayerRoundDarts(it, currentRound, playersPoints),
+                        isBull25
+                    ),
+                    ppd = DartsUtils.getPlayerPPD(it, playersPoints, isBull25)
+                )
+            )
+        }
+        return x01PlayerList
     }
 
     sealed class GameUiState {

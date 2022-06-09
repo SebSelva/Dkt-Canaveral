@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.model.Player
 import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
@@ -37,14 +36,16 @@ class GameCountUpFragment : Game01Fragment() {
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
 
+    private var startGame: Long = -1L
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         countUpViewModel.variant = args.variantIndex
         countUpViewModel.isBull25 = args.isBull25
         countUpViewModel.nbRounds = resources.getStringArray(R.array.game_countup_detail_round)[args.roundIndex].toInt()
-
         initViews(view)
+        startGame = System.currentTimeMillis()
     }
 
     private fun initViews(view: View) {
@@ -165,6 +166,15 @@ class GameCountUpFragment : Game01Fragment() {
 
         // Test if game is finished
         if (DartsUtils.isCountUpFinished(nbRounds, countUpViewModel.players, stack)) {
+            val winPlayers = DartsUtils.getWinnersByGame(
+                resources.getIntArray(R.array.game_x01_variant_array).toList(),
+                args.variantIndex,
+                ArrayList(countUpViewModel.getPlayerStatsList().toList())
+            )
+            countUpViewModel.onGameEnd(
+                System.currentTimeMillis() - startGame,
+                winPlayers
+            )
             goToPlayersStatsScreen()
         }
 
@@ -233,29 +243,12 @@ class GameCountUpFragment : Game01Fragment() {
     }
 
     private fun goToPlayersStatsScreen() {
-        val x01PlayerList = emptyList<PlayerStats>().toMutableList()
-        countUpViewModel.players.forEach {
-            x01PlayerList.add(
-                PlayerStats(
-                    it,
-                    currentScore = DartsUtils.getCountUpPlayerScore(
-                        countUpViewModel.isBull25,
-                        it,
-                        countUpViewModel.playersPoints
-                    ),
-                    checkout = DartsUtils.getScoreFromPointList(
-                        DartsUtils.getPlayerRoundDarts(it, countUpViewModel.currentRound, countUpViewModel.playersPoints),
-                        args.isBull25
-                    ),
-                    ppd = DartsUtils.getPlayerPPD(it, countUpViewModel.playersPoints, args.isBull25)
-                )
-            )
-        }
+        val playerStatList = countUpViewModel.getPlayerStatsList()
         lifecycleScope.launchWhenResumed {
             delay(4200)
             findNavController().navigate(R.id.action_countup_to_end,
                 GameStatsFragmentArgs(
-                    x01PlayerList.toTypedArray(),
+                    playerStatList.toTypedArray(),
                     args.gameTypeIndex,
                     args.variantIndex,
                     args.isBull25,
