@@ -26,7 +26,6 @@ import com.decathlon.canaveral.stats.adapter.TricksStatsAdapter
 import com.decathlon.canaveral.stats.model.GameStats
 import com.decathlon.canaveral.stats.model.StatItem
 import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -108,9 +107,11 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         statsViewModel.uiState().observe(viewLifecycleOwner) {
             when (it) {
                 is StatsViewModel.StatsViewState.StatsNetworkError -> {
+                    // TODO remove
                     Toast.makeText(requireContext(), getString(R.string.common_internet_error) +" " +it.errorCode, Toast.LENGTH_LONG).show()
                 }
                 is StatsViewModel.StatsViewState.StatsComplete -> {
+                    // TODO remove
                     Toast.makeText(requireContext(), "Statistics updated", Toast.LENGTH_LONG).show()
                 }
             }

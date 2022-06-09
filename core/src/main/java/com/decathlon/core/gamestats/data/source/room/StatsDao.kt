@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 interface StatsDao: BaseDao<DartsStatEntity> {
 
     @Query("SELECT * FROM dartStats")
+    suspend fun getDartsStatEntity(): DartsStatEntity
+
+    @Query("SELECT * FROM dartStats")
     fun getStats(): Flow<DartsStatEntity>
 
     @Query("DELETE FROM dartStats")

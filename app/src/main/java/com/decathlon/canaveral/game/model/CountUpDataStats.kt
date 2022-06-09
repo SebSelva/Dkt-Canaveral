@@ -9,7 +9,7 @@ import java.util.*
 import kotlin.math.max
 
 class CountUpDataStats(
-    private val gameLength: Long,
+    private val duration: Long,
     players: List<Player>,
     private val winners: List<Player>,
     private val currentPlayer: Player,
@@ -61,7 +61,7 @@ class CountUpDataStats(
             null,
             "/v2/sports/316",
             getDateTimeFormatted(),
-            gameLength,
+            duration,
             "/v2/connectors/806",
             stdDataStats
         )
