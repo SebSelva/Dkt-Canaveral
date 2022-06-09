@@ -14,6 +14,7 @@ import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.stats.StatsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
+import com.decathlon.core.gamestats.data.GeneralRepository
 import com.decathlon.core.gamestats.data.STDRepository
 import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.LocalUserMeasureDataSource
@@ -41,11 +42,6 @@ class CanaveralApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-    }
-
-    override fun onTerminate() {
-        // TODO deconnection generalRepository
-        super.onTerminate()
     }
 
     private fun initKoin() {
@@ -80,13 +76,15 @@ class CanaveralApp : Application() {
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
         single { UserRepository(get() as RoomUserDataSource, get(), get(), get() as RoomStatsDataSource) }
-        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource, get(), get(), get()) }
+        single { GeneralRepository(this@CanaveralApp) }
+        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource, get(), get(), get(), get()) }
     }
 
     private val viewModelsModule = module {
         viewModel { DashboardViewModel(get()) }
         viewModel { PlayerEditionViewModel(get()) }
         viewModel { Game01ViewModel(get()) }
+        viewModel { GameActivityViewModel(get(),get()) }
         viewModel { CountUpViewModel(get()) }
         viewModel { LoginViewModel(get(), get()) }
         viewModel { UserEditionViewModel(get()) }

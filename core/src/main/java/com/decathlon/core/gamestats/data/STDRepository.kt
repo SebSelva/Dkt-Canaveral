@@ -8,12 +8,10 @@ import com.decathlon.core.gamestats.data.source.network.model.getDartCount
 import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.LocalUserMeasureDataSource
 import com.decathlon.core.gamestats.data.source.room.StatDataSource
-import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
-import com.decathlon.core.gamestats.data.source.room.entity.UserMeasureEntity
-import com.decathlon.core.gamestats.data.source.room.entity.getDartCount
-import com.decathlon.core.gamestats.data.source.room.entity.toEntity
+import com.decathlon.core.gamestats.data.source.room.entity.*
 import com.decathlon.core.user.data.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flow
@@ -30,13 +28,12 @@ class STDRepository(
     private val statsDataSource: StatDataSource,
     private val userRepository: UserRepository,
     private val activitiesDataSource: LocalActivitiesDataSource,
-    private val measureDataSource: LocalUserMeasureDataSource
+    private val generalRepository: GeneralRepository,
+    private val measureDataSource: LocalUserMeasureDataSource,
 ) {
     private val stdServices: STDServices
     private fun bearerHeader(accessToken: String) = "Bearer $accessToken"
     private val dartsStatEntity = DartsStatEntity()
-
-    private var isConnected = true
 
     private val userMeasuresIndexes = mutableListOf(
         219, 222, 284, 285, 286, 287, 288, 289,
@@ -59,6 +56,7 @@ class STDRepository(
             .build()
 
         stdServices = retrofit.create(STDServices::class.java)
+
     }
 
     fun getAllStats(): Flow<DartsStatEntity> = statsDataSource.get()
@@ -69,6 +67,7 @@ class STDRepository(
         stdServices.getAccountInfo(bearerHeader(accessToken))
 
     suspend fun updateAllStats(accessToken: String) = flow<Result<DartsStatEntity>> {
+        sendDataOff()
         val userRecJob = flowOf(refreshUserRecords(accessToken))
         val userLifeStats = flowOf(refreshUserLifeStats(accessToken))
         flowOf(userRecJob, userLifeStats).flattenMerge().collect { result ->
@@ -140,6 +139,7 @@ class STDRepository(
 
     suspend fun sendActivity(stdActivity: StdActivity) {
         val accessToken = userRepository.getAccessTokenRefreshed()
+        val isConnected = generalRepository.isConnected()
         if (accessToken != null && isConnected) {
             getAccountInfo(accessToken).let {
                 stdActivity.user = it.id
@@ -270,4 +270,33 @@ class STDRepository(
         return list
     }
 
+    suspend fun sendDataOff() {
+        sendDataOff(userRepository.getAccessTokenRefreshed())
+    }
+
+    private suspend fun sendDataOff(accessToken: String?) = withContext(IO) {
+        if (accessToken == null) {
+            Timber.w("DATA Off access token is null")
+        }
+        accessToken?.let { token ->
+            getAccountInfo(token).let { info ->
+
+                activitiesDataSource.getActivities().forEach {
+                    val toWs = it.toWs(info.id)
+                    Timber.w("DATA Off post activity $toWs")
+                    // TODO DEBUG post activity after reconnection
+                    //stdServices.postUserActivity(token, toWs)
+                    Timber.w("DATA Off post activity done}")
+                }
+
+                measureDataSource.getUserMeasures().forEach {
+                    Timber.w("DATA Off post measures ${it.toWs(info.id)}")
+                    //stdServices.postUserMeasure(token, it.toWs(info.id))
+                }
+
+                activitiesDataSource.removeAll()
+                measureDataSource.removeAll()
+            }
+        }
+    }
 }
