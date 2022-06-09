@@ -15,6 +15,7 @@ import com.decathlon.canaveral.player.PlayerEditionViewModel
 import com.decathlon.canaveral.stats.StatsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
+import com.decathlon.core.gamestats.data.GeneralRepository
 import com.decathlon.core.gamestats.data.STDRepository
 import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.LocalUserMeasureDataSource
@@ -31,6 +32,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
+import org.koin.java.KoinJavaComponent.get
 import timber.log.Timber
 
 class CanaveralApp : Application() {
@@ -45,7 +47,7 @@ class CanaveralApp : Application() {
     }
 
     override fun onTerminate() {
-        // TODO deconnection generalRepository
+        get<GeneralRepository>(GeneralRepository::class.java).unRegisterConnectivityListener()
         super.onTerminate()
     }
 
@@ -81,7 +83,8 @@ class CanaveralApp : Application() {
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
         single { UserRepository(get() as RoomUserDataSource, get(), get(), get() as RoomStatsDataSource) }
-        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource, get(), get()) }
+        single { GeneralRepository(this@CanaveralApp) }
+        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource, get(), get(), get(), get()) }
     }
 
     private val viewModelsModule = module {

@@ -8,16 +8,14 @@ import com.decathlon.core.gamestats.data.source.network.model.getDartCount
 import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.LocalUserMeasureDataSource
 import com.decathlon.core.gamestats.data.source.room.StatDataSource
-import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
-import com.decathlon.core.gamestats.data.source.room.entity.UserMeasureEntity
-import com.decathlon.core.gamestats.data.source.room.entity.getDartCount
-import com.decathlon.core.gamestats.data.source.room.entity.toEntity
-import kotlinx.coroutines.Dispatchers
+import com.decathlon.core.gamestats.data.source.room.entity.*
+import com.decathlon.core.user.data.UserRepository
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,13 +26,19 @@ class STDRepository(
     private val stdApiKey: String,
     private val statsDataSource: StatDataSource,
     private val activitiesDataSource: LocalActivitiesDataSource,
-    private val measureDataSource: LocalUserMeasureDataSource
-) {
+    private val generalRepository: GeneralRepository,
+    private val measureDataSource: LocalUserMeasureDataSource,
+    private val userRepository: UserRepository
+) : IInternetAvailability {
     private val stdServices: STDServices
     private fun bearerHeader(accessToken: String) = "Bearer $accessToken"
     private val dartsStatEntity = DartsStatEntity()
 
     private var isConnected = true
+
+    private var jobDataOffSent: Job? = null
+
+    var scope = CoroutineScope(IO)
 
     private val userMeasuresIndexes = mutableListOf(
         219, 222, 284, 285, 286, 287, 288, 289,
@@ -57,6 +61,13 @@ class STDRepository(
             .build()
 
         stdServices = retrofit.create(STDServices::class.java)
+
+
+        generalRepository.listener = this
+        generalRepository.registerConnectivityListener()
+        isConnected = generalRepository.isConnected
+        Timber.i("init CONNECTION change $isConnected")
+        if (isConnected) sendDataOff()
     }
 
     fun getAllStats(): Flow<DartsStatEntity> = statsDataSource.get()
@@ -264,4 +275,31 @@ class STDRepository(
         return list
     }
 
+    override fun onInternetAvailabilityChange(isAvailable: Boolean) {
+        if (isConnected != isAvailable && isAvailable) {
+            Timber.d("connection internet change $isAvailable")
+            sendDataOff()
+        }
+        isConnected = isAvailable
+    }
+
+    private fun sendDataOff() {
+        scope.launch {
+            val bearer = userRepository.getAccessToken()
+            bearer?.let { token ->
+                getAccountInfo(token).let { info ->
+                    activitiesDataSource.getActivities().forEach {
+                        stdServices.postUserActivity(token, it.toWs(info.id))
+                    }
+                    measureDataSource.getUserMeasures().forEach {
+                        stdServices.postUserMeasure(token, it.toWs(info.id))
+                    }
+                    activitiesDataSource.removeAll()
+                    measureDataSource.removeAll()
+                    jobDataOffSent = null
+                    updateAllStats(token)
+                }
+            }
+        }
+    }
 }

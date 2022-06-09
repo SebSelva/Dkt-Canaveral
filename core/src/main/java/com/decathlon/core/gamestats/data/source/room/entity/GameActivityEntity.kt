@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 import com.decathlon.core.gamestats.data.source.network.model.StdActivity
 import com.decathlon.core.gamestats.data.source.network.model.StdDartsData
 import kotlinx.parcelize.Parcelize
@@ -34,4 +33,19 @@ fun StdActivity.toEntity(): GameActivityEntity {
         connector = connector,
         dataSummaries = dataSummaries
     )
+}
+
+fun GameActivityEntity.toWs(userWs: String): StdActivity {
+    return StdActivity(
+        name = name,
+        user = userWs,
+        sport = sport,
+        startDate = startDate,
+        duration = duration,
+        connector = connector,
+        dataSummaries = dataSummaries
+    )
+}
+fun List<GameActivityEntity>.toWs(userWs:String): List<StdActivity> {
+    return map { it.toWs(userWs) }
 }
