@@ -13,4 +13,7 @@ class StdActions(private val stdRepository: STDRepository) {
 
     suspend fun postUserActivity(accessToken: String, stdActivity: StdActivity) =
         stdRepository.postUserActivity(accessToken, stdActivity)
+
+    suspend fun saveActivity(stdActivity: StdActivity) =
+        stdRepository.saveActivity(stdActivity)
 }

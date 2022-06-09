@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
+import com.decathlon.core.gamestats.data.source.room.entity.GameActivityEntity
 
 @Database(
-    version = 1,
-    entities = [DartsStatEntity::class],
+    version = 2,
+    entities = [DartsStatEntity::class, GameActivityEntity::class],
     exportSchema = false)
 abstract class StatsDatabase: RoomDatabase() {
 
     abstract fun statsDao(): StatsDao
+
+    abstract fun activityDao(): ActivityDao
 
     companion object {
 

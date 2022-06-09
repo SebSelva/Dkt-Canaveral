@@ -1,19 +1,20 @@
 package com.decathlon.canaveral.game.x01
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
-import com.decathlon.canaveral.common.model.NullPoint
-import com.decathlon.canaveral.common.model.Player
-import com.decathlon.canaveral.common.model.PlayerPoint
-import com.decathlon.canaveral.common.model.Point
+import com.decathlon.canaveral.common.model.*
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.game.model.Game01DataStats
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.util.*
 
-open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel<Game01ViewModel.GameUiState>() {
+open class Game01ViewModel(private val interactors: Interactors) :
+    BaseViewModel<Game01ViewModel.GameUiState>() {
 
     var players: List<Player> = emptyList()
     var variant = 0
@@ -132,6 +133,28 @@ open class Game01ViewModel(private val interactors: Interactors) : BaseViewModel
 
     fun getPlayersPoints() {
         playersPointsLivedata.postValue(playersPoints)
+    }
+
+    override fun updateActivity(winPlayers: MutableList<PlayerStats>) {
+        currentPlayer?.let { player ->
+            val dataStats = Game01DataStats(
+                currentRound.toLong(),
+                players,
+                winPlayers.map { player },
+                player,
+                playersPoints,
+                isBull25
+            )
+            val activity = dataStats.getStdActivity()
+            activity.user?.let {
+                viewModelScope.launch {
+                    interactors.stdActions.saveActivity(activity)
+                    getAccessToken(interactors)?.let { token ->
+                        interactors.stdActions.postUserActivity(token, activity)
+                    }
+                }
+            } ?: Timber.i("Update activity player")
+        }
     }
 
     sealed class GameUiState {

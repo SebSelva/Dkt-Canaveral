@@ -6,6 +6,7 @@ import com.decathlon.canaveral.common.interactors.player.PlayerActions
 import com.decathlon.canaveral.common.interactors.stats.StdActions
 import com.decathlon.canaveral.common.interactors.user.*
 import com.decathlon.canaveral.dashboard.DashboardViewModel
+import com.decathlon.canaveral.game.GameStatsViewModel
 import com.decathlon.canaveral.game.countup.CountUpViewModel
 import com.decathlon.canaveral.game.x01.Game01ViewModel
 import com.decathlon.canaveral.intro.LoginViewModel
@@ -15,6 +16,7 @@ import com.decathlon.canaveral.stats.StatsViewModel
 import com.decathlon.canaveral.user.UserEditionViewModel
 import com.decathlon.core.Constants
 import com.decathlon.core.gamestats.data.STDRepository
+import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.RoomStatsDataSource
 import com.decathlon.core.player.data.PlayerRepository
 import com.decathlon.core.player.data.source.RoomPlayerDataSource
@@ -68,10 +70,11 @@ class CanaveralApp : Application() {
         single { RoomPlayerDataSource(this@CanaveralApp) }
         single { RoomUserDataSource(this@CanaveralApp) }
         single { RoomStatsDataSource(this@CanaveralApp) }
+        single { LocalActivitiesDataSource(this@CanaveralApp) }
         // Repositories
         single { PlayerRepository(get() as RoomPlayerDataSource) }
         single { UserRepository(get() as RoomUserDataSource, get(), get(), get() as RoomStatsDataSource) }
-        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource) }
+        single { STDRepository(Constants.STD_KEY, get() as RoomStatsDataSource, get()) }
     }
 
     private val viewModelsModule = module {
@@ -82,6 +85,7 @@ class CanaveralApp : Application() {
         viewModel { LoginViewModel(get(), get()) }
         viewModel { UserEditionViewModel(get()) }
         viewModel { StatsViewModel(get()) }
+        viewModel { GameStatsViewModel() }
     }
 
     private val interactorsModule = module {

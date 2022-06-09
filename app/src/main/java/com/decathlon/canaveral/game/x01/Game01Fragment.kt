@@ -19,11 +19,13 @@ import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
+import com.decathlon.canaveral.game.GameStatsViewModel
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -31,6 +33,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
     private val args: Game01FragmentArgs by navArgs()
     private val game01ViewModel by viewModel<Game01ViewModel>()
+    private val gameStatsViewModel by sharedViewModel<GameStatsViewModel>()
+
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
@@ -185,6 +189,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     game01ViewModel.isStackIncreasing -> {
                         delay(2000)
                         // SHOW TRICK DONE
+                        game01ViewModel.updateActivity(gameStatsViewModel.winPlayers)
                         showTransitionInfo(R.id.action_01game_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(

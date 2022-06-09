@@ -3,8 +3,10 @@ package com.decathlon.core.gamestats.data
 import com.decathlon.core.Constants
 import com.decathlon.core.gamestats.data.source.network.STDServices
 import com.decathlon.core.gamestats.data.source.network.model.StdActivity
+import com.decathlon.core.gamestats.data.source.room.LocalActivitiesDataSource
 import com.decathlon.core.gamestats.data.source.room.StatDataSource
 import com.decathlon.core.gamestats.data.source.room.entity.DartsStatEntity
+import com.decathlon.core.gamestats.data.source.room.entity.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -14,7 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class STDRepository(
     private val stdApiKey: String,
-    private val statsDataSource: StatDataSource
+    private val statsDataSource: StatDataSource,
+    private val activitiesDataSource: LocalActivitiesDataSource
 ) {
     private val stdServices: STDServices
     private fun bearerHeader(accessToken: String) = "Bearer $accessToken"
@@ -120,4 +123,8 @@ class STDRepository(
             stdActivity.user = it.id
             stdServices.postUserActivity(bearerHeader(accessToken), stdActivity)
         }
+
+    fun saveActivity(stdActivity: StdActivity) {
+        activitiesDataSource.insert(stdActivity.toEntity())
+    }
 }
