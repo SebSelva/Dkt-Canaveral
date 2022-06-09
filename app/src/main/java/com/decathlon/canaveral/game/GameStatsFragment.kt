@@ -11,11 +11,14 @@ import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.databinding.FragmentGameEndBinding
 import com.decathlon.canaveral.game.adapter.PlayersStatsAdapter
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
     private val args: GameStatsFragmentArgs by navArgs()
     override var layoutId = R.layout.fragment_game_end
+
+    private val gameStatsViewModel by sharedViewModel<GameStatsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,19 +28,19 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
             resources.getString(R.string.game_type_01_game) -> sortedPlayers.sortBy { x01Player -> x01Player.currentScore }
             resources.getString(R.string.game_type_count_up) -> sortedPlayers.sortByDescending { x01Player -> x01Player.currentScore }
         }
-        val winPlayers = emptyList<PlayerStats>().toMutableList()
+        gameStatsViewModel.winPlayers = emptyList<PlayerStats>().toMutableList()
         var bestScore: Int? = null
         sortedPlayers.forEach {
             if (bestScore == null) bestScore = it.currentScore
-            if (bestScore == it.currentScore) winPlayers.add(it)
+            if (bestScore == it.currentScore) gameStatsViewModel.winPlayers.add(it)
         }
 
         // Title
-        _binding.endTitle.text = getStatsTitle(sortedPlayers, winPlayers)
+        _binding.endTitle.text = getStatsTitle(sortedPlayers, gameStatsViewModel.winPlayers)
 
         // Winning players
-        val winSpan = if (winPlayers.size != 1) {
-            if (winPlayers.size > 4) 3 else 2
+        val winSpan = if (gameStatsViewModel.winPlayers.size != 1) {
+            if (gameStatsViewModel.winPlayers.size > 4) 3 else 2
         } else 1
         _binding.endWinningPlayers.layoutManager =
             GridLayoutManager(
@@ -48,12 +51,12 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
 
         val winningPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
             true,
-            winPlayers.size == sortedPlayers.size
+            gameStatsViewModel.winPlayers.size == sortedPlayers.size
         )
         _binding.endWinningPlayers.adapter = winningPlayersStatsAdapter
 
         // Losing players
-        val lostPlayers = sortedPlayers.toList().subList(winPlayers.size, sortedPlayers.size)
+        val lostPlayers = sortedPlayers.toList().subList(gameStatsViewModel.winPlayers.size, sortedPlayers.size)
         val lostSpan = if (lostPlayers.size != 1) {
             if (lostPlayers.size > 4) 3 else 2
         } else 1
@@ -64,13 +67,13 @@ class GameStatsFragment : BaseFragment<FragmentGameEndBinding>() {
                 GridLayoutManager.VERTICAL,
                 false)
         val otherPlayersStatsAdapter = PlayersStatsAdapter(args.gameTypeIndex,
-            winPlayers.size == sortedPlayers.size,
-            winPlayers.size == sortedPlayers.size
+            gameStatsViewModel.winPlayers.size == sortedPlayers.size,
+            gameStatsViewModel.winPlayers.size == sortedPlayers.size
         )
         _binding.endLostPlayers.adapter = otherPlayersStatsAdapter
 
         winningPlayersStatsAdapter.setData(
-            winPlayers,
+            gameStatsViewModel.winPlayers,
             resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
         otherPlayersStatsAdapter.setData(
             lostPlayers,

@@ -1,7 +1,10 @@
 package com.decathlon.core.gamestats.data.source.network.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class StdDartsData(
     // GAME STATS
     @SerializedName("218")
@@ -224,7 +227,7 @@ data class StdDartsData(
     var triple19Count: Long,
     @SerializedName("345")
     var triple20Count: Long,
-){
+): Parcelable {
     constructor() : this(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0,0,0,0,
