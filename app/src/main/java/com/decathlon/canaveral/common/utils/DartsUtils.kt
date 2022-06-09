@@ -16,7 +16,8 @@ class DartsUtils {
     companion object {
 
         const val DARTS_SHOTS_NUMBER = 3
-        private const val BULL_VALUE = "Bull"
+        const val BULL_VALUE = "Bull"
+        const val MISS_VALUE = "Miss"
 
         fun getStringFromPoint(context: Context, point: Point) :String {
             var text = ""
@@ -101,6 +102,25 @@ class DartsUtils {
             stackPoints?.filter { it.player == currentPlayer && it.round == currentRound }
                 ?.forEach {
                 lastPoints.add(it.point)
+            }
+            return lastPoints
+        }
+
+        /**
+         * @return last darts thrown in the same round from @param stackPoints matching with @param player
+         */
+        fun getPlayerPointRoundDarts(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?): List<PlayerPoint>? {
+            return stackPoints?.filter { it.player == currentPlayer && it.round == currentRound }
+        }
+
+        /**
+         * @return darts thrown from @param stackPoints matching with @param player
+         */
+        fun getPlayerDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<PlayerPoint> {
+            val lastPoints = ArrayList<PlayerPoint>()
+            stackPoints?.filter { it.player == currentPlayer}
+                ?.forEach {
+                lastPoints.add(it)
             }
             return lastPoints
         }
@@ -196,6 +216,12 @@ class DartsUtils {
             }
         }
 
+        fun getRate(statPart: Long, statTotal: Long) =
+            if (statTotal > 0) statPart * 100F / statTotal else 0F
+
+        fun getIntPercentValue(value: Float) =
+            String.format("%d %%", value.roundToInt())
+
         fun getArrayLevel(levelResInt: Int): Int {
             return when (levelResInt) {
                 R.string.stats_trick_baby_ton,
@@ -277,6 +303,128 @@ class DartsUtils {
             R.string.stats_trick_highest_16rounds to R.string.stats_trick_highest_16rounds_info,
             R.string.stats_trick_avg_score_round to R.string.stats_trick_avg_score_round_info)
             return descriptionMap[trickTitle]
+        }
+
+        /**
+         * Tricks on a round
+         * */
+        fun isBabyTon(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 95
+        }
+
+        fun isBagONuts(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 45
+        }
+
+        fun isHatTrick(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?): Boolean {
+            var isHatTrick = true
+            for (point in getPlayerRoundDarts(currentPlayer, currentRound, stackPoints)) {
+                isHatTrick = isHatTrick && (point.isDoubled && point.value == BULL_VALUE)
+            }
+            return isHatTrick
+        }
+
+        fun isHighTon(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) in 151..180
+        }
+
+        fun isLowTon(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) in 101..150
+        }
+
+        fun isThreeInABed(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?): Boolean {
+            var isTrickValid = true
+            val roundPoints = getPlayerRoundDarts(currentPlayer, currentRound, stackPoints)
+            for (point in roundPoints) {
+                isTrickValid = isTrickValid && (point.value == roundPoints.first().value)
+            }
+            return isTrickValid
+        }
+
+        fun isTon(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 100
+        }
+
+        fun isTon80(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 80
+        }
+
+        fun isWhiteHorse(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?): Boolean {
+            var isTrickValid = true
+            val roundPoints = getPlayerRoundDarts(currentPlayer, currentRound, stackPoints)
+            for (point in roundPoints) {
+                isTrickValid = isTrickValid && point.isTripled
+            }
+            return isTrickValid
+        }
+
+        fun isMoreThan60(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) in 60..99
+        }
+
+        fun isMoreThan100(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) in 100..139
+        }
+
+        fun isMoreThan140(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) in 140..179
+        }
+
+        fun is180(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
+            return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 180
+        }
+
+        /**
+         * Tricks on a dart
+         */
+        fun isBulleye(point: Point) = point.value == BULL_VALUE
+
+        /**
+         * Tricks on a game
+         */
+        fun getFieldCount(fieldToCount: String, currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): Long {
+            var count = 0L
+            val playerDarts = getPlayerDarts(currentPlayer, stackPoints)
+            for (playerPoint in playerDarts) {
+                count += if (fieldToCount == playerPoint.point.value) 1 else 0
+            }
+            return count
+        }
+
+        fun getDoubleCount(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): Long {
+            var count = 0L
+            val playerDarts = getPlayerDarts(currentPlayer, stackPoints)
+            for (playerPoint in playerDarts) {
+                count += if (playerPoint.point.isDoubled) 1 else 0
+            }
+            return count
+        }
+
+        fun getTripleCount(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): Long {
+            var count = 0L
+            val playerDarts = getPlayerDarts(currentPlayer, stackPoints)
+            for (playerPoint in playerDarts) {
+                count += if (playerPoint.point.isTripled) 1 else 0
+            }
+            return count
+        }
+
+        fun getTriple19Count(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): Long {
+            var count = 0L
+            val playerDarts = getPlayerDarts(currentPlayer, stackPoints)
+            for (playerPoint in playerDarts) {
+                count += if (playerPoint.point.isTripled && playerPoint.point.value == "19") 1 else 0
+            }
+            return count
+        }
+
+        fun getTriple20Count(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): Long {
+            var count = 0L
+            val playerDarts = getPlayerDarts(currentPlayer, stackPoints)
+            for (playerPoint in playerDarts) {
+                count += if (playerPoint.point.isTripled && playerPoint.point.value == "20") 1 else 0
+            }
+            return count
         }
     }
 }

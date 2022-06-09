@@ -9,5 +9,5 @@ interface StatDataSource {
 
     suspend fun insert(item: DartsStatEntity)
 
-    suspend fun remove(item: DartsStatEntity)
+    suspend fun removeAll()
 }

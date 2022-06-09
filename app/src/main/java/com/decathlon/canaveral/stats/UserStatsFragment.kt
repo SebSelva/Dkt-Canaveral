@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +16,8 @@ import app.futured.donut.DonutSection
 import com.decathlon.canaveral.R
 import com.decathlon.canaveral.common.BaseFragment
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.getIntPercentValue
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.getRate
 import com.decathlon.canaveral.databinding.FragmentUserStatsBinding
 import com.decathlon.canaveral.intro.LoginViewModel
 import com.decathlon.canaveral.stats.adapter.FieldsStatsAdapter
@@ -27,7 +30,6 @@ import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
@@ -68,7 +70,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
                 LoginViewModel.LoginUiState.LogoutSuccess-> {
                     lifecycleScope.launchWhenResumed {
                         setProfile()
-                        statsViewModel.getStats()
+                        statsViewModel.updateStats()
                     }
                 }
             }
@@ -84,9 +86,8 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
                 if (user?.nickname?.isNotEmpty() == true) {
                     _binding.profileNickname.text = resources.getString(R.string.profile_nickname, user.nickname)
                 }
-                _binding.userPpdValue.text = "-"
-                _binding.userMprValue.text = "-"
                 statsViewModel.getStats()
+                statsViewModel.updateStats()
             }
         }
     }
@@ -102,6 +103,17 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
 
         statsViewModel.statsLiveData.observe(viewLifecycleOwner) {
             setStatData(it)
+        }
+
+        statsViewModel.uiState().observe(viewLifecycleOwner) {
+            when (it) {
+                is StatsViewModel.StatsViewState.StatsNetworkError -> {
+                    Toast.makeText(requireContext(), getString(R.string.common_internet_error) +" " +it.errorCode, Toast.LENGTH_LONG).show()
+                }
+                is StatsViewModel.StatsViewState.StatsComplete -> {
+                    Toast.makeText(requireContext(), "Statistics updated", Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
         lifecycleScope.launchWhenResumed {
@@ -126,8 +138,10 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
             val dateTime = simpleDateFormat.format(Date(statValues.dateTime))
             _binding.statUpdateDate.text = resources.getString(R.string.stats_last_update, dateTime)
 
-            _binding.userPpdValue.text = String.format("%.2f", (statValues.ppdTotalScored.toFloat() / statValues.dartsThrown))
-            _binding.userMprValue.text = String.format("%.2f", (statValues.mpr.toFloat() / statValues.dartsThrown))
+            _binding.userPpdValue.text = String.format("%.2f",
+                if (statValues.ppdDartsThrown > 0) (statValues.ppdTotalScored.toFloat() / statValues.ppdDartsThrown) else 0F)
+            _binding.userMprValue.text = String.format("%.2f",
+                if (statValues.dartsThrown > 0) (statValues.mpr.toFloat() / statValues.dartsThrown) else 0F)
 
             setDonutData(victories, draws, defeats)
             _binding.victoriesPercent.text = getIntPercentValue(victories)
@@ -150,9 +164,6 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         }
         userStats = stat
     }
-
-    private fun getIntPercentValue(value: Float) =
-        String.format("%d %%", value.roundToInt())
 
     private fun setDonutData(victories: Float, draws: Float, defeats: Float) {
 
@@ -198,7 +209,10 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
     private fun getGame01Stats(stat: DartsStatEntity): GameStats {
         val game01PlayedGames = StatItem(R.string.stats_game_played_games, stat.game01)
         val game01Ppd =
-            StatItem(R.string.stats_game_ppd, stat.ppdTotalScored.toFloat() / stat.dartsThrown)
+            StatItem(R.string.stats_game_ppd,
+                if (stat.ppdDartsThrown > 0) stat.ppdTotalScored.toFloat() / stat.ppdDartsThrown
+                else 0F
+            )
         val game01WinRate =
             StatItem(R.string.stats_game_winning_percentage, getIntPercentValue(getRate(stat.game01Won, stat.game01)))
 
@@ -219,7 +233,8 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         )
     }
 
-    /*private fun getGameCricketStats(stat: DartsStatEntity): GameStats {
+    /* Cricket game not available yet
+    private fun getGameCricketStats(stat: DartsStatEntity): GameStats {
         val cricketGamesPlayed = StatItem(R.string.stats_game_played_games, stat.gameCricket)
         val cricketMpr = StatItem(R.string.stats_game_mpr, stat.mpr.toFloat())
         val cricketWinRate = StatItem(
@@ -230,9 +245,6 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
             listOf(cricketGamesPlayed, cricketMpr, cricketWinRate)
         )
     }*/
-
-    private fun getRate(statPart: Long, statTotal: Long) =
-        if (statTotal > 0) statPart * 100F / statTotal else 0F
 
     private fun setTricksStats(stat: DartsStatEntity) {
         val babyTon = StatItem(R.string.stats_trick_baby_ton, stat.babyTonTrick)
@@ -284,7 +296,7 @@ class UserStatsFragment: BaseFragment<FragmentUserStatsBinding>() {
         _binding.gameTricksRecyclerView.layoutManager = GridLayoutManager(
             requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
         _binding.gameTricksRecyclerView.adapter = tricksAdapter
-        tricksAdapter.setData(trickList)
+        tricksAdapter.submitList(trickList)
     }
 
     private fun setFieldsStats(stat: DartsStatEntity) {

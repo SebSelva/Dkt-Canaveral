@@ -2,8 +2,8 @@ package com.decathlon.canaveral.dashboard
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.BaseViewModel
+import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.model.Player
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -15,21 +15,21 @@ class DashboardViewModel (private val interactors: Interactors) : BaseViewModel<
     val playerLiveData : MutableLiveData<List<Player>> = MutableLiveData()
 
     fun getPlayers() = viewModelScope.launch(Dispatchers.IO) {
-        interactors.getPlayers().collect {
+        interactors.playerActions.getPlayers().collect {
             playerLiveData.postValue(it.map { player -> Player(player) })
         }
     }
 
     fun addPlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
-        interactors.addPlayer(player)
+        interactors.playerActions.addPlayer(player)
     }
 
     fun removePlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
-        interactors.deletePlayer(player)
+        interactors.playerActions.deletePlayer(player)
     }
 
     fun updatePlayer(player: Player) = viewModelScope.launch(Dispatchers.IO) {
-        interactors.updatePlayer(player)
+        interactors.playerActions.updatePlayer(player)
     }
 
     sealed class DashboardUiState {

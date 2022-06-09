@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.decathlon.canaveral.R
@@ -16,7 +17,11 @@ import com.decathlon.canaveral.camera.CameraActivity
 import com.decathlon.canaveral.camera.CameraActivityArgs
 import com.decathlon.canaveral.common.BaseDialogFragment
 import com.decathlon.canaveral.common.utils.CameraUtils
+import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.databinding.DialogPlayerEditionBinding
+import com.decathlon.canaveral.intro.LoginViewModel
+import kotlinx.coroutines.flow.collect
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -25,6 +30,8 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
     private val args: PlayerEditionFragmentArgs by navArgs()
 
     private val playerEditionViewModel by viewModel<PlayerEditionViewModel>()
+    private val dashboardViewModel by sharedViewModel<DashboardViewModel>()
+    private val loginViewModel by sharedViewModel<LoginViewModel>()
 
     private val galleryResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -85,6 +92,33 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
 
         _binding.editionCancel.setOnClickListener {
             dismiss()
+        }
+
+        dashboardViewModel.playerLiveData.value?.let { list ->
+            var userAssociated = false
+            for (item in list) {
+                userAssociated = userAssociated || (item.userId != null)
+            }
+            if (!userAssociated) { setProfile() }
+            else _binding.user = null
+        }
+        dashboardViewModel.getPlayers()
+    }
+
+    private fun setProfile() {
+        lifecycleScope.launchWhenStarted {
+            loginViewModel.getMainUser().collect { user ->
+                _binding.user = user
+                user?.let {
+                    _binding.userName.text = it.firstname
+                    _binding.userLayout.setOnClickListener {
+                        playerEditionViewModel.player.userId = 1
+                        playerEditionViewModel.player.nickname = user.nickname.ifEmpty { user.firstname }
+                        playerEditionViewModel.player.image = user.image
+                        _binding.player = playerEditionViewModel.player
+                    }
+                }
+            }
         }
     }
 

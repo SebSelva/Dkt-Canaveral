@@ -9,16 +9,17 @@ class Player (
         var firstname: String,
         var lastname: String,
         var tempname: String?,
-        var image: String?
+        var image: String?,
+        var userId: Int?
 
 ) : BaseItem() {
         constructor(player: com.decathlon.core.player.model.Player) : this(player.id, player.nickname,
-            player.firstname, player.lastname, player.tempname, player.image)
+                player.firstname, player.lastname, player.tempname, player.image, player.userId)
 
-        constructor() : this(0, "", "","",null,null)
+        constructor() : this(0, "", "","",null,null,null)
 
         fun toCore(): com.decathlon.core.player.model.Player {
-            return com.decathlon.core.player.model.Player(id, nickname, firstname, lastname, tempname, image)
+            return com.decathlon.core.player.model.Player(id, nickname, firstname, lastname, tempname, image, userId)
         }
 
         fun getName(): String? {
@@ -32,6 +33,8 @@ class Player (
             if (other.id != this.id) return false
             if (other.nickname != this.nickname) return false
             if (other.tempname != this.tempname) return false
+            if (other.image != this.image) return false
+            if (other.userId != this.userId) return false
             return true
         }
 
@@ -42,6 +45,7 @@ class Player (
                 result = 31 * result + lastname.hashCode()
                 result = 31 * result + tempname.hashCode()
                 result = 31 * result + (image?.hashCode() ?: 0)
+                result = 31 * result + userId.hashCode()
                 return result
         }
 }

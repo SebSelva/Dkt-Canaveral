@@ -1,192 +1,239 @@
 package com.decathlon.core.gamestats.data.source.network.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class StdDartsData(
     // GAME STATS
-    @SerializedName("98")
-    val gamesPlayed: Long,
     @SerializedName("218")
-    val gamesWon: Long,
+    var gamesWon: Long,
     @SerializedName("220")
-    val legsPlayed: Long,
+    var legsPlayed: Long,
     @SerializedName("221")
-    val legsWon: Long,
+    var legsWon: Long,
     @SerializedName("323")
-    val ppdTotalScored: Long,
+    var ppdTotalScored: Long,
     @SerializedName("322")
-    val ppdDartsThrown: Long,
+    var ppdDartsThrown: Long,
     @SerializedName("223")
-    val ppd: Long,
+    var ppd: Long,
     @SerializedName("224")
-    val mpr: Long,
+    var mpr: Long,
     @SerializedName("225")
-    val dartsThrown: Long,
+    var dartsThrown: Long,
 
     // GAME TYPE
     @SerializedName("226")
-    val game01: Long,
+    var game01: Long,
     @SerializedName("227")
-    val gameCricket: Long,
+    var gameCricket: Long,
     @SerializedName("228")
-    val gameCountUp: Long,
+    var gameCountUp: Long,
     @SerializedName("229")
-    val gameBullHunter: Long,
+    var gameBullHunter: Long,
     @SerializedName("230")
-    val gameMatch: Long,
+    var gameMatch: Long,
     @SerializedName("231")
-    val gameHalfT: Long,
+    var gameHalfT: Long,
     @SerializedName("232")
-    val gameTarget: Long,
+    var gameTarget: Long,
     @SerializedName("233")
-    val gameShanghai: Long,
+    var gameShanghai: Long,
     @SerializedName("234")
-    val gameAroundTheClock: Long,
+    var gameAroundTheClock: Long,
     @SerializedName("235")
-    val gameOver: Long,
+    var gameOver: Long,
     @SerializedName("236")
-    val gamerandomCheckout: Long,
+    var gameRandomCheckout: Long,
     @SerializedName("237")
-    val gameLandmine: Long,
+    var gameLandmine: Long,
     @SerializedName("238")
-    val gameBaseBall: Long,
+    var gameBaseBall: Long,
     @SerializedName("239")
-    val game3InLine: Long,
+    var game3InLine: Long,
     @SerializedName("240")
-    val gameSoccerPk: Long,
+    var gameSoccerPk: Long,
     @SerializedName("241")
-    val gameBallTrap: Long,
+    var gameBallTrap: Long,
     @SerializedName("242")
-    val gameSuperBull: Long,
+    var gameSuperBull: Long,
+
+    @SerializedName("349")
+    var game01Won: Long,
+    @SerializedName("351")
+    var gameCricketWon: Long,
+    @SerializedName("350")
+    var gameCountUpWon: Long,
+    @SerializedName("352")
+    var gameBullHunterWon: Long,
+    @SerializedName("353")
+    var gameMatchWon: Long,
+    @SerializedName("354")
+    var gameHalfTWon: Long,
+    @SerializedName("355")
+    var gameTargetWon: Long,
+    @SerializedName("356")
+    var gameShanghaiWon: Long,
+    @SerializedName("357")
+    var gameAroundTheClockWon: Long,
+    @SerializedName("358")
+    var gameOverWon: Long,
+    @SerializedName("359")
+    var gameRandomCheckoutWon: Long,
+    @SerializedName("360")
+    var gameLandmineWon: Long,
+    @SerializedName("361")
+    var gameBaseBallWon: Long,
+    @SerializedName("362")
+    var game3InLineWon: Long,
+    @SerializedName("363")
+    var gameSoccerPkWon: Long,
+    @SerializedName("364")
+    var gameBallTrapWon: Long,
+    @SerializedName("365")
+    var gameSuperBullWon: Long,
 
     // GAME PARAMS
     @SerializedName("243")
-    val gameId: Long,
+    var gameId: Long,
     @SerializedName("248")
-    val playersNumber: Long,
+    var playersNumber: Long,
     @SerializedName("244")
-    val gameWinnerId: Long,
+    var gameWinnerId: Long,
     @SerializedName("245")
-    val legsWinnerId: Long,
+    var legsWinnerId: Long,
     @SerializedName("246")
-    val legsNumber: Long,
+    var legsNumber: Long,
     @SerializedName("247")
-    val roundNumber: Long,
+    var roundNumber: Long,
 
     // PLAYER PARAMS
     @SerializedName("249")
-    val playerId: Long,
+    var playerId: Long,
     @SerializedName("250")
-    val playerPPD: Long,
+    var playerPPD: Long,
     @SerializedName("251")
-    val playerMPR: Long,
+    var playerMPR: Long,
     @SerializedName("252")
-    val playerWin: Long,
+    var playerWin: Long,
     @SerializedName("253")
-    val playerDartsThrownH: Long,
+    var playerDartsThrownH: Long,
     @SerializedName("326")
-    val playerDartsThrownL: Long,
+    var playerDartsThrownL: Long,
 
     // TRICKS
     @SerializedName("254")
-    val babyTonTrick: Long,
+    var babyTonTrick: Long,
     @SerializedName("255")
-    val bagONutsTrick: Long,
+    var bagONutsTrick: Long,
     @SerializedName("256")
-    val bullEyesTrick: Long,
+    var bullEyesTrick: Long,
     @SerializedName("257")
-    val bustTrick: Long,
+    var bustTrick: Long,
     @SerializedName("258")
-    val hatTrick: Long,
+    var hatTrick: Long,
     @SerializedName("259")
-    val highTownTrick: Long,
+    var highTownTrick: Long,
     @SerializedName("260")
-    val lowTownTrick: Long,
+    var lowTownTrick: Long,
     @SerializedName("261")
-    val threeInABedTrick: Long,
+    var threeInABedTrick: Long,
     @SerializedName("263")
-    val tonTrick: Long,
+    var tonTrick: Long,
     @SerializedName("264")
-    val ton80Trick: Long,
+    var ton80Trick: Long,
     @SerializedName("265")
-    val whiteHorseTrick: Long,
+    var whiteHorseTrick: Long,
     @SerializedName("266")
-    val roundMore60Trick: Long,
+    var roundMore60Trick: Long,
     @SerializedName("267")
-    val roundMore100Trick: Long,
+    var roundMore100Trick: Long,
     @SerializedName("268")
-    val roundMore140Trick: Long,
+    var roundMore140Trick: Long,
     @SerializedName("269")
-    val round180Trick: Long,
+    var round180Trick: Long,
     @SerializedName("270")
-    val dart15Trick: Long,
+    var dart15Count: Long,
     @SerializedName("271")
-    val dart16Trick: Long,
+    var dart16Count: Long,
     @SerializedName("272")
-    val dart17Trick: Long,
+    var dart17Count: Long,
     @SerializedName("273")
-    val dart18Trick: Long,
+    var dart18Count: Long,
     @SerializedName("274")
-    val dart19Trick: Long,
+    var dart19Count: Long,
     @SerializedName("275")
-    val dart20Trick: Long,
+    var dart20Count: Long,
     @SerializedName("262")
-    val dartBullTrick: Long,
+    var dartBullCount: Long,
     @SerializedName("276")
-    val roundHighest: Long,
+    var roundHighest: Long,
     @SerializedName("278")
-    val averageScoreDart1: Long,
+    var averageScoreDart1: Long,
     @SerializedName("279")
-    val averageScoreDart2: Long,
+    var averageScoreDart2: Long,
     @SerializedName("280")
-    val averageScoreDart3: Long,
+    var averageScoreDart3: Long,
     @SerializedName("281")
-    val checkoutPercent: Long,
+    var checkoutPercent: Long,
     @SerializedName("282")
-    val checkoutRecordH: Long,
+    var checkoutRecordH: Long,
     @SerializedName("283")
-    val highScoreOn8Rounds: Long,
-    val highScoreOn12Rounds: Long,
-    val highScoreOn16Rounds: Long,
-    val averageScoreRound: Long,
+    var highScoreOn8Rounds: Long,
+    @SerializedName("347")
+    var highScoreOn12Rounds: Long,
+    @SerializedName("348")
+    var highScoreOn16Rounds: Long,
+    var averageScoreRound: Long,
 
     // DART FIELDS STATS
     @SerializedName("327")
-    val dartMissCount: Long,
+    var dartMissCount: Long,
     @SerializedName("328")
-    val dart1Count: Long,
+    var dart1Count: Long,
     @SerializedName("329")
-    val dart2Count: Long,
+    var dart2Count: Long,
     @SerializedName("330")
-    val dart3Count: Long,
+    var dart3Count: Long,
     @SerializedName("331")
-    val dart4Count: Long,
+    var dart4Count: Long,
     @SerializedName("332")
-    val dart5Count: Long,
+    var dart5Count: Long,
     @SerializedName("333")
-    val dart6Count: Long,
+    var dart6Count: Long,
     @SerializedName("334")
-    val dart7Count: Long,
+    var dart7Count: Long,
     @SerializedName("335")
-    val dart8Count: Long,
+    var dart8Count: Long,
     @SerializedName("336")
-    val dart9Count: Long,
+    var dart9Count: Long,
     @SerializedName("337")
-    val dart10Count: Long,
+    var dart10Count: Long,
     @SerializedName("338")
-    val dart11Count: Long,
+    var dart11Count: Long,
     @SerializedName("339")
-    val dart12Count: Long,
+    var dart12Count: Long,
     @SerializedName("340")
-    val dart13Count: Long,
+    var dart13Count: Long,
     @SerializedName("341")
-    val dart14Count: Long,
+    var dart14Count: Long,
     @SerializedName("342")
-    val doubleCount: Long,
+    var doubleCount: Long,
     @SerializedName("343")
-    val tripleCount: Long,
+    var tripleCount: Long,
     @SerializedName("344")
-    val triple19Count: Long,
+    var triple19Count: Long,
     @SerializedName("345")
-    val triple20Count: Long,
-)
+    var triple20Count: Long,
+): Parcelable {
+    constructor() : this(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0)
+
+}

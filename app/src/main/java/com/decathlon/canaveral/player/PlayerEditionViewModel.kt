@@ -12,7 +12,7 @@ class PlayerEditionViewModel(private val interactors: Interactors) : BaseViewMod
     lateinit var player: Player
 
     fun updatePlayer() = viewModelScope.launch(Dispatchers.IO) {
-        interactors.updatePlayer(player)
+        interactors.playerActions.updatePlayer(player)
     }
 
     sealed class PlayerEditionState {

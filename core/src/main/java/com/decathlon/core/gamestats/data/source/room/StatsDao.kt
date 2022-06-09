@@ -11,4 +11,7 @@ interface StatsDao: BaseDao<DartsStatEntity> {
 
     @Query("SELECT * FROM dartStats")
     fun getStats(): Flow<DartsStatEntity>
+
+    @Query("DELETE FROM dartStats")
+    fun removeAllStats()
 }

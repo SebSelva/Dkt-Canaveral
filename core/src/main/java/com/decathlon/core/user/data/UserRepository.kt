@@ -2,6 +2,7 @@ package com.decathlon.core.user.data
 
 import android.content.Context
 import com.decathlon.core.Constants
+import com.decathlon.core.gamestats.data.source.room.StatDataSource
 import com.decathlon.core.user.common.AuthResource
 import com.decathlon.core.user.data.source.UserDataSource
 import com.decathlon.core.user.data.source.datastore.AccountPreference
@@ -20,30 +21,32 @@ import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class UserRepository(
-    private val dataSource: UserDataSource,
+    private val userDataSource: UserDataSource,
     private val dktLoginManager: DktLoginManager,
-    private val accountPreference: AccountPreference
+    private val accountPreference: AccountPreference,
+    private val statDataSource: StatDataSource
     )
 {
 
     suspend fun addUser(user: User) = withContext(Dispatchers.IO) {
-        dataSource.insertUser(user)
+        userDataSource.insertUser(user)
     }
 
     suspend fun removeUser(user: User) = withContext(Dispatchers.IO) {
-        dataSource.removeUser(user)
+        userDataSource.removeUser(user)
+        statDataSource.removeAll()
     }
 
     suspend fun getUsers() = withContext(Dispatchers.IO) {
-        dataSource.getUsers()
+        userDataSource.getUsers()
     }
 
     suspend fun getMainUser() = withContext(Dispatchers.IO) {
-        dataSource.getMainUser()
+        userDataSource.getMainUser()
     }
 
     suspend fun updateUser(user: User) = withContext(Dispatchers.IO) {
-        dataSource.updateUser(user)
+        userDataSource.updateUser(user)
     }
 
     suspend fun validFirstConsent() = withContext(Dispatchers.IO) {

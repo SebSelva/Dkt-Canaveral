@@ -79,6 +79,7 @@
     <string name="player_remain_point">-</string>
     <string name="player_round">R %d/%d</string>
     <string name="player_round_unlimited">R %d</string>
+    <string name="profile_associate_title">Associate my profile</string>
     <string name="profile_nickname">alias %s</string>
     <string name="profile_title">Profile</string>
     <string name="save">Save</string>

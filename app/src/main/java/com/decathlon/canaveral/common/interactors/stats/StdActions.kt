@@ -5,9 +5,15 @@ import com.decathlon.core.gamestats.data.source.network.model.StdActivity
 
 class StdActions(private val stdRepository: STDRepository) {
 
-    suspend fun getUserStats(accessToken: String) =
-        stdRepository.getAllStats(accessToken)
+    fun getUserStats() =
+        stdRepository.getAllStats()
+
+    suspend fun updateStats(accessToken: String) =
+        stdRepository.updateAllStats(accessToken)
 
     suspend fun postUserActivity(accessToken: String, stdActivity: StdActivity) =
         stdRepository.postUserActivity(accessToken, stdActivity)
+
+    suspend fun saveActivity(stdActivity: StdActivity) =
+        stdRepository.saveActivity(stdActivity)
 }

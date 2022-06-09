@@ -17,6 +17,7 @@ import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
+import com.decathlon.canaveral.game.GameStatsViewModel
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
@@ -24,6 +25,7 @@ import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -31,6 +33,7 @@ class GameCountUpFragment : Game01Fragment() {
 
     private val args: GameCountUpFragmentArgs by navArgs()
     private val countUpViewModel by viewModel<CountUpViewModel>()
+    private val gameStatsViewModel by sharedViewModel<GameStatsViewModel>()
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
@@ -179,6 +182,8 @@ class GameCountUpFragment : Game01Fragment() {
                 when {
                     countUpViewModel.isStackIncreasing -> {
                         delay(2000)
+                        // SHOW TRICK DONE
+                        countUpViewModel.updateActivity(gameStatsViewModel.winPlayers)
                         showTransitionInfo(R.id.action_countup_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(
