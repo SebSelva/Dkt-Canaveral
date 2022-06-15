@@ -114,7 +114,7 @@ class DartsUtils {
         }
 
         /**
-         * @return last darts thrown in the same round from @param stackPoints matching with @param player
+         * @return darts thrown from @param stackPoints matching with @param player
          */
         fun getPlayerDarts(currentPlayer: Player, stackPoints: Stack<PlayerPoint>?): List<PlayerPoint> {
             val lastPoints = ArrayList<PlayerPoint>()

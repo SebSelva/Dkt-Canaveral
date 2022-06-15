@@ -19,11 +19,13 @@ import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.databinding.FragmentGameBinding
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
+import com.decathlon.canaveral.game.GameStatsViewModel
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
 import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -31,11 +33,15 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
     private val args: Game01FragmentArgs by navArgs()
     private val game01ViewModel by viewModel<Game01ViewModel>()
+    private val gameStatsViewModel by sharedViewModel<GameStatsViewModel>()
+
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
+
+    private var startGame: Long = -1L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,8 +51,8 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
         game01ViewModel.inValue = args.inIndex
         game01ViewModel.outValue = args.outIndex
         game01ViewModel.nbRounds = resources.getStringArray(R.array.game_x01_detail_round)[args.roundIndex].toIntOrNull()
-
         initViews(view)
+        startGame = System.currentTimeMillis()
     }
 
     private fun initViews(view: View) {
@@ -162,7 +168,10 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
 
         // Test if game is finished
         if (DartsUtils.is01GameFinished(startingPoints, game01ViewModel.isBull25, nbRounds, game01ViewModel.inValue, game01ViewModel.players, stack)) {
-            // Generate STD ACTIVITY here to be sent
+            game01ViewModel.onGameEnd(
+                System.currentTimeMillis() - startGame,
+                gameStatsViewModel.winPlayers
+            )
             goToPlayersStatsScreen(startingPoints)
         }
 
@@ -184,7 +193,7 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                     }
                     game01ViewModel.isStackIncreasing -> {
                         delay(2000)
-                        // SHOW TRICK DONE
+                        // SHOW TRICK DONE isBabyTon -> Tricks on a round end DartUtils
                         showTransitionInfo(R.id.action_01game_to_score,
                             DartsUtils.getScoreFromPointList(
                                 DartsUtils.getPlayerLastValidRoundDarts(

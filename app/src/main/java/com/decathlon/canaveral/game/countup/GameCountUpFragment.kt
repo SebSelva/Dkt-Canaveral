@@ -17,6 +17,7 @@ import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.utils.DartsUtils
 import com.decathlon.canaveral.game.GameStatsFragmentArgs
+import com.decathlon.canaveral.game.GameStatsViewModel
 import com.decathlon.canaveral.game.adapter.KeyboardAdapter
 import com.decathlon.canaveral.game.adapter.KeyboardType
 import com.decathlon.canaveral.game.adapter.PlayerPointsAdapter
@@ -24,6 +25,7 @@ import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import com.decathlon.canaveral.game.x01.Game01Fragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -31,11 +33,14 @@ class GameCountUpFragment : Game01Fragment() {
 
     private val args: GameCountUpFragmentArgs by navArgs()
     private val countUpViewModel by viewModel<CountUpViewModel>()
+    private val gameStatsViewModel by sharedViewModel<GameStatsViewModel>()
     override var layoutId = R.layout.fragment_game
 
     private lateinit var playerPointsAdapter: PlayerPointsAdapter
     private lateinit var playersWaitingAdapter: PlayersWaitingAdapter
     private var jobNextPlayer: Job? = null
+
+    private var startGame: Long = -1L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,8 +48,8 @@ class GameCountUpFragment : Game01Fragment() {
         countUpViewModel.variant = args.variantIndex
         countUpViewModel.isBull25 = args.isBull25
         countUpViewModel.nbRounds = resources.getStringArray(R.array.game_countup_detail_round)[args.roundIndex].toInt()
-
         initViews(view)
+        startGame = System.currentTimeMillis()
     }
 
     private fun initViews(view: View) {
@@ -165,6 +170,10 @@ class GameCountUpFragment : Game01Fragment() {
 
         // Test if game is finished
         if (DartsUtils.isCountUpFinished(nbRounds, countUpViewModel.players, stack)) {
+            countUpViewModel.onGameEnd(
+                System.currentTimeMillis() - startGame,
+                gameStatsViewModel.winPlayers
+            )
             goToPlayersStatsScreen()
         }
 
