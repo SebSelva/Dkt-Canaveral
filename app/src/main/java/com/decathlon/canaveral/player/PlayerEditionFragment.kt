@@ -20,7 +20,6 @@ import com.decathlon.canaveral.common.utils.CameraUtils
 import com.decathlon.canaveral.dashboard.DashboardViewModel
 import com.decathlon.canaveral.databinding.DialogPlayerEditionBinding
 import com.decathlon.canaveral.intro.LoginViewModel
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -92,6 +91,15 @@ class PlayerEditionFragment: BaseDialogFragment<DialogPlayerEditionBinding>() {
 
         _binding.editionCancel.setOnClickListener {
             dismiss()
+        }
+
+        _binding.editionReset.setOnClickListener {
+            playerEditionViewModel.player.userId = null
+            playerEditionViewModel.player.nickname = ""
+            playerEditionViewModel.player.image = null
+            _binding.player = playerEditionViewModel.player
+            playerEditionViewModel.updatePlayer()
+            findNavController().popBackStack()
         }
 
         dashboardViewModel.playerLiveData.value?.let { list ->

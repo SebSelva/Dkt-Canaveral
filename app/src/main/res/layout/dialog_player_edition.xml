@@ -152,7 +152,19 @@
                 android:layout_gravity="center_horizontal"
                 android:padding="@dimen/margin_medium"
                 android:textSize="16sp"
-                android:text="@string/cancel" />
+                android:text="@string/cancel"
+                app:isVisible="@{player.userId == null}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/edition_reset"
+                style="@style/Dkt.TextStyle.Grey.Clickable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/margin_medium"
+                android:textSize="16sp"
+                android:text="@string/player_edition_reset"
+                app:isVisible="@{player.userId != null}"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

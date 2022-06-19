@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Canaveral 2.0</string>
     <string name="app_version" translatable="false">V%s</string>
 
@@ -128,6 +128,7 @@
     // Player Edition
     <string name="player_edition_title">Player Edition</string>
     <string name="player_edition_nickname">Pseudo</string>
+    <string name="player_edition_reset" tools:ignore="MissingTranslation">Reset player</string>
     <string name="user_login">Log in</string>
     <string name="user_logout">Log out</string>
     <string name="user_hi">Hi,\n%s!</string>
