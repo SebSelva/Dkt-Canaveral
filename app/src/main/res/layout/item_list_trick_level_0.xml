@@ -31,6 +31,18 @@
             app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
             tools:text="17"/>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/trick_progress_indicator"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="@dimen/margin_small"
+            app:trackCornerRadius="2dp"
+            app:trackColor="@color/grey_dkt_50"
+            app:indicatorColor="@color/grey_dkt_200"
+            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
+            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
+            app:layout_constraintTop_toBottomOf="@id/trick_level_circle"/>
+
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/Dkt.TextStyle.Stats.Trick.Name"
             android:id="@+id/trick_name"
@@ -39,19 +51,8 @@
             android:minLines="2"
             app:layout_constraintStart_toStartOf="@id/trick_level_circle"
             app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
-            app:layout_constraintTop_toBottomOf="@id/trick_level_circle"
+            app:layout_constraintTop_toBottomOf="@id/trick_progress_indicator"
             tools:text="Baby ton"/>
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/trick_progress_indicator"
-            android:layout_width="0dp"
-            android:layout_height="4dp"
-            app:trackCornerRadius="2dp"
-            app:trackColor="@color/grey_dkt_50"
-            app:indicatorColor="@color/grey_dkt_200"
-            app:layout_constraintStart_toStartOf="@id/trick_level_circle"
-            app:layout_constraintEnd_toEndOf="@id/trick_level_circle"
-            app:layout_constraintTop_toBottomOf="@id/trick_name"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
