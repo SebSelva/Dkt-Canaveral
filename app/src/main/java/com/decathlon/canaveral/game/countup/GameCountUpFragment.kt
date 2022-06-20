@@ -24,6 +24,7 @@ import com.decathlon.canaveral.game.x01.Game01Fragment
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.util.*
 
 class GameCountUpFragment : Game01Fragment() {
@@ -185,6 +186,15 @@ class GameCountUpFragment : Game01Fragment() {
                 stack
             )
         ) {
+            val tricksDone = DartsUtils.getTricksDone(
+                countUpViewModel.currentPlayerLiveData.value!!,
+                countUpViewModel.currentRound,
+                stack,
+                countUpViewModel.isBull25,
+                CountUpViewModel.validTricks
+            )
+            Timber.i(tricksDone.toString())
+
             jobNextPlayer = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                 when {
                     countUpViewModel.isStackIncreasing -> {

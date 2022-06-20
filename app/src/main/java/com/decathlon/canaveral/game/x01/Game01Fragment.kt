@@ -24,6 +24,7 @@ import com.decathlon.canaveral.game.adapter.PlayersWaitingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 import java.util.*
 
 open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
@@ -183,7 +184,14 @@ open class Game01Fragment : BaseFragment<FragmentGameBinding>() {
                 stack
             )
         ) {
-            //TODO: SHOW TRICKS DONE Tricks on a round completed - Rules in DartUtils
+            val tricksDone = DartsUtils.getTricksDone(
+                game01ViewModel.currentPlayerLiveData.value!!,
+                game01ViewModel.currentRound,
+                stack,
+                game01ViewModel.isBull25,
+                Game01ViewModel.validTricks
+            )
+            Timber.i(tricksDone.toString())
 
             jobNextPlayer = viewLifecycleOwner.lifecycleScope.launchWhenResumed {
                 when {

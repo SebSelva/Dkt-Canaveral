@@ -6,6 +6,7 @@ import com.decathlon.canaveral.common.BaseViewModel
 import com.decathlon.canaveral.common.interactors.Interactors
 import com.decathlon.canaveral.common.model.*
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.TrickType
 import com.decathlon.canaveral.game.common.GameActionsInterface
 import com.decathlon.canaveral.game.model.Game01DataStats
 import kotlinx.coroutines.Dispatchers.IO
@@ -173,6 +174,25 @@ open class Game01ViewModel(private val interactors: Interactors) :
             )
         }
         return x01PlayerList
+    }
+
+    companion object {
+        val validTricks = listOf(
+            TrickType.BabyTon,
+            TrickType.BagONuts,
+            TrickType.BullsEye,
+            TrickType.Bust,
+            TrickType.HatTrick,
+            TrickType.HighTon,
+            TrickType.LowTon,
+            TrickType.ThreeInABed,
+            TrickType.Ton,
+            TrickType.Ton80,
+            TrickType.ScoredMoreThan60,
+            TrickType.ScoredMoreThan100,
+            TrickType.ScoredMoreThan140,
+            TrickType.Scored180
+        )
     }
 
     sealed class GameUiState {

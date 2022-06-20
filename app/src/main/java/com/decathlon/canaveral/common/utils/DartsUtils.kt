@@ -16,6 +16,24 @@ class DartsUtils {
         const val BULL_VALUE = "Bull"
         const val MISS_VALUE = "Miss"
 
+        enum class TrickType {
+            BabyTon,
+            BagONuts,
+            BullsEye,
+            Bust,
+            HatTrick,
+            HighTon,
+            LowTon,
+            ThreeInABed,
+            Ton,
+            Ton80,
+            WhiteHorse,
+            ScoredMoreThan60,
+            ScoredMoreThan100,
+            ScoredMoreThan140,
+            Scored180
+        }
+
         fun getStringFromPoint(context: Context, point: Point) :String {
             var text = ""
             if (point.isDoubled) {
@@ -383,6 +401,34 @@ class DartsUtils {
 
         fun is180(currentPlayer: Player, currentRound: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean): Boolean {
             return getScoreFromPointList(getPlayerRoundDarts(currentPlayer, currentRound, stackPoints), isSimpleBull25) == 180
+        }
+
+        fun getTricksDone(currentPlayer: Player, round: Int, stackPoints: Stack<PlayerPoint>?, isSimpleBull25: Boolean, validTricks: List<TrickType>): List<TrickType> {
+            val trickList = ArrayList<TrickType>()
+
+            if (isBabyTon(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.BabyTon)
+            if (isBagONuts(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.BagONuts)
+            for (point in getPlayerRoundDarts(currentPlayer,round,stackPoints)) {
+                if (isBulleye(point)) {
+                    trickList.add(TrickType.BullsEye)
+                    break
+                }
+            }
+            val playerRoundDarts = getPlayerPointRoundDarts(currentPlayer, round, stackPoints)
+            if (!playerRoundDarts.isNullOrEmpty() && playerRoundDarts.last().isBusted) trickList.add(TrickType.Bust)
+            if (isHatTrick(currentPlayer, round, stackPoints)) trickList.add(TrickType.HatTrick)
+            if (isHighTon(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.HighTon)
+            if (isLowTon(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.LowTon)
+            if (isThreeInABed(currentPlayer, round, stackPoints)) trickList.add(TrickType.ThreeInABed)
+            if (isTon(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.Ton)
+            if (isTon80(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.Ton80)
+            if (isWhiteHorse(currentPlayer,round, stackPoints)) trickList.add(TrickType.WhiteHorse)
+            if (isMoreThan60(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.ScoredMoreThan60)
+            if (isMoreThan100(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.ScoredMoreThan100)
+            if (isMoreThan140(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.ScoredMoreThan140)
+            if (is180(currentPlayer, round, stackPoints, isSimpleBull25)) trickList.add(TrickType.Scored180)
+
+            return trickList.filter { validTricks.contains(it) }
         }
 
         /**

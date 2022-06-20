@@ -6,6 +6,7 @@ import com.decathlon.canaveral.common.model.PlayerPoint
 import com.decathlon.canaveral.common.model.PlayerStats
 import com.decathlon.canaveral.common.model.Point
 import com.decathlon.canaveral.common.utils.DartsUtils
+import com.decathlon.canaveral.common.utils.DartsUtils.Companion.TrickType
 import com.decathlon.canaveral.game.model.CountUpDataStats
 import com.decathlon.canaveral.game.x01.Game01ViewModel
 import kotlinx.coroutines.launch
@@ -41,6 +42,25 @@ class CountUpViewModel(val interactors: Interactors) : Game01ViewModel(interacto
                 interactors.stdActions.updateActivity(activity)
             }
         }
+    }
+
+    companion object {
+        val validTricks = listOf(
+            TrickType.BabyTon,
+            TrickType.BagONuts,
+            TrickType.BullsEye,
+            TrickType.Bust,
+            TrickType.HatTrick,
+            TrickType.HighTon,
+            TrickType.LowTon,
+            TrickType.ThreeInABed,
+            TrickType.Ton,
+            TrickType.Ton80,
+            TrickType.ScoredMoreThan60,
+            TrickType.ScoredMoreThan100,
+            TrickType.ScoredMoreThan140,
+            TrickType.Scored180
+        )
     }
 
 }
