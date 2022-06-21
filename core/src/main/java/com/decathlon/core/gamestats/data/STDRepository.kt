@@ -174,7 +174,7 @@ class STDRepository(
                         ((dartsStatEntity?.gamesWon ?: 0) + newDartStats.gamesWon) * 100f / t
                     val userMeasure = StdUserMeasure(
                         userId,
-                        measureIndex.toString(),
+                        "/v2/datatypes/$measureIndex",
                         newPercent.roundToInt().toFloat(),
                         stdActivity.startdate
                     )
@@ -186,7 +186,7 @@ class STDRepository(
                         ((dartsStatEntity?.legsWon ?: 0) + newDartStats.legsWon) * 100f / t
                     val userMeasure = StdUserMeasure(
                         userId,
-                        measureIndex.toString(),
+                        "/v2/datatypes/$measureIndex",
                         newPercent.roundToInt().toFloat(),
                         stdActivity.startdate
                     )
@@ -203,7 +203,7 @@ class STDRepository(
                             )) * 100f /
                                     ((dartsStatEntity?.dartsThrown ?: 0) + newDartStats.dartsThrown)
                         val userMeasure = StdUserMeasure(
-                            userId, measureIndex.toString(), newPercent.roundToInt().toFloat(),
+                            userId, "/v2/datatypes/$measureIndex", newPercent.roundToInt().toFloat(),
                             stdActivity.startdate
                         )
                         list.add(userMeasure)
@@ -227,7 +227,7 @@ class STDRepository(
                     val newPercent = if (t == 0L) 0f else
                         ((dartsStatEntity?.gamesWon ?: 0) + totalWon) * 100f / t
                     val userMeasure = UserMeasureEntity(
-                        datatype = measureIndex.toString(),
+                        datatype = "/v2/datatypes/$measureIndex",
                         value = newPercent.roundToInt().toFloat(),
                         date = activities.last().startDate
                     )
@@ -240,7 +240,7 @@ class STDRepository(
                     val newPercent = if (t == 0L) 0f else
                         ((dartsStatEntity?.legsWon ?: 0) + totalWon) * 100f / t
                     val userMeasure = UserMeasureEntity(
-                        datatype = measureIndex.toString(),
+                        datatype = "/v2/datatypes/$measureIndex",
                         value = newPercent.roundToInt().toFloat(),
                         date = activities.last().startDate
                     )
@@ -258,7 +258,7 @@ class STDRepository(
                                 ?: 0) + totalCountActivities) * 100f /
                                     ((dartsStatEntity?.dartsThrown ?: 0) + totalThrownActivities)
                         val userMeasure = UserMeasureEntity(
-                            datatype = measureIndex.toString(),
+                            datatype = "/v2/datatypes/$measureIndex",
                             value = newPercent.roundToInt().toFloat(),
                             date = activities.last().startDate
                         )
@@ -284,14 +284,13 @@ class STDRepository(
                 activitiesDataSource.getActivities().forEach {
                     val toWs = it.toWs(info.id)
                     Timber.w("DATA Off post activity $toWs")
-                    // TODO DEBUG post activity after reconnection
-                    //stdServices.postUserActivity(token, toWs)
+                    stdServices.postUserActivity(bearerHeader(token), toWs)
                     Timber.w("DATA Off post activity done}")
                 }
 
                 measureDataSource.getUserMeasures().forEach {
                     Timber.w("DATA Off post measures ${it.toWs(info.id)}")
-                    //stdServices.postUserMeasure(token, it.toWs(info.id))
+                    stdServices.postUserMeasure(bearerHeader(token), it.toWs(info.id))
                 }
 
                 activitiesDataSource.removeAll()
